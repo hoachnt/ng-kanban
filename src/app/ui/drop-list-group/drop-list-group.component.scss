@@ -3,11 +3,6 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
 }
-:host {
-    display: block;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
 @media screen and (max-width: 1000px) {
     .kanban-list_group {
