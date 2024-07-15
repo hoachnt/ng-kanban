@@ -1,11 +1,22 @@
 <h2 mat-dialog-title>Add task</h2>
-<mat-dialog-content>
-    <mat-form-field class="w-full">
-        <mat-label>Task</mat-label>
-        <input matInput [(ngModel)]="title" />
-    </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Close</button>
-    <button mat-button [mat-dialog-close]="title()" cdkFocusInitial>Ok</button>
-</mat-dialog-actions>
+<form [formGroup]="form" (ngSubmit)="onCreateKanbanItem()">
+    <mat-dialog-content>
+        <mat-form-field class="w-full">
+            <mat-label>Task</mat-label>
+            <input matInput formControlName="title" />
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onNoClick()" [disabled]="isDisabling()">
+            Close
+        </button>
+        <button
+            mat-button
+            cdkFocusInitial
+            [disabled]="isDisabling()"
+            type="submit"
+        >
+            Ok
+        </button>
+    </mat-dialog-actions>
+</form>

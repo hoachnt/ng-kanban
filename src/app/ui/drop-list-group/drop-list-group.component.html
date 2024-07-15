@@ -5,7 +5,7 @@
         [data]="kanbanItems | kanbanItemsFilter : item.id"
         [dropListTitle]="item.title"
         (itemDropped)="drop($event, item.id)"
-        [isUpdated]="isUpdated()"
+        [isUpdated]="isUpdating()"
     ></app-drop-list>
     } }
 </div>

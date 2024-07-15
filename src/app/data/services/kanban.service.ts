@@ -45,4 +45,10 @@ export class KanbanService {
             newKanban
         );
     }
+    postKanbanItem(data: IKanbanItem) {
+        return this.http.post<IKanbanItem>(
+            `${this.baseUrl}/items/kanban_item`,
+            data
+        );
+    }
 }

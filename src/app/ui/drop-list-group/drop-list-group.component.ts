@@ -28,7 +28,7 @@ export class DropListGroupComponent {
     kanbanService = inject(KanbanService);
     kanbanLists = this.kanbanService.kanbanLists;
     kanbanItems = this.kanbanService.kanbanItems;
-    isUpdated = signal(false);
+    isUpdating = signal(false);
 
     async ngOnInit(): Promise<void> {
         await firstValueFrom(this.kanbanService.getKanbanList());
@@ -57,11 +57,11 @@ export class DropListGroupComponent {
             }
         }
 
-        await firstValueFrom(this.kanbanService.getKanbanItems());
+        // await firstValueFrom(this.kanbanService.getKanbanItems());
     }
 
     async drop(event: CdkDragDrop<IKanbanItem[]>, dropListId?: number) {
-        this.isUpdated.set(true);
+        this.isUpdating.set(true);
 
         if (event.previousContainer === event.container) {
             moveItemInArray(
@@ -77,10 +77,11 @@ export class DropListGroupComponent {
                 event.previousIndex,
                 event.currentIndex
             );
+
             await this.updateKanbanList(event.previousContainer.data);
             await this.updateKanbanList(event.container.data, dropListId);
         }
 
-        this.isUpdated.set(false);
+        this.isUpdating.set(false);
     }
 }
