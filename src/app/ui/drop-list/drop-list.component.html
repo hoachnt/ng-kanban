@@ -1,5 +1,7 @@
 <div class="container">
-    <h2>{{ dropListTitle }}</h2>
+    <h2 class="mat-display-medium" style="color: #e8e2d4">
+        {{ dropListTitle }}
+    </h2>
 
     <div
         cdkDropList
@@ -8,10 +10,18 @@
         class="list"
     >
         @for (item of data; track item.title) {
-        <div class="box" cdkDrag>
-            <h5>{{ item.title }}</h5>
-            <p>currentIndex: {{ item.currentIndex }}</p>
-        </div>
+
+        <mat-card
+            appearance="raised"
+            cdkDrag
+            [cdkDragDisabled]="isUpdated"
+            class="box"
+        >
+            <mat-card-content class="kanban-item__title">
+                {{ item.title }}
+            </mat-card-content>
+        </mat-card>
+
         }
     </div>
 </div>

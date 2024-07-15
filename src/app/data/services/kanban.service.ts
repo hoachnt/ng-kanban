@@ -23,7 +23,12 @@ export class KanbanService {
     getKanbanList() {
         return this.http
             .get<IDirectusData<IKanbanList>>(
-                `${this.baseUrl}/items/kanban_list`
+                `${this.baseUrl}/items/kanban_list`,
+                {
+                    params: {
+                        sort: "currentIndex",
+                    },
+                }
             )
             .pipe(tap((res) => this.kanbanLists.set(res.data)));
     }
@@ -33,5 +38,11 @@ export class KanbanService {
                 `${this.baseUrl}/items/kanban_item`
             )
             .pipe(tap((res) => this.kanbanItems.set(res.data)));
+    }
+    updateKanbanItems(kanban_id: number, newKanban: IKanbanItem) {
+        return this.http.patch<IDirectusData<IKanbanItem>>(
+            `${this.baseUrl}/items/kanban_item/${kanban_id}`,
+            newKanban
+        );
     }
 }

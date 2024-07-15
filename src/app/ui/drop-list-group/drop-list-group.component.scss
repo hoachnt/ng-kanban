@@ -1,0 +1,22 @@
+.kanban-list_group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+:host {
+    display: block;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1000px) {
+    .kanban-list_group {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .kanban-list_group {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

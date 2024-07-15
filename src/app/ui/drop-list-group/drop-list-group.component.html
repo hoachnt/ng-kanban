@@ -1,10 +1,11 @@
-<div cdkDropListGroup>
+<div cdkDropListGroup class="kanban-list_group">
     @for (item of kanbanLists(); track item.id) { @if(kanbanItems(); as
     kanbanItems) {
     <app-drop-list
         [data]="kanbanItems | kanbanItemsFilter : item.id"
         [dropListTitle]="item.title"
-        (itemDropped)="drop($event)"
+        (itemDropped)="drop($event, item.id)"
+        [isUpdated]="isUpdated()"
     ></app-drop-list>
     } }
 </div>
