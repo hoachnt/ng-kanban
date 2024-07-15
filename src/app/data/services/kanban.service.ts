@@ -39,10 +39,15 @@ export class KanbanService {
             )
             .pipe(tap((res) => this.kanbanItems.set(res.data)));
     }
-    updateKanbanItems(kanban_id: number, newKanban: IKanbanItem) {
+    updateKanbanItem(kanban_id: number, newKanban: IKanbanItem) {
         return this.http.patch<IDirectusData<IKanbanItem>>(
             `${this.baseUrl}/items/kanban_item/${kanban_id}`,
             newKanban
+        );
+    }
+    deleteKanbanItem(kanban_id: number) {
+        return this.http.delete<IDirectusData<IKanbanItem>>(
+            `${this.baseUrl}/items/kanban_item/${kanban_id}`
         );
     }
     postKanbanItem(data: IKanbanItem) {

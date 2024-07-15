@@ -47,7 +47,7 @@ export class DropListGroupComponent {
 
             try {
                 await firstValueFrom(
-                    this.kanbanService.updateKanbanItems(
+                    this.kanbanService.updateKanbanItem(
                         kanbanItem.id,
                         kanbanItem
                     )

@@ -20,6 +20,21 @@
             <mat-card-content class="kanban-item__title">
                 {{ item.title }}
             </mat-card-content>
+            <mat-card-actions>
+                <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="More actions"
+                >
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="onDeleteKanbanItem(item.id)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                </mat-menu>
+            </mat-card-actions>
         </mat-card>
 
         }
