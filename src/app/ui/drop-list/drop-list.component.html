@@ -1,5 +1,5 @@
 <div class="container">
-    <h2 class="mat-display-medium" style="color: #e8e2d4">
+    <h2 class="mat-display-medium">
         {{ dropListTitle }}
     </h2>
 
@@ -17,9 +17,9 @@
             [cdkDragDisabled]="isUpdated"
             class="box"
         >
-            <mat-card-content class="kanban-item__title">
+            <mat-card-header class="kanban-item__title">
                 {{ item.title }}
-            </mat-card-content>
+            </mat-card-header>
             <mat-card-actions>
                 <button
                     mat-icon-button
@@ -29,7 +29,7 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="onDeleteKanbanItem(item.id)">
+                    <button mat-menu-item (click)="openDialog(item)">
                         <mat-icon>delete</mat-icon>
                         <span>Delete</span>
                     </button>

@@ -1,35 +1,64 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
-@use "./styles/m3-theme" as m3; // Ensure the path is correct
+// @use "./styles/m3-theme" as m3; // Ensure the path is correct
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// Include core styles
-@include mat.core();
+// Define the theme object.
+$kanban-theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$azure-palette,
+            tertiary: mat.$blue-palette,
+        ),
+        density: (
+            scale: 0,
+        ),
+    )
+);
 
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
 :root {
-    // Apply the light theme by default
-    @include mat.core-theme(m3.$dark-theme);
-    @include mat.all-component-themes(m3.$dark-theme);
-    @include mat.system-level-colors(m3.$dark-theme);
-    @include mat.system-level-typography(m3.$dark-theme);
-
-    @media (prefers-color-scheme: light) {
-        // Use the `-color` mixins to only apply color styles without reapplying the same
-        // typography and density styles.
-        @include mat.core-color(m3.$light-theme);
-        @include mat.button-color(m3.$light-theme);
-        @include mat.all-component-themes(m3.$light-theme);
-    }
+    @include mat.all-component-themes($kanban-theme);
+    @include mat.core-theme($kanban-theme);
+    @include mat.system-level-colors($kanban-theme);
+    @include mat.system-level-typography($kanban-theme);
 }
+
+// :root {
+//     // Apply the light theme by default
+//     @include mat.core-theme(m3.$light-theme);
+//     @include mat.all-component-themes(m3.$light-theme);
+//     @include mat.system-level-colors(m3.$light-theme);
+//     @include mat.system-level-typography(m3.$light-theme);
+
+//     @media (prefers-color-scheme: dark) {
+//         // Use the `-color` mixins to only apply color styles without reapplying the same
+//         // typography and density styles.
+//         @include mat.core-color(m3.$dark-theme);
+//         @include mat.button-color(m3.$dark-theme);
+//         @include mat.all-component-themes(m3.$dark-theme);
+//     }
+// }
 
 html,
 body {
     height: 100%;
 }
-
 body {
     margin: 0;
-    background: var(--sys-surface-dim) !important;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

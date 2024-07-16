@@ -7,14 +7,13 @@
 
 .list {
     min-height: 60px;
-    background: var(--sys-background);
     border-radius: var(--mdc-elevated-card-container-shape);
     overflow: hidden;
+    border: 1px solid var(--mdc-outlined-card-outline-color);
 }
 
 .box {
     padding: 20px 10px;
-    color: #e8e2d4;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -27,10 +26,6 @@
     cursor: not-allowed;
     user-select: none;
     opacity: 0.5;
-}
-
-.kanban-item__title {
-    color: var(--sys-on-background);
 }
 
 .cdk-drag-preview {

@@ -7,7 +7,12 @@
         </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button (click)="onNoClick()" [disabled]="isDisabling()">
+        <button
+            mat-button
+            (click)="onNoClick()"
+            [disabled]="isDisabling()"
+            type="button"
+        >
             Close
         </button>
         <button
