@@ -1,4 +1,10 @@
-import { Component, inject, signal } from "@angular/core";
+import {
+    Component,
+    ElementRef,
+    inject,
+    signal,
+    ViewChild,
+} from "@angular/core";
 import {
     MatDialogActions,
     MatDialogContent,
@@ -11,6 +17,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { IKanbanItem } from "../../libraries/directus/directus";
 import {
+    FormBuilder,
     FormControl,
     FormGroup,
     FormsModule,
@@ -43,21 +50,32 @@ export interface DialogData extends IKanbanItem {}
     styleUrl: "./dialog-add-kanban-item-form.component.scss",
 })
 export class DialogAddKanbanItemFormComponent {
+    @ViewChild("titleInput") titleInput!: ElementRef;
+
     kanbanService = inject(KanbanService);
 
     readonly dialogRef = inject(MatDialogRef<DialogAddKanbanItemFormComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+    fb = inject(FormBuilder);
+
     isDisabling = signal(false);
 
-    form = new FormGroup({
-        title: new FormControl<string | null>(null, Validators.required),
+    form = this.fb.group({
+        title: ["", Validators.required],
     });
+
+    ngAfterViewInit() {
+        this.titleInput.nativeElement.focus();
+    }
 
     onNoClick(): void {
         this.dialogRef.close();
     }
     async onCreateKanbanItem() {
-        if (!this.form.valid) return;
+        this.form.markAllAsTouched();
+        this.form.updateValueAndValidity();
+
+        if (this.form.invalid) return;
 
         this.isDisabling.set(true);
 

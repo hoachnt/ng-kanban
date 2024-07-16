@@ -3,7 +3,7 @@
     <mat-dialog-content>
         <mat-form-field class="w-full">
             <mat-label>Task</mat-label>
-            <input matInput formControlName="title" />
+            <input #titleInput matInput formControlName="title" />
         </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>
@@ -17,7 +17,6 @@
         </button>
         <button
             mat-button
-            cdkFocusInitial
             [disabled]="isDisabling()"
             type="submit"
         >
