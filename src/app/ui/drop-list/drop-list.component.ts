@@ -58,8 +58,8 @@ export class DropListComponent {
         this.itemDropped.emit(event);
     }
 
-    openDialog(kanbanItem: DialogData): void {
-        if (this.data === null) return;
+    openDialog(kanbanItem: DialogData | null): void {
+        if (kanbanItem === null) return;
 
         const dialogRef = this.dialog.open(DialogDeleteKanbanItem, {
             data: { title: kanbanItem.title, id: kanbanItem.id },
