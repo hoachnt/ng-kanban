@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Add task</h2>
-<form [formGroup]="form" (ngSubmit)="onCreateKanbanItem()">
+<h2 mat-dialog-title>Edit task</h2>
+<form [formGroup]="form" (ngSubmit)="onUpdateKanbanItem()">
     <mat-dialog-content>
         <mat-form-field class="w-full">
-            <mat-label>Task title</mat-label>
+            <mat-label>New task title</mat-label>
             <input #titleInput matInput formControlName="title" />
         </mat-form-field>
     </mat-dialog-content>
@@ -15,6 +15,8 @@
         >
             Close
         </button>
-        <button mat-button [disabled]="isDisabling()" type="submit">Ok</button>
+        <button mat-button [disabled]="isDisabling()" type="submit">
+            Edit
+        </button>
     </mat-dialog-actions>
 </form>

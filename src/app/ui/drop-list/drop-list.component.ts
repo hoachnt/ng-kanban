@@ -5,7 +5,6 @@ import {
     inject,
     Input,
     Output,
-    signal,
 } from "@angular/core";
 import { CdkDragDrop, CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { DropItemSortPipe } from "../../helpers/pipes/drop-item-sort.pipe";
@@ -14,17 +13,9 @@ import { MatCardModule } from "@angular/material/card";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { KanbanService } from "../../data/services/kanban.service";
-import { firstValueFrom } from "rxjs";
-import {
-    MAT_DIALOG_DATA,
-    MatDialog,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogContent,
-    MatDialogRef,
-    MatDialogTitle,
-} from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
+import { DialogDeleteKanbanItem } from "./drop-item/dialog/dialog-delete-kanban-item.component";
+import { DialogUpdateKanbanItemComponent } from "./drop-item/dialog/dialog-update-kanban-item.component";
 
 interface DialogData extends IKanbanItem {}
 
@@ -67,40 +58,18 @@ export class DropListComponent {
 
         dialogRef.afterClosed().subscribe();
     }
-}
+    openDialogUpdate(kanbanItem: DialogData | null) {
+        if (kanbanItem === null) return;
 
-@Component({
-    selector: "dialog-delete-kanban-item",
-    templateUrl: "dialog-delete-kanban-item.component.html",
-    standalone: true,
-    imports: [
-        MatButtonModule,
-        MatDialogTitle,
-        MatDialogContent,
-        MatDialogActions,
-        MatDialogClose,
-    ],
-})
-export class DialogDeleteKanbanItem {
-    readonly dialogRef = inject(MatDialogRef<DialogDeleteKanbanItem>);
-    readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+        const dialogRef = this.dialog.open(DialogUpdateKanbanItemComponent, {
+            data: {
+                title: kanbanItem.title,
+                id: kanbanItem.id,
+                kanban_list_id: kanbanItem.kanban_list_id,
+                currentIndex: kanbanItem.currentIndex,
+            },
+        });
 
-    readonly kanbanService = inject(KanbanService);
-    readonly isDeleting = signal(false);
-
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
-
-    async onDeleteKanbanItem() {
-        if (this.data.id === undefined) return;
-
-        this.isDeleting.set(true);
-
-        await firstValueFrom(this.kanbanService.deleteKanbanItem(this.data.id));
-        await firstValueFrom(this.kanbanService.getKanbanItems());
-
-        this.dialogRef.close();
-        this.isDeleting.set(false);
+        dialogRef.afterClosed().subscribe();
     }
 }
