@@ -2,6 +2,7 @@ import {
     Component,
     ElementRef,
     inject,
+    LOCALE_ID,
     signal,
     ViewChild,
 } from "@angular/core";
@@ -27,13 +28,19 @@ import {
 import { MatButtonModule } from "@angular/material/button";
 import { KanbanService } from "../../data/services/kanban.service";
 import { firstValueFrom } from "rxjs";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { DatePipe, registerLocaleData } from "@angular/common";
+import localeVi from "@angular/common/locales/vi";
+
+// Регистрация локали
+registerLocaleData(localeVi);
 
 export interface DialogData extends IKanbanItem {}
 
 @Component({
     selector: "app-dialog-add-kanban-item-form",
     standalone: true,
+    providers: [DatePipe],
     imports: [
         MatFormFieldModule,
         MatInputModule,
@@ -43,16 +50,17 @@ export interface DialogData extends IKanbanItem {}
         MatDialogContent,
         MatDialogActions,
         MatDialogClose,
-        MatProgressSpinnerModule,
         ReactiveFormsModule,
+        MatDatepickerModule,
     ],
     templateUrl: "./dialog-add-kanban-item-form.component.html",
-    styleUrl: "./dialog-add-kanban-item-form.component.scss",
+    styleUrls: ["./dialog-add-kanban-item-form.component.scss"],
 })
 export class DialogAddKanbanItemFormComponent {
     @ViewChild("titleInput") titleInput!: ElementRef;
 
     kanbanService = inject(KanbanService);
+    datePipe = inject(DatePipe);
 
     readonly dialogRef = inject(MatDialogRef<DialogAddKanbanItemFormComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
@@ -62,6 +70,7 @@ export class DialogAddKanbanItemFormComponent {
 
     form = this.fb.group({
         title: ["", Validators.required],
+        deadline: [null],
     });
 
     ngAfterViewInit() {
@@ -71,6 +80,7 @@ export class DialogAddKanbanItemFormComponent {
     onNoClick(): void {
         this.dialogRef.close();
     }
+
     async onCreateKanbanItem() {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
@@ -87,8 +97,16 @@ export class DialogAddKanbanItemFormComponent {
             return;
         }
 
+        const formattedDeadline = this.form.value.deadline
+            ? this.datePipe.transform(
+                  this.form.value.deadline,
+                  "yyyy-MM-ddTHH:mm:ss"
+              )
+            : null;
+
         const newKanbanItem: IKanbanItem = {
             title: this.form.value.title!,
+            deadline: formattedDeadline,
             currentIndex: 0,
             kanban_list_id: getKanbanListId,
         };

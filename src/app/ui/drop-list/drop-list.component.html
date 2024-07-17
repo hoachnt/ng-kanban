@@ -17,9 +17,18 @@
             [cdkDragDisabled]="isUpdated"
             class="box"
         >
-            <mat-card-header class="kanban-item__title">
-                {{ item.title }}
-            </mat-card-header>
+            <section>
+                <mat-card-header class="">
+                    {{ item.title }}
+                </mat-card-header>
+                @if(item.deadline) {
+                <mat-card-content class="kanban-item__content">
+                    <mat-chip matTooltip="Deadline">{{
+                        item.deadline | date : "mediumDate"
+                    }}</mat-chip>
+                </mat-card-content>
+                }
+            </section>
             <mat-card-actions>
                 <button
                     mat-icon-button

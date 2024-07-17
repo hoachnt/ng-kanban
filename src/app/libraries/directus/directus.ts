@@ -4,6 +4,8 @@ import { environment } from "../../../environments/environment.development";
 export interface IKanbanItem {
     id?: number;
     title: string;
+    description?: string | null;
+    deadline?: string | null;
     currentIndex: number;
     kanban_list_id: number;
 }

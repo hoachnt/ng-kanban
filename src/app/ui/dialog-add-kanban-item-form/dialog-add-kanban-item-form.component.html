@@ -5,6 +5,20 @@
             <mat-label>Title</mat-label>
             <input #titleInput matInput formControlName="title" />
         </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Choose a date</mat-label>
+            <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="deadline"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>
         <button

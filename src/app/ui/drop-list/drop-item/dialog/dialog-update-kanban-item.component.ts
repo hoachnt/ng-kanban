@@ -27,6 +27,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { KanbanService } from "../../../../data/services/kanban.service";
 import { IKanbanItem } from "../../../../libraries/directus/directus";
 import { firstValueFrom } from "rxjs";
+import { DatePipe } from "@angular/common";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 
 interface DialogData extends IKanbanItem {}
 
@@ -44,13 +46,16 @@ interface DialogData extends IKanbanItem {}
         MatDialogClose,
         MatProgressSpinnerModule,
         ReactiveFormsModule,
+        MatDatepickerModule,
     ],
+    providers: [DatePipe],
     templateUrl: "./dialog-update-kanban-item.component.html",
 })
 export class DialogUpdateKanbanItemComponent {
     @ViewChild("titleInput") titleInput!: ElementRef;
 
     kanbanService = inject(KanbanService);
+    datePipe = inject(DatePipe);
 
     readonly dialogRef = inject(MatDialogRef<DialogUpdateKanbanItemComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
@@ -60,11 +65,17 @@ export class DialogUpdateKanbanItemComponent {
 
     form = this.fb.group({
         title: ["", Validators.required],
+        deadline: [null as Date | null],
     });
 
     constructor() {
         effect(() => {
-            this.form.patchValue(this.data);
+            this.form.patchValue({
+                title: this.data.title || "",
+                deadline: this.data.deadline
+                    ? new Date(this.data.deadline)
+                    : null,
+            });
         });
     }
 
@@ -85,10 +96,18 @@ export class DialogUpdateKanbanItemComponent {
 
         this.isDisabling.set(true);
 
+        const formattedDeadline = this.form.value.deadline
+            ? this.datePipe.transform(
+                  this.form.value.deadline,
+                  "yyyy-MM-ddTHH:mm:ss"
+              )
+            : null;
+
         await firstValueFrom(
             this.kanbanService.updateKanbanItem(this.data.id, {
                 ...this.data,
                 title: this.form.value.title!,
+                deadline: formattedDeadline,
             })
         );
         await firstValueFrom(this.kanbanService.getKanbanItems());

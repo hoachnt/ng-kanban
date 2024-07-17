@@ -13,9 +13,12 @@ import { MatCardModule } from "@angular/material/card";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { MatChipsModule } from "@angular/material/chips";
 import { MatDialog } from "@angular/material/dialog";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { DialogDeleteKanbanItem } from "./drop-item/dialog/dialog-delete-kanban-item.component";
 import { DialogUpdateKanbanItemComponent } from "./drop-item/dialog/dialog-update-kanban-item.component";
+import { DatePipe } from "@angular/common";
 
 interface DialogData extends IKanbanItem {}
 
@@ -30,6 +33,9 @@ interface DialogData extends IKanbanItem {}
         MatButtonModule,
         MatMenuModule,
         MatIconModule,
+        MatChipsModule,
+        MatTooltipModule,
+        DatePipe,
     ],
     templateUrl: "./drop-list.component.html",
     styleUrl: "./drop-list.component.scss",
@@ -65,6 +71,7 @@ export class DropListComponent {
             data: {
                 title: kanbanItem.title,
                 id: kanbanItem.id,
+                deadline: kanbanItem.deadline,
                 kanban_list_id: kanbanItem.kanban_list_id,
                 currentIndex: kanbanItem.currentIndex,
             },
