@@ -2,7 +2,6 @@
 // For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
 // @use "./styles/m3-theme" as m3; // Ensure the path is correct
-
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -18,12 +17,12 @@
 $kanban-theme: mat.define-theme(
     (
         color: (
-            theme-type: light,
+            theme-type: dark,
             primary: mat.$azure-palette,
             tertiary: mat.$blue-palette,
         ),
         density: (
-            scale: 0,
+            scale: -1,
         ),
     )
 );
@@ -38,19 +37,18 @@ $kanban-theme: mat.define-theme(
     @include mat.system-level-typography($kanban-theme);
 }
 
-// :root {
+// html {
 //     // Apply the light theme by default
-//     @include mat.core-theme(m3.$light-theme);
-//     @include mat.all-component-themes(m3.$light-theme);
-//     @include mat.system-level-colors(m3.$light-theme);
-//     @include mat.system-level-typography(m3.$light-theme);
+//     @include mat.core-theme(m3.$dark-theme);
+//     @include mat.all-component-themes(m3.$dark-theme);
+//     @include mat.system-level-colors(m3.$dark-theme);
+//     @include mat.system-level-typography(m3.$dark-theme);
 
-//     @media (prefers-color-scheme: dark) {
+//     @media (prefers-color-scheme: light) {
 //         // Use the `-color` mixins to only apply color styles without reapplying the same
 //         // typography and density styles.
-//         @include mat.core-color(m3.$dark-theme);
-//         @include mat.button-color(m3.$dark-theme);
-//         @include mat.all-component-themes(m3.$dark-theme);
+//         @include mat.core-color(m3.$light-theme);
+//         @include mat.all-component-themes(m3.$light-theme);
 //     }
 // }
 
