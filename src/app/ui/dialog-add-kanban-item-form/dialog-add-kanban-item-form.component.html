@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Add task</h2>
 <form [formGroup]="form" (ngSubmit)="onCreateKanbanItem()">
     <mat-dialog-content>
-        <mat-form-field class="w-full" [appearance]="'outline'">
+        <mat-form-field class="w-full">
             <mat-label>Title</mat-label>
             <input #titleInput matInput formControlName="title" />
         </mat-form-field>
