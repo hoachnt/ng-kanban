@@ -1,3 +1,3 @@
 export const environment = {
-    directusUrl: process.env["DIRECTUS_URL"],
+    directusUrl: "https://directus.hoachnt.com",
 };
