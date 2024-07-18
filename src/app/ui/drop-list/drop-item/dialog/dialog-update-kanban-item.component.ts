@@ -65,6 +65,7 @@ export class DialogUpdateKanbanItemComponent {
 
     form = this.fb.group({
         title: ["", Validators.required],
+        description: [""],
         deadline: [null as Date | null],
     });
 
@@ -72,6 +73,7 @@ export class DialogUpdateKanbanItemComponent {
         effect(() => {
             this.form.patchValue({
                 title: this.data.title || "",
+                description: this.data.description,
                 deadline: this.data.deadline
                     ? new Date(this.data.deadline)
                     : null,
@@ -107,6 +109,7 @@ export class DialogUpdateKanbanItemComponent {
             this.kanbanService.updateKanbanItem(this.data.id, {
                 ...this.data,
                 title: this.form.value.title!,
+                description: this.form.value.description,
                 deadline: formattedDeadline,
             })
         );

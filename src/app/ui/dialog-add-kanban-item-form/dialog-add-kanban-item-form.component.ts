@@ -70,6 +70,7 @@ export class DialogAddKanbanItemFormComponent {
 
     form = this.fb.group({
         title: ["", Validators.required],
+        description: [""],
         deadline: [null],
     });
 
@@ -106,6 +107,7 @@ export class DialogAddKanbanItemFormComponent {
 
         const newKanbanItem: IKanbanItem = {
             title: this.form.value.title!,
+            description: this.form.value.description,
             deadline: formattedDeadline,
             currentIndex: 0,
             kanban_list_id: getKanbanListId,

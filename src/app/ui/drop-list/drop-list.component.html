@@ -17,19 +17,7 @@
             [cdkDragDisabled]="isUpdated"
             class="box"
         >
-            <section>
-                <mat-card-header class="">
-                    {{ item.title }}
-                </mat-card-header>
-                @if(item.deadline) {
-                <mat-card-content class="kanban-item__content">
-                    <mat-chip matTooltip="Deadline">{{
-                        item.deadline | date : "mediumDate"
-                    }}</mat-chip>
-                </mat-card-content>
-                }
-            </section>
-            <mat-card-actions>
+            <mat-card-actions class="kanban-item__actions">
                 <button
                     mat-icon-button
                     [matMenuTriggerFor]="menu"
@@ -48,6 +36,33 @@
                     </button>
                 </mat-menu>
             </mat-card-actions>
+            <mat-card-header class="">
+                {{ item.title }}
+            </mat-card-header>
+            <mat-card-content class="kanban-item__content">
+                @if(item.deadline) {
+                <mat-chip matTooltip="Deadline">{{
+                    item.deadline | date : "mediumDate"
+                }}</mat-chip>
+                } @if(item.description) {
+
+                <mat-expansion-panel
+                    class="!mt-4"
+                    (opened)="panelOpenState.set(true)"
+                    (closed)="panelOpenState.set(false)"
+                >
+                    <mat-expansion-panel-header>
+                        @if(!panelOpenState() ) {
+                        <mat-panel-title>
+                            {{ item.description | truncateText : 20 }}
+                        </mat-panel-title>
+                        }
+                    </mat-expansion-panel-header>
+
+                    <p>{{ item.description }}</p>
+                </mat-expansion-panel>
+                }
+            </mat-card-content>
         </mat-card>
 
         }

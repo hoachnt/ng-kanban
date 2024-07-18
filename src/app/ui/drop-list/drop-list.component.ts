@@ -5,6 +5,7 @@ import {
     inject,
     Input,
     Output,
+    signal,
 } from "@angular/core";
 import { CdkDragDrop, CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { DropItemSortPipe } from "../../helpers/pipes/drop-item-sort.pipe";
@@ -19,6 +20,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { DialogDeleteKanbanItem } from "./drop-item/dialog/dialog-delete-kanban-item.component";
 import { DialogUpdateKanbanItemComponent } from "./drop-item/dialog/dialog-update-kanban-item.component";
 import { DatePipe } from "@angular/common";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { TruncateTextPipe } from "../../helpers/pipes/truncate-text.pipe";
 
 interface DialogData extends IKanbanItem {}
 
@@ -36,6 +39,8 @@ interface DialogData extends IKanbanItem {}
         MatChipsModule,
         MatTooltipModule,
         DatePipe,
+        TruncateTextPipe,
+        MatExpansionModule,
     ],
     templateUrl: "./drop-list.component.html",
     styleUrl: "./drop-list.component.scss",
@@ -50,6 +55,7 @@ export class DropListComponent {
     @Output() itemDropped = new EventEmitter<CdkDragDrop<IKanbanItem[]>>();
 
     readonly dialog = inject(MatDialog);
+    panelOpenState = signal(false);
 
     drop(event: CdkDragDrop<IKanbanItem[]>) {
         this.itemDropped.emit(event);
@@ -70,6 +76,7 @@ export class DropListComponent {
         const dialogRef = this.dialog.open(DialogUpdateKanbanItemComponent, {
             data: {
                 title: kanbanItem.title,
+                description: kanbanItem.description,
                 id: kanbanItem.id,
                 deadline: kanbanItem.deadline,
                 kanban_list_id: kanbanItem.kanban_list_id,

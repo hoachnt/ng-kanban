@@ -14,12 +14,12 @@
 
 .box {
     padding: 20px 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
     cursor: move;
     border-radius: 0;
+}
+
+.kanban-item__actions {
+    align-self: flex-end;
 }
 
 .box.cdk-drag-disabled {
@@ -30,6 +30,7 @@
 
 .kanban-item__content {
     padding: 16px;
+    min-width: 100%;
 }
 
 .cdk-drag-preview {
