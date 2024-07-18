@@ -22,6 +22,12 @@
     align-self: flex-end;
 }
 
+.kanban-item__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .box.cdk-drag-disabled {
     cursor: not-allowed;
     user-select: none;

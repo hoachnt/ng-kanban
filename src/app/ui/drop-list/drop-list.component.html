@@ -17,28 +17,32 @@
             [cdkDragDisabled]="isUpdated"
             class="box"
         >
-            <mat-card-actions class="kanban-item__actions">
-                <button
-                    mat-icon-button
-                    [matMenuTriggerFor]="menu"
-                    aria-label="More actions"
-                >
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openDialog(item)">
-                        <mat-icon>delete</mat-icon>
-                        <span>Delete</span>
+            <section class="kanban-item__header">
+                <mat-card-header class="!pt-0">
+                    {{ item.title }}
+                </mat-card-header>
+
+                <mat-card-actions class="kanban-item__actions">
+                    <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="More actions"
+                    >
+                        <mat-icon>more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item (click)="openDialogUpdate(item)">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edit</span>
-                    </button>
-                </mat-menu>
-            </mat-card-actions>
-            <mat-card-header class="">
-                {{ item.title }}
-            </mat-card-header>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openDialog(item)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                        <button mat-menu-item (click)="openDialogUpdate(item)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                    </mat-menu>
+                </mat-card-actions>
+            </section>
+            @if (item.deadline || item.description) {
             <mat-card-content class="kanban-item__content">
                 @if(item.deadline) {
                 <mat-chip matTooltip="Deadline">{{
@@ -63,6 +67,7 @@
                 </mat-expansion-panel>
                 }
             </mat-card-content>
+            }
         </mat-card>
 
         }
