@@ -22,6 +22,7 @@
     "@angular/router": "^18.0.0",
     "@directus/sdk": "^16.1.1",
     "@ngx-env/builder": "^18.0.1",
+    "ngx-cookie-service": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

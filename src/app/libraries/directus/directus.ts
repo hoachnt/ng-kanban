@@ -1,5 +1,6 @@
 import { authentication, createDirectus, rest } from "@directus/sdk";
 import { environment } from "../../../environments/environment.development";
+import { ITokenResponse } from "../../auth/auth.type";
 
 export interface IKanbanItem {
     id?: number;
@@ -18,6 +19,10 @@ export interface IKanbanList {
 
 export interface IDirectusData<T> {
     data: T[];
+}
+
+export interface IDirectusLoginData {
+    data: ITokenResponse;
 }
 
 type Schema = {
