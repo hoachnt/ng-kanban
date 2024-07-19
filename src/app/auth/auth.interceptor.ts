@@ -51,7 +51,7 @@ const handle403Error = (
             switchMap((res) => {
                 isRefreshing = false;
                 refreshTokenSubject.next(res.data.access_token);
-                return next(addToken(req, res.data.refresh_token));
+                return next(addToken(req, res.data.access_token));
             }),
             catchError((err) => {
                 isRefreshing = false;
