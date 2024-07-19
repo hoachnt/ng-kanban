@@ -5,10 +5,7 @@ import { catchError, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
 import { ITokenResponse } from "./auth.type";
 import { environment } from "../../environments/environment.development";
-import {
-    IDirectusData,
-    IDirectusLoginData,
-} from "../libraries/directus/directus";
+import { IDirectusLoginData } from "../libraries/directus/directus";
 
 @Injectable({
     providedIn: "root",

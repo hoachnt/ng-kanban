@@ -70,7 +70,16 @@ const handle403Error = (
     }
 };
 
+const isRefreshTokenRequest = (req: HttpRequest<any>): boolean => {
+    // Check if the request URL is for the refresh token endpoint
+    return req.url.includes("refresh"); // Adjust based on your actual endpoint
+};
+
 const addToken = (req: HttpRequest<any>, token: string) => {
+    if (isRefreshTokenRequest(req)) {
+        return req.clone();
+    }
+
     return req.clone({
         setHeaders: {
             Authorization: `Bearer ${token}`,
