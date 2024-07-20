@@ -1,4 +1,5 @@
 import {
+    ChangeDetectorRef,
     Component,
     effect,
     ElementRef,
@@ -60,6 +61,7 @@ export class DialogUpdateKanbanItemComponent {
     readonly dialogRef = inject(MatDialogRef<DialogUpdateKanbanItemComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
     fb = inject(FormBuilder);
+    cdr = inject(ChangeDetectorRef);
 
     isDisabling = signal(false);
 
@@ -83,6 +85,7 @@ export class DialogUpdateKanbanItemComponent {
 
     ngAfterViewInit() {
         this.titleInput.nativeElement.focus();
+        this.cdr.detectChanges();
     }
 
     onNoClick(): void {

@@ -2,9 +2,10 @@ import {
     Component,
     ElementRef,
     inject,
-    LOCALE_ID,
     signal,
     ViewChild,
+    AfterViewInit,
+    ChangeDetectorRef,
 } from "@angular/core";
 import {
     MatDialogActions,
@@ -19,8 +20,6 @@ import { MatInputModule } from "@angular/material/input";
 import { IKanbanItem } from "../../libraries/directus/directus";
 import {
     FormBuilder,
-    FormControl,
-    FormGroup,
     FormsModule,
     ReactiveFormsModule,
     Validators,
@@ -56,7 +55,7 @@ export interface DialogData extends IKanbanItem {}
     templateUrl: "./dialog-add-kanban-item-form.component.html",
     styleUrls: ["./dialog-add-kanban-item-form.component.scss"],
 })
-export class DialogAddKanbanItemFormComponent {
+export class DialogAddKanbanItemFormComponent implements AfterViewInit {
     @ViewChild("titleInput") titleInput!: ElementRef;
 
     kanbanService = inject(KanbanService);
@@ -65,6 +64,7 @@ export class DialogAddKanbanItemFormComponent {
     readonly dialogRef = inject(MatDialogRef<DialogAddKanbanItemFormComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
     fb = inject(FormBuilder);
+    cdr = inject(ChangeDetectorRef);
 
     isDisabling = signal(false);
 
@@ -76,6 +76,7 @@ export class DialogAddKanbanItemFormComponent {
 
     ngAfterViewInit() {
         this.titleInput.nativeElement.focus();
+        this.cdr.detectChanges(); // Принудительное обновление обнаружения изменений
     }
 
     onNoClick(): void {
