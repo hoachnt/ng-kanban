@@ -1,5 +1,7 @@
 import { Component, inject, signal } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
+import { MatSnackBar } from "@angular/material/snack-bar";
+
 import {
     MAT_DIALOG_DATA,
     MatDialogActions,
@@ -31,6 +33,8 @@ export class DialogDeleteKanbanItem {
     readonly kanbanService = inject(KanbanService);
     readonly isDeleting = signal(false);
 
+    constructor(private _snackBar: MatSnackBar) {}
+
     onNoClick(): void {
         this.dialogRef.close();
     }
@@ -40,10 +44,26 @@ export class DialogDeleteKanbanItem {
 
         this.isDeleting.set(true);
 
-        await firstValueFrom(this.kanbanService.deleteKanbanItem(this.data.id));
-        await firstValueFrom(this.kanbanService.getKanbanItems());
+        try {
+            await firstValueFrom(
+                this.kanbanService.deleteKanbanItem(this.data.id)
+            );
+            await firstValueFrom(this.kanbanService.getKanbanItems());
 
-        this.dialogRef.close();
-        this.isDeleting.set(false);
+            this.openSnackBar("Successfully deleted!");
+        } catch (error) {
+            this.openSnackBar("Error during delete task!");
+        } finally {
+            this.dialogRef.close();
+            this.isDeleting.set(false);
+        }
+    }
+
+    openSnackBar(title: string) {
+        this._snackBar.open(title, "Ok", {
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            duration: 5000,
+        });
     }
 }

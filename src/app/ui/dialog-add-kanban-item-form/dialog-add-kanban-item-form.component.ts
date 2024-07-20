@@ -8,6 +8,12 @@ import {
     ChangeDetectorRef,
 } from "@angular/core";
 import {
+    MatSnackBar,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
+
+import {
     MatDialogActions,
     MatDialogContent,
     MatDialogRef,
@@ -60,19 +66,22 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
 
     kanbanService = inject(KanbanService);
     datePipe = inject(DatePipe);
-
     readonly dialogRef = inject(MatDialogRef<DialogAddKanbanItemFormComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
     fb = inject(FormBuilder);
     cdr = inject(ChangeDetectorRef);
 
     isDisabling = signal(false);
+    horizontalPosition: MatSnackBarHorizontalPosition = "right";
+    verticalPosition: MatSnackBarVerticalPosition = "top";
 
     form = this.fb.group({
         title: ["", Validators.required],
         description: [""],
         deadline: [null],
     });
+
+    constructor(private _snackBar: MatSnackBar) {}
 
     ngAfterViewInit() {
         this.titleInput.nativeElement.focus();
@@ -87,7 +96,7 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
 
-        if (this.form.invalid) return;
+        if (this.form.invalid) return this.openSnackBar("Title required!");
 
         this.isDisabling.set(true);
 
@@ -114,10 +123,26 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
             kanban_list_id: getKanbanListId,
         };
 
-        await firstValueFrom(this.kanbanService.postKanbanItem(newKanbanItem));
-        await firstValueFrom(this.kanbanService.getKanbanItems());
+        try {
+            await firstValueFrom(
+                this.kanbanService.postKanbanItem(newKanbanItem)
+            );
+            await firstValueFrom(this.kanbanService.getKanbanItems());
 
-        this.dialogRef.close();
-        this.isDisabling.set(false);
+            this.openSnackBar("Task added successfully!");
+        } catch (error) {
+            this.openSnackBar("Error adding task!");
+        } finally {
+            this.dialogRef.close();
+            this.isDisabling.set(false);
+        }
+    }
+
+    openSnackBar(title: string) {
+        this._snackBar.open(title, "Ok", {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: 5000,
+        });
     }
 }

@@ -7,6 +7,7 @@ import {
     signal,
     ViewChild,
 } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {
     FormBuilder,
     FormsModule,
@@ -71,7 +72,7 @@ export class DialogUpdateKanbanItemComponent {
         deadline: [null as Date | null],
     });
 
-    constructor() {
+    constructor(private _snackBar: MatSnackBar) {
         effect(() => {
             this.form.patchValue({
                 title: this.data.title || "",
@@ -96,7 +97,7 @@ export class DialogUpdateKanbanItemComponent {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
 
-        if (this.form.invalid) return;
+        if (this.form.invalid) return this.openSnackBar("Title required!");
         if (this.data.id === undefined) return;
 
         this.isDisabling.set(true);
@@ -108,17 +109,31 @@ export class DialogUpdateKanbanItemComponent {
               )
             : null;
 
-        await firstValueFrom(
-            this.kanbanService.updateKanbanItem(this.data.id, {
-                ...this.data,
-                title: this.form.value.title!,
-                description: this.form.value.description,
-                deadline: formattedDeadline,
-            })
-        );
-        await firstValueFrom(this.kanbanService.getKanbanItems());
+        try {
+            await firstValueFrom(
+                this.kanbanService.updateKanbanItem(this.data.id, {
+                    ...this.data,
+                    title: this.form.value.title!,
+                    description: this.form.value.description,
+                    deadline: formattedDeadline,
+                })
+            );
+            await firstValueFrom(this.kanbanService.getKanbanItems());
 
-        this.dialogRef.close();
-        this.isDisabling.set(false);
+            this.openSnackBar("Successfully updated!");
+        } catch (error) {
+            this.openSnackBar("Error during update task!");
+        } finally {
+            this.dialogRef.close();
+            this.isDisabling.set(false);
+        }
+    }
+
+    openSnackBar(title: string) {
+        this._snackBar.open(title, "Ok", {
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            duration: 5000,
+        });
     }
 }
