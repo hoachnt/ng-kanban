@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { CdkDragDrop, CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { DropItemSortPipe } from "../../helpers/pipes/drop-item-sort.pipe";
-import { IKanbanItem } from "../../libraries/directus/directus";
+import { IKanbanItem, IKanbanList } from "../../libraries/directus/directus";
 import { MatCardModule } from "@angular/material/card";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
@@ -22,8 +22,10 @@ import { DialogUpdateKanbanItemComponent } from "./drop-item/dialog/dialog-updat
 import { DatePipe } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { TruncateTextPipe } from "../../helpers/pipes/truncate-text.pipe";
+import { DialogDeleteKanbanListComponent } from "./dialog/dialog-delete-kanban-list/dialog-delete-kanban-list.component";
 
 interface DialogData extends IKanbanItem {}
+interface DialogKanbanListData extends IKanbanList {}
 
 @Component({
     selector: "app-drop-list",
@@ -47,7 +49,8 @@ interface DialogData extends IKanbanItem {}
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropListComponent {
-    @Input() data!: IKanbanItem[] | null;
+    @Input() kanbanItems!: IKanbanItem[] | null;
+    @Input() kanbanList!: IKanbanList | null;
     @Input() dropListTitle!: string;
     @Input() connectedTo!: string[];
     @Input() isUpdated!: Boolean;
@@ -82,6 +85,15 @@ export class DropListComponent {
                 kanban_list_id: kanbanItem.kanban_list_id,
                 currentIndex: kanbanItem.currentIndex,
             },
+        });
+
+        dialogRef.afterClosed().subscribe();
+    }
+    openDialogDeleteKanbanList(kanbanList: DialogKanbanListData | null): void {
+        if (kanbanList === null) return;
+
+        const dialogRef = this.dialog.open(DialogDeleteKanbanListComponent, {
+            data: { title: kanbanList.title, id: kanbanList.id },
         });
 
         dialogRef.afterClosed().subscribe();

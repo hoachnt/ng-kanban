@@ -12,24 +12,25 @@ import {
 } from "@angular/material/dialog";
 import { KanbanService } from "../../../../data/services/kanban.service";
 import { firstValueFrom } from "rxjs";
-import { IKanbanItem } from "../../../../libraries/directus/directus";
+import { IKanbanList } from "../../../../libraries/directus/directus";
 
-export interface DialogData extends IKanbanItem {}
+interface DialogData extends IKanbanList {}
 
 @Component({
-    selector: "dialog-delete-kanban-item",
-    templateUrl: "dialog-delete-kanban-item.component.html",
+    selector: "app-dialog-delete-kanban-list",
     standalone: true,
     imports: [
-        MatButtonModule,
-        MatDialogTitle,
-        MatDialogContent,
         MatDialogActions,
         MatDialogClose,
+        MatDialogContent,
+        MatDialogTitle,
+        MatButtonModule,
     ],
+    templateUrl: "./dialog-delete-kanban-list.component.html",
+    styleUrl: "./dialog-delete-kanban-list.component.scss",
 })
-export class DialogDeleteKanbanItem {
-    readonly dialogRef = inject(MatDialogRef<DialogDeleteKanbanItem>);
+export class DialogDeleteKanbanListComponent {
+    readonly dialogRef = inject(MatDialogRef<DialogDeleteKanbanListComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
     readonly kanbanService = inject(KanbanService);
@@ -48,13 +49,13 @@ export class DialogDeleteKanbanItem {
 
         try {
             await firstValueFrom(
-                this.kanbanService.deleteKanbanItem(this.data.id)
+                this.kanbanService.deleteKanbanList(this.data.id)
             );
-            await firstValueFrom(this.kanbanService.getKanbanItems());
+            await firstValueFrom(this.kanbanService.getKanbanList());
 
             this.openSnackBar("Successfully deleted!");
         } catch (error) {
-            this.openSnackBar("Error during delete task!");
+            this.openSnackBar("Error during delete list!");
         } finally {
             this.dialogRef.close();
             this.isDeleting.set(false);

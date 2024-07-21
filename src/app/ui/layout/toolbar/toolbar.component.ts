@@ -1,21 +1,37 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { AddKanbanItemDialogComponent } from "../../add-kanban-item-dialog/add-kanban-item-dialog.component";
+import { MatMenuModule } from "@angular/material/menu";
+import { DialogAddKanbanListComponent } from "../../dialog-add-kanban-list/dialog-add-kanban-list.component";
+import { MatDialog } from "@angular/material/dialog";
+import { DialogAddKanbanItemFormComponent } from "../../dialog-add-kanban-item-form/dialog-add-kanban-item-form.component";
 
 @Component({
     selector: "app-toolbar",
     standalone: true,
     imports: [
-        AddKanbanItemDialogComponent,
         RouterOutlet,
         MatToolbarModule,
         MatButtonModule,
         MatIconModule,
+        MatMenuModule,
     ],
     templateUrl: "./toolbar.component.html",
     styleUrl: "./toolbar.component.scss",
 })
-export class ToolbarComponent {}
+export class ToolbarComponent {
+    readonly dialog = inject(MatDialog);
+
+    openKanbanListDialog(): void {
+        const dialogRef = this.dialog.open(DialogAddKanbanListComponent);
+
+        dialogRef.afterClosed().subscribe();
+    }
+    openKanbanItemDialog(): void {
+        const dialogRef = this.dialog.open(DialogAddKanbanItemFormComponent);
+
+        dialogRef.afterClosed().subscribe();
+    }
+}

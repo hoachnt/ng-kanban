@@ -9,25 +9,35 @@ import {
 import { DropListComponent } from "../drop-list/drop-list.component";
 import { firstValueFrom } from "rxjs";
 import { KanbanService } from "../../data/services/kanban.service";
-import { IKanbanItem, IKanbanList } from "../../libraries/directus/directus";
+import { IKanbanItem } from "../../libraries/directus/directus";
 import { KanbanItemsFilterPipe } from "../../helpers/pipes/kanban-items-filter.pipe";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { DialogAddKanbanListComponent } from "../dialog-add-kanban-list/dialog-add-kanban-list.component";
+import { MatDialog } from "@angular/material/dialog";
+import { SortByDatePipePipe } from "../../helpers/pipes/sort-by-date-pipe.pipe";
 
 @Component({
     selector: "app-drop-list-group",
     standalone: true,
     imports: [
-        DropListComponent,
-        CdkDropListGroup,
-        CdkDropList,
-        KanbanItemsFilterPipe,
-    ],
+    DropListComponent,
+    CdkDropListGroup,
+    CdkDropList,
+    KanbanItemsFilterPipe,
+    MatButtonModule,
+    MatIconModule,
+    SortByDatePipePipe
+],
     templateUrl: "./drop-list-group.component.html",
     styleUrls: ["./drop-list-group.component.scss"], // Исправлено styleUrl на styleUrls
 })
 export class DropListGroupComponent {
     kanbanService = inject(KanbanService);
+
     kanbanLists = this.kanbanService.kanbanLists;
     kanbanItems = this.kanbanService.kanbanItems;
+
     isUpdating = signal(false);
 
     async ngOnInit(): Promise<void> {

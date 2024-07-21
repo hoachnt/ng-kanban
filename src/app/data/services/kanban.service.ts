@@ -56,4 +56,15 @@ export class KanbanService {
             data
         );
     }
+    postKanbanList(data: IKanbanList) {
+        return this.http.post<IKanbanList>(
+            `${this.baseUrl}/items/kanban_list`,
+            data
+        );
+    }
+    deleteKanbanList(kanban_list_id: number) {
+        return this.http.delete<IDirectusData<IKanbanItem>>(
+            `${this.baseUrl}/items/kanban_list/${kanban_list_id}`
+        );
+    }
 }

@@ -12,9 +12,11 @@ export interface IKanbanItem {
 }
 
 export interface IKanbanList {
+    date_created?: Date | null;
     id?: number;
     title: string;
     kanban_items_id: number[];
+    currentIndex: number;
 }
 
 export interface IDirectusData<T> {

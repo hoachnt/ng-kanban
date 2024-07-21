@@ -38,6 +38,12 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.remove-mat-expansion-panel-padding
+    .mat-expansion-panel-content
+    .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
 .green-snackbar {
     .mdc-snackbar__surface {
         background-color: var(--success-color) !important;
@@ -77,4 +83,9 @@ body {
     background-color: var(--warning-color);
     color: var(--dark-color) !important;
     border: none;
+}
+
+.btn-error {
+    background-color: var(--error-color) !important;
+    color: var(--white-color) !important;
 }

@@ -1,15 +1,37 @@
 <div class="container">
-    <h2 class="mat-display-medium">
-        {{ dropListTitle }}
-    </h2>
+    <mat-accordion class="!min-h-fit !block !pb-2">
+        <mat-expansion-panel
+            hideToggle
+            class="remove-mat-expansion-panel-padding !border-none !shadow-none"
+        >
+            <mat-expansion-panel-header class="!min-h-[60px] !block !p-0">
+                <mat-panel-title>
+                    <h2 class="mat-display-medium">
+                        {{ dropListTitle }}
+                    </h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent>
+                <div class="expansion-actions p-2">
+                    <button
+                        mat-mini-fab
+                        class="btn-error"
+                        (click)="openDialogDeleteKanbanList(kanbanList)"
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </ng-template>
+        </mat-expansion-panel>
+    </mat-accordion>
 
     <div
         cdkDropList
-        [cdkDropListData]="data | dropItemSort"
+        [cdkDropListData]="kanbanItems | dropItemSort"
         (cdkDropListDropped)="drop($event)"
         class="list"
     >
-        @for (item of data; track item.title) {
+        @for (item of kanbanItems; track item.title) {
 
         <mat-card
             appearance="raised"
@@ -49,22 +71,23 @@
                     item.deadline | date : "mediumDate"
                 }}</mat-chip>
                 } @if(item.description) {
+                <mat-accordion>
+                    <mat-expansion-panel
+                        class="!mt-4"
+                        (opened)="panelOpenState.set(true)"
+                        (closed)="panelOpenState.set(false)"
+                    >
+                        <mat-expansion-panel-header>
+                            @if(!panelOpenState() ) {
+                            <mat-panel-title>
+                                {{ item.description | truncateText : 20 }}
+                            </mat-panel-title>
+                            }
+                        </mat-expansion-panel-header>
 
-                <mat-expansion-panel
-                    class="!mt-4"
-                    (opened)="panelOpenState.set(true)"
-                    (closed)="panelOpenState.set(false)"
-                >
-                    <mat-expansion-panel-header>
-                        @if(!panelOpenState() ) {
-                        <mat-panel-title>
-                            {{ item.description | truncateText : 20 }}
-                        </mat-panel-title>
-                        }
-                    </mat-expansion-panel-header>
-
-                    <p>{{ item.description }}</p>
-                </mat-expansion-panel>
+                        <p>{{ item.description }}</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
                 }
             </mat-card-content>
             }

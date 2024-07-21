@@ -1,8 +1,9 @@
 <div cdkDropListGroup class="kanban-list_group">
-    @for (item of kanbanLists(); track item.id) { @if(kanbanItems(); as
-    kanbanItems) {
+    @for (item of kanbanLists() | sortByDatePipe; track item.id) {
+    @if(kanbanItems(); as kanbanItems) {
     <app-drop-list
-        [data]="kanbanItems | kanbanItemsFilter : item.id"
+        [kanbanItems]="kanbanItems | kanbanItemsFilter : item.id"
+        [kanbanList]="item"
         [dropListTitle]="item.title"
         (itemDropped)="drop($event, item.id)"
         [isUpdated]="isUpdating()"
