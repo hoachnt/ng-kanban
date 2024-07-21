@@ -7,7 +7,12 @@ import {
     Output,
     signal,
 } from "@angular/core";
-import { CdkDragDrop, CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
+import {
+    CdkDragDrop,
+    CdkDrag,
+    CdkDropList,
+    CdkDragStart,
+} from "@angular/cdk/drag-drop";
 import { DropItemSortPipe } from "../../helpers/pipes/drop-item-sort.pipe";
 import { IKanbanItem, IKanbanList } from "../../libraries/directus/directus";
 import { MatCardModule } from "@angular/material/card";
@@ -45,7 +50,7 @@ interface DialogKanbanListData extends IKanbanList {}
         MatExpansionModule,
     ],
     templateUrl: "./drop-list.component.html",
-    styleUrl: "./drop-list.component.scss",
+    styleUrls: ["./drop-list.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropListComponent {
@@ -60,8 +65,53 @@ export class DropListComponent {
     readonly dialog = inject(MatDialog);
     panelOpenState = signal(false);
 
+    private holdTimeout: any;
+
     drop(event: CdkDragDrop<IKanbanItem[]>) {
         this.itemDropped.emit(event);
+    }
+
+    onMouseDown(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+
+        this.holdTimeout = setTimeout(() => {
+            const card = target.closest(".box") as HTMLElement;
+            if (card) {
+                card.classList.add("drag-ready");
+            }
+        }, 1000); // 1 second
+    }
+
+    onMouseUp(event: MouseEvent): void {
+        clearTimeout(this.holdTimeout);
+
+        const target = event.target as HTMLElement;
+        const card = target.closest(".box") as HTMLElement;
+
+        if (card) {
+            card.classList.remove("drag-ready");
+        }
+    }
+
+    onMouseLeave(event: MouseEvent): void {
+        clearTimeout(this.holdTimeout);
+
+        const target = event.target as HTMLElement;
+        const card = target.closest(".box") as HTMLElement;
+
+        if (card) {
+            card.classList.remove("drag-ready");
+        }
+    }
+
+    onDragStarted(event: any): void {
+        const card = event.source.element.nativeElement as HTMLElement;
+        card.classList.remove("drag-ready");
+    }
+
+    onDragEnded(event: any): void {
+        const card = event.source.element.nativeElement as HTMLElement;
+        card.classList.remove("drag-ready");
     }
 
     openDialog(kanbanItem: DialogData | null): void {
@@ -73,6 +123,7 @@ export class DropListComponent {
 
         dialogRef.afterClosed().subscribe();
     }
+
     openDialogUpdate(kanbanItem: DialogData | null) {
         if (kanbanItem === null) return;
 
@@ -89,6 +140,7 @@ export class DropListComponent {
 
         dialogRef.afterClosed().subscribe();
     }
+
     openDialogDeleteKanbanList(kanbanList: DialogKanbanListData | null): void {
         if (kanbanList === null) return;
 
