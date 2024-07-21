@@ -1,7 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
-// @use "./styles/m3-theme" as m3; // Ensure the path is correct
+@use "./styles/m3-theme" as m3; // Ensure the path is correct
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -13,44 +13,21 @@
 @tailwind components;
 @tailwind utilities;
 
-// Define the theme object.
-$kanban-theme: mat.define-theme(
-    (
-        color: (
-            theme-type: light,
-            primary: mat.$azure-palette,
-            tertiary: mat.$blue-palette,
-        ),
-        density: (
-            scale: -1,
-        ),
-    )
-);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
 :root {
-    @include mat.all-component-themes($kanban-theme);
-    @include mat.core-theme($kanban-theme);
-    @include mat.system-level-colors($kanban-theme);
-    @include mat.system-level-typography($kanban-theme);
+    --success-color: #17c964; // Main success color
+    --warning-color: #f5a524; // Main warning color
+    --error-color: #f31260; // Main error color
+    --dark-color: #000;
+    --white-color: #fff;
 }
 
-// html {
-//     // Apply the light theme by default
-//     @include mat.core-theme(m3.$dark-theme);
-//     @include mat.all-component-themes(m3.$dark-theme);
-//     @include mat.system-level-colors(m3.$dark-theme);
-//     @include mat.system-level-typography(m3.$dark-theme);
-
-//     @media (prefers-color-scheme: light) {
-//         // Use the `-color` mixins to only apply color styles without reapplying the same
-//         // typography and density styles.
-//         @include mat.core-color(m3.$light-theme);
-//         @include mat.all-component-themes(m3.$light-theme);
-//     }
-// }
+html {
+    // Apply the light theme by default
+    @include mat.core-theme(m3.$kanban-theme);
+    @include mat.all-component-themes(m3.$kanban-theme);
+    @include mat.system-level-colors(m3.$kanban-theme);
+    @include mat.system-level-typography(m3.$kanban-theme);
+}
 
 html,
 body {
@@ -59,4 +36,45 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.green-snackbar {
+    .mdc-snackbar__surface {
+        background-color: var(--success-color) !important;
+    }
+    .mdc-snackbar__label {
+        color: var(--dark-color) !important;
+    }
+}
+.green-snackbar button {
+    background-color: var(--success-color);
+    color: var(--dark-color) !important;
+    border: none;
+}
+.red-snackbar {
+    .mdc-snackbar__surface {
+        background-color: var(--error-color) !important;
+    }
+    .mdc-snackbar__label {
+        color: var(--white-color) !important;
+    }
+}
+.red-snackbar button {
+    background-color: var(--error-color);
+    color: var(--white-color) !important;
+    border: none;
+}
+
+.warning-snackbar {
+    .mdc-snackbar__surface {
+        background-color: var(--warning-color) !important;
+    }
+    .mdc-snackbar__label {
+        color: var(--dark-color) !important;
+    }
+}
+.warning-snackbar button {
+    background-color: var(--warning-color);
+    color: var(--dark-color) !important;
+    border: none;
 }

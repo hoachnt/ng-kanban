@@ -96,7 +96,8 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
 
-        if (this.form.invalid) return this.openSnackBar("Title required!");
+        if (this.form.invalid)
+            return this.openSnackBar("Title required!", "warning");
 
         this.isDisabling.set(true);
 
@@ -129,20 +130,32 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
             );
             await firstValueFrom(this.kanbanService.getKanbanItems());
 
-            this.openSnackBar("Task added successfully!");
+            this.openSnackBar("Task added successfully!", "success");
         } catch (error) {
-            this.openSnackBar("Error adding task!");
+            this.openSnackBar("Error adding task!", "error");
         } finally {
             this.dialogRef.close();
             this.isDisabling.set(false);
         }
     }
 
-    openSnackBar(title: string) {
+    openSnackBar(
+        title: string,
+        snackbarTypeClass?: "success" | "error" | "warning"
+    ) {
         this._snackBar.open(title, "Ok", {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: 5000,
+            // panelClass: [
+            //     snackbarTypeClass === "success"
+            //         ? "green-snackbar"
+            //         : snackbarTypeClass === "error"
+            //         ? "red-snackbar"
+            //         : snackbarTypeClass === "warning"
+            //         ? "warning-snackbar"
+            //         : "",
+            // ],
         });
     }
 }
