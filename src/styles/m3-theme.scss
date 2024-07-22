@@ -2,18 +2,13 @@
 @use "@angular/material" as mat;
 
 // Define the primary and tertiary palettes as per your requirements
-$kanban-primary-palette: mat.$azure-palette;
-$kanban-tertiary-palette: mat.$blue-palette;
-
 $kanban-theme: mat.define-theme(
     (
         color: (
-            theme-type: light,
-            primary: $kanban-primary-palette,
-            tertiary: $kanban-tertiary-palette,
+            use-system-variables: true,
         ),
-        density: (
-            scale: -1,
+        typography: (
+            use-system-variables: true,
         ),
     )
 );

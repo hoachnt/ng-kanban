@@ -30,9 +30,9 @@
                             }
                         ],
                         "styles": [
-                            "@angular/material/prebuilt-themes/azure-blue.css",
-                            "src/styles/m3-theme.scss",
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "src/styles/light.css",
+                            "src/styles/dark.css"
                         ],
                         "scripts": []
                     },

@@ -72,10 +72,12 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.box.drag-ready {
-    background-color: var(--sys-primary); /* Example style */
-    color: var(--sys-on-primary);
-    z-index: 1000; /* Make sure the element is on top */
-    transform: translateY(-10px); /* Move the element up */
-    max-height: fit-content !important;
+:host {
+    .mat-expansion-panel-header {
+        display: flex;
+        align-items: center;
+    }
+    .mat-display-medium {
+        margin: 0;
+    }
 }
