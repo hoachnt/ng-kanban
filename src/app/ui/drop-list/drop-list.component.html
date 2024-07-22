@@ -42,58 +42,63 @@
             (mouseup)="onMouseUp($event)"
             class="box"
         >
-            <section class="kanban-item__header">
-                <mat-card-header class="!pt-0">
-                    {{ item.title }}
-                </mat-card-header>
+            <section class="box-content">
+                <section class="kanban-item__header">
+                    <mat-card-header class="!pt-0">
+                        {{ item.title }}
+                    </mat-card-header>
 
-                <mat-card-actions class="kanban-item__actions">
-                    <button
-                        mat-icon-button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="More actions"
-                    >
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openDialog(item)">
-                            <mat-icon>delete</mat-icon>
-                            <span>Delete</span>
+                    <mat-card-actions class="kanban-item__actions">
+                        <button
+                            mat-icon-button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="More actions"
+                        >
+                            <mat-icon>more_vert</mat-icon>
                         </button>
-                        <button mat-menu-item (click)="openDialogUpdate(item)">
-                            <mat-icon>edit</mat-icon>
-                            <span>Edit</span>
-                        </button>
-                    </mat-menu>
-                </mat-card-actions>
-            </section>
-            @if (item.deadline || item.description) {
-            <mat-card-content class="kanban-item__content">
-                @if(item.deadline) {
-                <mat-chip matTooltip="Deadline">{{
-                    item.deadline | date : "mediumDate"
-                }}</mat-chip>
-                } @if(item.description) {
-                <mat-accordion>
-                    <mat-expansion-panel
-                        class="!mt-4"
-                        (opened)="panelOpenState.set(true)"
-                        (closed)="panelOpenState.set(false)"
-                    >
-                        <mat-expansion-panel-header>
-                            @if(!panelOpenState() ) {
-                            <mat-panel-title>
-                                {{ item.description | truncateText : 20 }}
-                            </mat-panel-title>
-                            }
-                        </mat-expansion-panel-header>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openDialog(item)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                            <button
+                                mat-menu-item
+                                (click)="openDialogUpdate(item)"
+                            >
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                        </mat-menu>
+                    </mat-card-actions>
+                </section>
+                @if (item.deadline || item.description) {
+                <mat-card-content class="kanban-item__content">
+                    @if(item.deadline) {
+                    <mat-chip matTooltip="Deadline">{{
+                        item.deadline | date : "mediumDate"
+                    }}</mat-chip>
+                    } @if(item.description) {
+                    <mat-accordion>
+                        <mat-expansion-panel
+                            class="!mt-4"
+                            (opened)="panelOpenState.set(true)"
+                            (closed)="panelOpenState.set(false)"
+                        >
+                            <mat-expansion-panel-header>
+                                @if(!panelOpenState() ) {
+                                <mat-panel-title>
+                                    {{ item.description | truncateText : 20 }}
+                                </mat-panel-title>
+                                }
+                            </mat-expansion-panel-header>
 
-                        <p>{{ item.description }}</p>
-                    </mat-expansion-panel>
-                </mat-accordion>
+                            <p>{{ item.description }}</p>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    }
+                </mat-card-content>
                 }
-            </mat-card-content>
-            }
+            </section>
         </mat-card>
 
         }

@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(withInterceptors([authTokenInterceptor])),
         provideAnimationsAsync(),
         provideNativeDateAdapter(),
+
         { provide: MAT_DATE_LOCALE, useValue: "vi-VN" },
     ],
 };

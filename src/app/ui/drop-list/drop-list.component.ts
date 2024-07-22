@@ -7,7 +7,12 @@ import {
     Output,
     signal,
 } from "@angular/core";
-import { CdkDragDrop, CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
+import {
+    CdkDragDrop,
+    CdkDrag,
+    CdkDropList,
+    CdkDragPlaceholder,
+} from "@angular/cdk/drag-drop";
 import { DropItemSortPipe } from "../../helpers/pipes/drop-item-sort.pipe";
 import { IKanbanItem, IKanbanList } from "../../libraries/directus/directus";
 import { MatCardModule } from "@angular/material/card";
@@ -34,6 +39,7 @@ interface DialogKanbanListData extends IKanbanList {}
     imports: [
         CdkDrag,
         CdkDropList,
+        CdkDragPlaceholder,
         DropItemSortPipe,
         MatCardModule,
         MatButtonModule,
