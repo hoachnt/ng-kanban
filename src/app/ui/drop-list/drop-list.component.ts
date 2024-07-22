@@ -23,6 +23,7 @@ import { DatePipe } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { TruncateTextPipe } from "../../helpers/pipes/truncate-text.pipe";
 import { DialogDeleteKanbanListComponent } from "./dialog/dialog-delete-kanban-list/dialog-delete-kanban-list.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 interface DialogData extends IKanbanItem {}
 interface DialogKanbanListData extends IKanbanList {}
@@ -60,8 +61,32 @@ export class DropListComponent {
     readonly dialog = inject(MatDialog);
     panelOpenState = signal(false);
 
+    private holdTimeout: any;
+
+    constructor(private _snackBar: MatSnackBar) {}
+
     drop(event: CdkDragDrop<IKanbanItem[]>) {
         this.itemDropped.emit(event);
+    }
+
+    onMouseDown(event: MouseEvent) {
+        this.openSnackBar("Hold for a second to drag");
+
+        this.holdTimeout = setTimeout(() => {
+            this.openSnackBar("You can drag it now");
+        }, 1000);
+    }
+
+    onMouseUp(event: MouseEvent): void {
+        clearTimeout(this.holdTimeout);
+    }
+
+    openSnackBar(title: string) {
+        this._snackBar.open(title, "Ok", {
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            duration: 5000,
+        });
     }
 
     openDialog(kanbanItem: DialogData | null): void {

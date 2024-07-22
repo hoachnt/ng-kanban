@@ -38,6 +38,8 @@
             cdkDrag
             [cdkDragDisabled]="isUpdated"
             [cdkDragStartDelay]="1000"
+            (mousedown)="onMouseDown($event)"
+            (mouseup)="onMouseUp($event)"
             class="box"
         >
             <section class="kanban-item__header">
