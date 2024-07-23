@@ -12,13 +12,19 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <ng-template matExpansionPanelContent>
-                <div class="expansion-actions p-2">
+                <div class="expansion-actions p-2 space-x-2">
                     <button
                         mat-mini-fab
                         class="!bg-red-500/80 !text-white"
                         (click)="openDialogDeleteKanbanList(kanbanList)"
                     >
                         <mat-icon>delete</mat-icon>
+                    </button>
+                    <button
+                        mat-mini-fab
+                        (click)="openDialogUpdateKanbanList(kanbanList)"
+                    >
+                        <mat-icon>edit</mat-icon>
                     </button>
                 </div>
             </ng-template>
@@ -50,7 +56,7 @@
             </div>
 
             <mat-card-header class="!pt-0">
-                {{ item.title | truncateText: 70 }}
+                {{ item.title | truncateText : 70 }}
             </mat-card-header>
             <mat-card-content class="kanban-item__content">
                 @if(item.deadline) {

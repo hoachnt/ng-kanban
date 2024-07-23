@@ -28,9 +28,9 @@ import { DialogDeleteKanbanListComponent } from "./dialog/dialog-delete-kanban-l
 
 interface DialogKanbanListData extends IKanbanList {}
 
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatDialog } from "@angular/material/dialog";
 import { DropItemDialogComponent } from "./drop-item/dialog/drop-item-dialog/drop-item-dialog.component";
+import { DialogUpdateKanbanListComponent } from "./dialog/dialog-update-kanban-list/dialog-update-kanban-list.component";
 
 @Component({
     selector: "app-drop-list",
@@ -69,6 +69,16 @@ export class DropListComponent {
 
         const dialogRef = this.dialog.open(DialogDeleteKanbanListComponent, {
             data: { title: kanbanList.title, id: kanbanList.id },
+        });
+
+        dialogRef.afterClosed().subscribe();
+    }
+
+    openDialogUpdateKanbanList(kanbanList: DialogKanbanListData | null): void {
+        if (kanbanList === null) return;
+
+        const dialogRef = this.dialog.open(DialogUpdateKanbanListComponent, {
+            data: { ...kanbanList },
         });
 
         dialogRef.afterClosed().subscribe();

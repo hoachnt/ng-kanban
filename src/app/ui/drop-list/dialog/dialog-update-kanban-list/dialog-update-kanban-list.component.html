@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Update list</h2>
+<form [formGroup]="form" (ngSubmit)="onUpdateKanbanList()">
+    <mat-dialog-content>
+        <mat-form-field class="w-full">
+            <mat-label>List position</mat-label>
+            <input #currentIndexInput matInput formControlName="currentIndex" />
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onNoClick()" [disabled]="isUpdating()">
+            No
+        </button>
+        <button
+            mat-button
+            cdkFocusInitial
+            [disabled]="isUpdating()"
+            type="submit"
+        >
+            Yes
+        </button>
+    </mat-dialog-actions>
+</form>

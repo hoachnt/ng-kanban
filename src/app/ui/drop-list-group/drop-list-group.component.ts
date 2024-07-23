@@ -21,14 +21,14 @@ import { SortByDatePipePipe } from "../../helpers/pipes/sort-by-date-pipe.pipe";
     selector: "app-drop-list-group",
     standalone: true,
     imports: [
-    DropListComponent,
-    CdkDropListGroup,
-    CdkDropList,
-    KanbanItemsFilterPipe,
-    MatButtonModule,
-    MatIconModule,
-    SortByDatePipePipe
-],
+        DropListComponent,
+        CdkDropListGroup,
+        CdkDropList,
+        KanbanItemsFilterPipe,
+        MatButtonModule,
+        MatIconModule,
+        SortByDatePipePipe,
+    ],
     templateUrl: "./drop-list-group.component.html",
     styleUrls: ["./drop-list-group.component.scss"], // Исправлено styleUrl на styleUrls
 })

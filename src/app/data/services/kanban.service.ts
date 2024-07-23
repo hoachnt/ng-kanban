@@ -67,4 +67,10 @@ export class KanbanService {
             `${this.baseUrl}/items/kanban_list/${kanban_list_id}`
         );
     }
+    updateKanbanList(kanban_list_id: number, newKanbanList: IKanbanList) {
+        return this.http.patch<IDirectusData<IKanbanList>>(
+            `${this.baseUrl}/items/kanban_list/${kanban_list_id}`,
+            newKanbanList
+        );
+    }
 }
