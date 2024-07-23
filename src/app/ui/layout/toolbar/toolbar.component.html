@@ -1,21 +1,25 @@
-<mat-toolbar
-    class="toolbar !px-6 !py-2 !fixed !top-0 !left-0 !h-fit !z-50"
->
-    <span class="toolbar-spacer"></span>
-    <button mat-mini-fab [matMenuTriggerFor]="menu" aria-label="More actions">
-        <mat-icon>add</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openKanbanItemDialog()">
-            <mat-icon>add_box</mat-icon>
-            <span>Add task</span>
+<nav class="toolbar !fixed !top-0 !left-0 !h-fit !z-50 min-w-full">
+    <mat-toolbar class="!px-6 !py-2">
+        <span class="toolbar-spacer"></span>
+        <button
+            mat-mini-fab
+            [matMenuTriggerFor]="menu"
+            aria-label="More actions"
+        >
+            <mat-icon>add</mat-icon>
         </button>
-        <button mat-menu-item (click)="openKanbanListDialog()">
-            <mat-icon>library_add</mat-icon>
-            <span>Add list</span>
-        </button>
-    </mat-menu>
-</mat-toolbar>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openKanbanItemDialog()">
+                <mat-icon>add_box</mat-icon>
+                <span>Add task</span>
+            </button>
+            <button mat-menu-item (click)="openKanbanListDialog()">
+                <mat-icon>library_add</mat-icon>
+                <span>Add list</span>
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+</nav>
 <div class="min-h-[40px] opacity-0"></div>
 <main>
     <router-outlet></router-outlet>
