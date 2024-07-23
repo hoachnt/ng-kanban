@@ -1,5 +1,5 @@
 <mat-toolbar
-    class="toolbar !mb-10 !px-6 !py-2 !sticky !top-0 !left-0 !h-fit !z-50"
+    class="toolbar !px-6 !py-2 !fixed !top-0 !left-0 !h-fit !z-50"
 >
     <span class="toolbar-spacer"></span>
     <button mat-mini-fab [matMenuTriggerFor]="menu" aria-label="More actions">
@@ -16,7 +16,7 @@
         </button>
     </mat-menu>
 </mat-toolbar>
-
+<div class="min-h-[40px] opacity-0"></div>
 <main>
     <router-outlet></router-outlet>
 </main>
