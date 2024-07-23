@@ -11,3 +11,13 @@ export function canActivateAuth() {
 
     return inject(Router).createUrlTree(["/login"]);
 }
+
+export function canActivateLogin() {
+    const isLoggedIn = inject(AuthService).isAuth;
+
+    if (!isLoggedIn) {
+        return true;
+    }
+
+    return inject(Router).createUrlTree(["/"]);
+}
