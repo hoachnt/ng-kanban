@@ -1,0 +1,31 @@
+<section class="dialog-header" mat-dialog-title>
+    <h2>{{ data.title }}</h2>
+    <div class="action-menu">
+        <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="More actions"
+        >
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialogDelete(data)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+        </button>
+        <button mat-menu-item (click)="openDialogUpdate(data)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+        </button>
+    </mat-menu>
+</section>
+<mat-dialog-content>
+    @if(data.deadline) {
+    <mat-chip matTooltip="Deadline">{{
+        data.deadline | date : "mediumDate"
+    }}</mat-chip>
+    } @if(data.description) {
+    <p class="text-base font-normal mt-2">{{ data.description }}</p>
+    }
+</mat-dialog-content>

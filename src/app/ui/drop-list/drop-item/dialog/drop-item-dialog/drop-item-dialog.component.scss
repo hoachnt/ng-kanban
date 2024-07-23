@@ -1,0 +1,15 @@
+.dialog-header {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 48px;
+    padding-top: 16px;
+}
+
+.action-menu {
+    display: flex;
+    justify-content: end;
+}
+
+.mat-mdc-dialog-title::before {
+    display: none;
+}
