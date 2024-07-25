@@ -4,7 +4,7 @@
         mode="side"
         [opened]="isOpen()"
         (openedChange)="onOpenedChangDrawer($event)"
-        class="!min-w-full md:!min-w-[360px] !border-r !border-[#cdc6b4] !rounded-none px-6 pb-2"
+        class="!min-w-full md:!min-w-[360px] !rounded-none px-6 pb-2"
     >
         <section class="mat-drawer_main">
             <div class="mat-drawer_header">
@@ -24,7 +24,7 @@
     </mat-drawer>
     <mat-drawer-content class="relative">
         <nav
-            class="toolbar !absolute !top-0 !left-0 !h-fit !z-50 min-w-full border-b border-[#cdc6b4]"
+            class="toolbar !absolute !top-0 !left-0 !h-fit !z-50 min-w-full"
         >
             <mat-toolbar class="!px-6 !py-2">
                 @if (!isOpen()) {

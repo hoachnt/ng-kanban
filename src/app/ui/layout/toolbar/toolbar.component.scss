@@ -22,3 +22,8 @@ mat-drawer-container {
     justify-content: end;
     align-items: center;
 }
+
+mat-drawer,
+mat-toolbar {
+    background-color: var(--sys-surface-container);
+}
