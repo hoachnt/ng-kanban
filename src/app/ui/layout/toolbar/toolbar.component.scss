@@ -27,3 +27,7 @@ mat-drawer,
 mat-toolbar {
     background-color: var(--sys-surface-container);
 }
+
+.logout-btn {
+    background-color: var(--sys-error) !important;
+}

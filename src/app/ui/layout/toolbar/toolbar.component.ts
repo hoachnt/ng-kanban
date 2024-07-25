@@ -9,6 +9,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { DialogAddKanbanItemFormComponent } from "../../dialog-add-kanban-item-form/dialog-add-kanban-item-form.component";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { AuthService } from "../../../auth/auth.service";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { ThemeService } from "../../services/theme.service";
 
 @Component({
     selector: "app-toolbar",
@@ -20,6 +22,7 @@ import { AuthService } from "../../../auth/auth.service";
         MatIconModule,
         MatMenuModule,
         MatSidenavModule,
+        MatTooltipModule,
     ],
     templateUrl: "./toolbar.component.html",
     styleUrl: "./toolbar.component.scss",
@@ -27,6 +30,8 @@ import { AuthService } from "../../../auth/auth.service";
 export class ToolbarComponent {
     readonly dialog = inject(MatDialog);
     readonly authService = inject(AuthService);
+    readonly themeService = inject(ThemeService);
+
     isOpen = signal(true);
 
     openKanbanListDialog(): void {
@@ -44,5 +49,8 @@ export class ToolbarComponent {
     }
     onOpenedChangDrawer(isOpen: boolean) {
         this.isOpen.set(isOpen);
+    }
+    toggleTheme(): void {
+        this.themeService.toggleTheme();
     }
 }

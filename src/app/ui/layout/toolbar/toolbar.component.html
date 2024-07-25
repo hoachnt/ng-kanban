@@ -17,15 +17,13 @@
                 </button>
             </div>
             <div></div>
-            <button mat-flat-button class="!bg-red-800" (click)="onLogout()">
+            <button mat-flat-button class="logout-btn" (click)="onLogout()">
                 Logout
             </button>
         </section>
     </mat-drawer>
     <mat-drawer-content class="relative">
-        <nav
-            class="toolbar !absolute !top-0 !left-0 !h-fit !z-50 min-w-full"
-        >
+        <nav class="toolbar !absolute !top-0 !left-0 !h-fit !z-50 min-w-full">
             <mat-toolbar class="!px-6 !py-2">
                 @if (!isOpen()) {
                 <button
@@ -40,11 +38,22 @@
 
                 <span class="toolbar-spacer"></span>
                 <button
-                    mat-mini-fab
+                    matTooltip="Add task & list"
+                    mat-icon-button
+                    aria-label="More actions"
+                    (click)="toggleTheme()"
+                >
+                    <mat-icon>{{
+                        themeService.theme ? "light_mode" : "dark_mode"
+                    }}</mat-icon>
+                </button>
+                <button
+                    matTooltip="Add task & list"
+                    mat-icon-button
                     [matMenuTriggerFor]="menu"
                     aria-label="More actions"
                 >
-                    <mat-icon>add</mat-icon>
+                    <mat-icon>add_circle</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="openKanbanItemDialog()">
