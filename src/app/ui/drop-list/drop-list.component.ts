@@ -63,6 +63,7 @@ export class DropListComponent {
     @Output() itemDropped = new EventEmitter<CdkDragDrop<IKanbanItem[]>>();
 
     readonly dialog = inject(MatDialog);
+    readonly panelOpenState = signal(false);
 
     openDialogDeleteKanbanList(kanbanList: DialogKanbanListData | null): void {
         if (kanbanList === null) return;
