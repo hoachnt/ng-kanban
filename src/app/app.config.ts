@@ -9,6 +9,7 @@ import {
     provideNativeDateAdapter,
 } from "@angular/material/core";
 import { authTokenInterceptor } from "./auth/auth.interceptor";
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -19,6 +20,6 @@ export const appConfig: ApplicationConfig = {
         provideAnimationsAsync(),
         provideNativeDateAdapter(),
 
-        { provide: MAT_DATE_LOCALE, useValue: "vi-VN" },
+        { provide: MAT_DATE_LOCALE, useValue: "vi-VN" }, provideClientHydration(),
     ],
 };
