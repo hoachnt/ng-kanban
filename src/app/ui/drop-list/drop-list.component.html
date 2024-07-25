@@ -39,7 +39,7 @@
         (cdkDropListDropped)="drop($event)"
         class="list"
     >
-        @for (item of kanbanItems?.slice(0, 4); track item.title) {
+        @for (item of kanbanItems.slice(0, 4); track item.title) {
 
         <mat-card
             appearance="raised"
@@ -79,7 +79,7 @@
                     <mat-panel-title> More </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                @for (item of kanbanItems?.slice(4); track item.title) {
+                @for (item of kanbanItems.slice(4); track item.title) {
 
                 <mat-card
                     appearance="raised"
