@@ -1,26 +1,66 @@
-<nav class="toolbar !fixed !top-0 !left-0 !h-fit !z-50 min-w-full">
-    <mat-toolbar class="!px-6 !py-2">
-        <span class="toolbar-spacer"></span>
-        <button
-            mat-mini-fab
-            [matMenuTriggerFor]="menu"
-            aria-label="More actions"
+<mat-drawer-container class="container">
+    <mat-drawer
+        #drawer
+        mode="side"
+        [opened]="isOpen()"
+        (openedChange)="onOpenedChangDrawer($event)"
+        class="!border-r !border-[#cdc6b4] !rounded-none px-6 pb-2"
+    >
+        <section class="mat-drawer_main">
+            <div class="mat-drawer_header">
+                <button
+                    mat-flat-button
+                    aria-label="Example icon-button with menu icon"
+                    (click)="drawer.close()"
+                >
+                    Close
+                </button>
+            </div>
+            <div></div>
+            <button mat-flat-button class="!bg-red-800" (click)="onLogout()">
+                Logout
+            </button>
+        </section>
+    </mat-drawer>
+    <mat-drawer-content class="relative">
+        <nav
+            class="toolbar !absolute !top-0 !left-0 !h-fit !z-50 min-w-full border-b border-[#cdc6b4]"
         >
-            <mat-icon>add</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openKanbanItemDialog()">
-                <mat-icon>add_box</mat-icon>
-                <span>Add task</span>
-            </button>
-            <button mat-menu-item (click)="openKanbanListDialog()">
-                <mat-icon>library_add</mat-icon>
-                <span>Add list</span>
-            </button>
-        </mat-menu>
-    </mat-toolbar>
-</nav>
-<main>
-    <div class="min-h-[40px] opacity-0"></div>
-    <router-outlet></router-outlet>
-</main>
+            <mat-toolbar class="!px-6 !py-2">
+                @if (!isOpen()) {
+                <button
+                    mat-icon-button
+                    class="icon"
+                    aria-label="Example icon-button with menu icon"
+                    (click)="drawer.open()"
+                >
+                    <mat-icon>menu</mat-icon>
+                </button>
+                }
+
+                <span class="toolbar-spacer"></span>
+                <button
+                    mat-mini-fab
+                    [matMenuTriggerFor]="menu"
+                    aria-label="More actions"
+                >
+                    <mat-icon>add</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openKanbanItemDialog()">
+                        <mat-icon>add_box</mat-icon>
+                        <span>Add task</span>
+                    </button>
+                    <button mat-menu-item (click)="openKanbanListDialog()">
+                        <mat-icon>library_add</mat-icon>
+                        <span>Add list</span>
+                    </button>
+                </mat-menu>
+            </mat-toolbar>
+        </nav>
+        <main>
+            <div class="min-h-[40px] opacity-0"></div>
+            <router-outlet></router-outlet>
+        </main>
+    </mat-drawer-content>
+</mat-drawer-container>

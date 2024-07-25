@@ -2,13 +2,23 @@
     flex: 1 1 auto;
 }
 
-mat-toolbar {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-:host main {
+main {
     height: 100dvh;
     overflow: auto;
-    padding: 25px;
+}
+
+:host,
+mat-drawer-container {
+    min-width: 100%;
+}
+
+.mat-drawer_main {
+    display: grid;
+    grid-template-rows: 64px 1fr 48px;
+    min-height: 100%;
+}
+.mat-drawer_header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
