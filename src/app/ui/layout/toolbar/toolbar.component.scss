@@ -6,3 +6,9 @@ mat-toolbar {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+:host main {
+    height: 100dvh;
+    overflow: auto;
+    padding: 25px;
+}
