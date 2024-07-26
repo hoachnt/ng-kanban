@@ -1,10 +1,10 @@
-<mat-drawer-container class="container">
+<mat-drawer-container class="container" [class.active]="isOpen()">
     <mat-drawer
         #drawer
         mode="side"
         [opened]="isOpen()"
         (openedChange)="onOpenedChangDrawer($event)"
-        class="!min-w-full md:!min-w-[360px] !rounded-none px-6 pb-2"
+        class="!min-w-full md:!min-w-[360px] px-6 pb-2"
     >
         <section class="mat-drawer_main">
             <div class="mat-drawer_header">
@@ -23,7 +23,7 @@
         </section>
     </mat-drawer>
     <mat-drawer-content class="relative">
-        <nav class="toolbar !absolute !top-0 !left-0 !h-fit !z-50 min-w-full">
+        <nav class="toolbar !sticky !top-0 !left-0 !h-fit !z-50 min-w-full">
             <mat-toolbar class="!px-6 !py-2">
                 @if (!isOpen()) {
                 <button
@@ -68,7 +68,6 @@
             </mat-toolbar>
         </nav>
         <main>
-            <div class="min-h-[40px] opacity-0"></div>
             <router-outlet></router-outlet>
         </main>
     </mat-drawer-content>
