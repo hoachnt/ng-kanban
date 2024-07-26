@@ -32,7 +32,7 @@ export class ToolbarComponent {
     readonly authService = inject(AuthService);
     readonly themeService = inject(ThemeService);
 
-    isOpen = signal(true);
+    isOpen = signal(false);
 
     openKanbanListDialog(): void {
         const dialogRef = this.dialog.open(DialogAddKanbanListComponent);

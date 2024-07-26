@@ -21,16 +21,14 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { DatePipe } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { TruncateTextPipe } from "../../helpers/pipes/truncate-text.pipe";
 import { DialogDeleteKanbanListComponent } from "./dialog/dialog-delete-kanban-list/dialog-delete-kanban-list.component";
 
 interface DialogKanbanListData extends IKanbanList {}
 
 import { MatDialog } from "@angular/material/dialog";
-import { DropItemDialogComponent } from "../drop-item/dialog/drop-item-dialog/drop-item-dialog.component";
 import { DialogUpdateKanbanListComponent } from "./dialog/dialog-update-kanban-list/dialog-update-kanban-list.component";
+import { DropItemComponent } from "../drop-item/drop-item.component";
 
 @Component({
     selector: "app-drop-list",
@@ -46,9 +44,8 @@ import { DialogUpdateKanbanListComponent } from "./dialog/dialog-update-kanban-l
         MatIconModule,
         MatChipsModule,
         MatTooltipModule,
-        DatePipe,
-        TruncateTextPipe,
         MatExpansionModule,
+        DropItemComponent,
     ],
     templateUrl: "./drop-list.component.html",
     styleUrl: "./drop-list.component.scss",
@@ -58,7 +55,7 @@ export class DropListComponent {
     @Input() kanbanItems!: IKanbanItem[] | null;
     @Input() kanbanList!: IKanbanList | null;
     @Input() dropListTitle!: string;
-    @Input() isUpdated!: Boolean;
+    @Input() isUpdating!: Boolean;
     @Input() dropListId!: number | undefined;
     @Output() itemDropped = new EventEmitter<CdkDragDrop<IKanbanItem[]>>();
 
@@ -80,18 +77,6 @@ export class DropListComponent {
 
         const dialogRef = this.dialog.open(DialogUpdateKanbanListComponent, {
             data: { ...kanbanList },
-        });
-
-        dialogRef.afterClosed().subscribe();
-    }
-
-    openDropItemDialog(kanbanItem: IKanbanItem | null): void {
-        if (kanbanItem === null) return;
-
-        const dialogRef = this.dialog.open(DropItemDialogComponent, {
-            data: {
-                ...kanbanItem,
-            },
         });
 
         dialogRef.afterClosed().subscribe();
