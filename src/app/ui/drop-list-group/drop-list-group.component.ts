@@ -67,7 +67,7 @@ export class DropListGroupComponent {
             }
         }
 
-        // await firstValueFrom(this.kanbanService.getKanbanItems());
+        await firstValueFrom(this.kanbanService.getKanbanItems());
     }
 
     async drop(event: CdkDragDrop<IKanbanItem[]>, dropListId?: number) {

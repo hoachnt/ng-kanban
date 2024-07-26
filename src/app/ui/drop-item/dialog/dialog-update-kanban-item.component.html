@@ -10,7 +10,7 @@
             <input #descriptionInput matInput formControlName="description" />
         </mat-form-field>
         <mat-form-field class="w-full">
-            <mat-label>Choose a date</mat-label>
+            <mat-label>Deadline</mat-label>
             <input
                 matInput
                 [matDatepicker]="picker"
@@ -21,6 +21,16 @@
                 [for]="picker"
             ></mat-datepicker-toggle>
             <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Favorite animal</mat-label>
+            <mat-select formControlName="kanban_list_id" required>
+                @for (kanbanList of kanbanLists(); track kanbanList.id) {
+                <mat-option [value]="kanbanList.id">{{
+                    kanbanList.title
+                }}</mat-option>
+                }
+            </mat-select>
         </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>

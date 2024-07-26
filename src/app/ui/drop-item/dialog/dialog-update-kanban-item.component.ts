@@ -31,6 +31,7 @@ import { IKanbanItem } from "../../../libraries/directus/directus";
 import { firstValueFrom } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatSelectModule } from "@angular/material/select";
 
 interface DialogData extends IKanbanItem {}
 
@@ -49,6 +50,7 @@ interface DialogData extends IKanbanItem {}
         MatProgressSpinnerModule,
         ReactiveFormsModule,
         MatDatepickerModule,
+        MatSelectModule,
     ],
     providers: [DatePipe],
     templateUrl: "./dialog-update-kanban-item.component.html",
@@ -58,18 +60,19 @@ export class DialogUpdateKanbanItemComponent {
 
     kanbanService = inject(KanbanService);
     datePipe = inject(DatePipe);
-
     readonly dialogRef = inject(MatDialogRef<DialogUpdateKanbanItemComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
     fb = inject(FormBuilder);
     cdr = inject(ChangeDetectorRef);
 
     isDisabling = signal(false);
+    kanbanLists = this.kanbanService.kanbanLists;
 
     form = this.fb.group({
         title: ["", Validators.required],
         description: [""],
         deadline: [null as Date | null],
+        kanban_list_id: [0 as number],
     });
 
     constructor(private _snackBar: MatSnackBar) {
@@ -80,6 +83,7 @@ export class DialogUpdateKanbanItemComponent {
                 deadline: this.data.deadline
                     ? new Date(this.data.deadline)
                     : null,
+                kanban_list_id: this.data.kanban_list_id,
             });
         });
     }
@@ -116,6 +120,7 @@ export class DialogUpdateKanbanItemComponent {
                     title: this.form.value.title!,
                     description: this.form.value.description,
                     deadline: formattedDeadline,
+                    kanban_list_id: this.form.value.kanban_list_id!,
                 })
             );
             await firstValueFrom(this.kanbanService.getKanbanItems());
