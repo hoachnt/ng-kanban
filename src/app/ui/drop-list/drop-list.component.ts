@@ -29,7 +29,7 @@ import { DialogDeleteKanbanListComponent } from "./dialog/dialog-delete-kanban-l
 interface DialogKanbanListData extends IKanbanList {}
 
 import { MatDialog } from "@angular/material/dialog";
-import { DropItemDialogComponent } from "./drop-item/dialog/drop-item-dialog/drop-item-dialog.component";
+import { DropItemDialogComponent } from "../drop-item/dialog/drop-item-dialog/drop-item-dialog.component";
 import { DialogUpdateKanbanListComponent } from "./dialog/dialog-update-kanban-list/dialog-update-kanban-list.component";
 
 @Component({

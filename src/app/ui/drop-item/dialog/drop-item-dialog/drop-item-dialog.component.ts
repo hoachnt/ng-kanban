@@ -21,7 +21,7 @@ import { DialogUpdateKanbanItemComponent } from "../dialog-update-kanban-item.co
 import {
     IKanbanItem,
     IKanbanList,
-} from "../../../../../libraries/directus/directus";
+} from "../../../../libraries/directus/directus";
 
 interface DialogData extends IKanbanItem {}
 

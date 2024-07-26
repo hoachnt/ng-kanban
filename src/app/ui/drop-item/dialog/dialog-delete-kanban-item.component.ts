@@ -10,9 +10,9 @@ import {
     MatDialogRef,
     MatDialogTitle,
 } from "@angular/material/dialog";
-import { KanbanService } from "../../../../data/services/kanban.service";
+import { KanbanService } from "../../../data/services/kanban.service";
 import { firstValueFrom } from "rxjs";
-import { IKanbanItem } from "../../../../libraries/directus/directus";
+import { IKanbanItem } from "../../../libraries/directus/directus";
 
 export interface DialogData extends IKanbanItem {}
 
