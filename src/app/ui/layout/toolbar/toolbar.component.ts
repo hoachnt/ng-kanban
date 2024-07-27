@@ -11,6 +11,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { AuthService } from "../../../auth/auth.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ThemeService } from "../../services/theme.service";
+import { SidebarListComponent } from "../../sidebar/sidebar-list/sidebar-list.component";
 
 @Component({
     selector: "app-toolbar",
@@ -23,6 +24,7 @@ import { ThemeService } from "../../services/theme.service";
         MatMenuModule,
         MatSidenavModule,
         MatTooltipModule,
+        SidebarListComponent,
     ],
     templateUrl: "./toolbar.component.html",
     styleUrl: "./toolbar.component.scss",

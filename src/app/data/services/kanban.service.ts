@@ -1,10 +1,13 @@
 import { inject, Injectable, signal } from "@angular/core";
 import {
     IDirectusData,
+    IDirectusDataObject,
     IKanbanItem,
     IKanbanList,
+    IProject,
+    IUser,
 } from "../../libraries/directus/directus";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "../../../environments/environment.development";
 import { tap } from "rxjs";
 
@@ -17,6 +20,8 @@ export class KanbanService {
 
     kanbanLists = signal<IKanbanList[] | null>(null);
     kanbanItems = signal<IKanbanItem[] | null>(null);
+    projects = signal<IProject[] | null>(null);
+    me = signal<IUser | null>(null);
 
     constructor() {}
 
@@ -72,5 +77,22 @@ export class KanbanService {
             `${this.baseUrl}/items/kanban_list/${kanban_list_id}`,
             newKanbanList
         );
+    }
+    getMe() {
+        return this.http
+            .get<IDirectusDataObject<IUser>>(`${this.baseUrl}/users/me`)
+            .pipe(tap((res) => this.me.set(res.data)));
+    }
+    getProjects(user_id: string) {
+        const params = new HttpParams().set(
+            "filter[user_created][_eq]",
+            user_id
+        );
+
+        return this.http
+            .get<IDirectusData<IProject>>(`${this.baseUrl}/items/projects`, {
+                params,
+            })
+            .pipe(tap((res) => this.projects.set(res.data)));
     }
 }
