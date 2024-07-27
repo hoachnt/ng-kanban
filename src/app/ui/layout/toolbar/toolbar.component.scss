@@ -28,7 +28,7 @@ mat-drawer-container {
     grid-template-columns: 1fr;
     gap: 10px;
     padding: 10px;
-    transition: .2s ease;
+    transition: 0.2s ease;
 }
 
 mat-drawer-container.active {
@@ -39,6 +39,13 @@ mat-drawer-container.active {
     display: grid;
     grid-template-rows: 64px 1fr 48px;
     min-height: 100%;
+    overflow: hidden;
+
+    .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 .mat-drawer_header {
     display: flex;
