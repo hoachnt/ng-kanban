@@ -9,7 +9,7 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-@import './styles/mat-dialog.scss';
+@import "./styles/mat-dialog.scss";
 
 @tailwind base;
 @tailwind components;
@@ -29,6 +29,7 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    overflow-x: hidden;
 }
 
 .mat-display-medium {
