@@ -28,6 +28,7 @@ mat-drawer-container {
     grid-template-columns: 1fr;
     gap: 10px;
     padding: 10px;
+    transition: .2s ease;
 }
 
 mat-drawer-container.active {
