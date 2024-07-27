@@ -9,6 +9,8 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
+@import './styles/mat-dialog.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

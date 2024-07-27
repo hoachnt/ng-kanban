@@ -8,12 +8,19 @@ export const routes: Routes = [
     {
         path: "",
         component: ToolbarComponent,
-        children: [{ path: "", component: HomePageComponent }],
+        children: [
+            {
+                path: "",
+                component: HomePageComponent,
+                data: { animation: "HomePage" },
+            },
+        ],
         canActivate: [canActivateAuth],
     },
     {
         path: "login",
         component: LoginPageComponent,
+        data: { animation: "LoginPage" },
         canActivate: [canActivateLogin],
     },
 ];
