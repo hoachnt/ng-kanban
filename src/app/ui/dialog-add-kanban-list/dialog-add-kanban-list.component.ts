@@ -30,7 +30,8 @@ import {
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { KanbanService } from "../../data/services/kanban.service";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, switchMap } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 export interface DialogData extends IKanbanList {}
 
@@ -58,6 +59,13 @@ export class DialogAddKanbanListComponent {
     readonly dialogRef = inject(MatDialogRef<DialogAddKanbanListComponent>);
     fb = inject(FormBuilder);
     cdr = inject(ChangeDetectorRef);
+    route = inject(ActivatedRoute);
+
+    project$ = this.route.params.pipe(
+        switchMap(({ id }) => {
+            return this.kanbanService.getProjectById(id);
+        })
+    );
 
     isDisabling = signal(false);
     horizontalPosition: MatSnackBarHorizontalPosition = "right";
@@ -99,7 +107,15 @@ export class DialogAddKanbanListComponent {
             await firstValueFrom(
                 this.kanbanService.postKanbanList(newKanbanList)
             );
-            await firstValueFrom(this.kanbanService.getKanbanList());
+            this.project$
+                .subscribe((value) => {
+                    if (value.data.id === undefined) return;
+
+                    firstValueFrom(
+                        this.kanbanService.getKanbanList(value.data.id)
+                    );
+                })
+                .unsubscribe();
 
             this.openSnackBar("List added successfully!", "success");
         } catch (error) {

@@ -22,18 +22,19 @@ export class KanbanService {
     kanbanItems = signal<IKanbanItem[] | null>(null);
     projects = signal<IProject[] | null>(null);
     me = signal<IUser | null>(null);
+    currentProjectId = signal(0);
 
     constructor() {}
 
-    getKanbanList() {
+    getKanbanList(project_id: number) {
+        const params = new HttpParams()
+            .set("filter[project_id][_eq]", project_id)
+            .append("sort", "currentIndex");
+
         return this.http
             .get<IDirectusData<IKanbanList>>(
                 `${this.baseUrl}/items/kanban_list`,
-                {
-                    params: {
-                        sort: "currentIndex",
-                    },
-                }
+                { params }
             )
             .pipe(tap((res) => this.kanbanLists.set(res.data)));
     }
@@ -94,5 +95,10 @@ export class KanbanService {
                 params,
             })
             .pipe(tap((res) => this.projects.set(res.data)));
+    }
+    getProjectById(project_id: number) {
+        return this.http.get<IDirectusDataObject<IProject>>(
+            `${this.baseUrl}/items/projects/${project_id}`
+        );
     }
 }

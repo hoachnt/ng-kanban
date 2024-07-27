@@ -1,9 +1,11 @@
 <mat-list>
     <div mat-subheader>Projects</div>
     @for (project of projects$(); track project.id) {
-    <mat-list-item>
-        <mat-icon matListItemIcon>folder</mat-icon>
-        <div matListItemTitle>{{ project.name }}</div>
-    </mat-list-item>
+    <a [routerLink]="['/project', project.id]">
+        <mat-list-item [class.active]="currentProjectId$() === project.id">
+            <mat-icon matListItemIcon>folder</mat-icon>
+            <div matListItemTitle>{{ project.name }}</div>
+        </mat-list-item>
+    </a>
     }
 </mat-list>

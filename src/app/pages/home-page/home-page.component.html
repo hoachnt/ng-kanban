@@ -1,1 +1,5 @@
-<app-drop-list-group></app-drop-list-group>
+@if(me$() !== null) {
+<h1 class="text-4xl">
+    Welcome {{ me$()?.last_name }} {{ me$()?.first_name }}
+</h1>
+}

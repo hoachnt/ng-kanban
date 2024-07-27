@@ -17,7 +17,7 @@ import {
 import { IKanbanList } from "../../../../libraries/directus/directus";
 import { KanbanService } from "../../../../data/services/kanban.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, switchMap } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {
     FormBuilder,
@@ -26,6 +26,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
+import { ActivatedRoute } from "@angular/router";
 interface DialogData extends IKanbanList {}
 
 @Component({
@@ -51,6 +52,13 @@ export class DialogUpdateKanbanListComponent {
     readonly fb = inject(FormBuilder);
     readonly cdr = inject(ChangeDetectorRef);
     readonly kanbanService = inject(KanbanService);
+    route = inject(ActivatedRoute);
+
+    project$ = this.route.params.pipe(
+        switchMap(({ id }) => {
+            return this.kanbanService.getProjectById(id);
+        })
+    );
 
     readonly kabanList = this.kanbanService.kanbanLists;
     readonly isUpdating = signal(false);
@@ -87,8 +95,16 @@ export class DialogUpdateKanbanListComponent {
                     currentIndex: this.form.value.currentIndex! - 1,
                 })
             );
-            await firstValueFrom(this.kanbanService.getKanbanList());
 
+            this.project$
+                .subscribe((value) => {
+                    if (value.data.id === undefined) return;
+
+                    firstValueFrom(
+                        this.kanbanService.getKanbanList(value.data.id)
+                    );
+                })
+                .unsubscribe();
             this.openSnackBar("Successfully updated!");
         } catch (error) {
             this.openSnackBar("Error during update list!");

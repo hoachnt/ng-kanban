@@ -1,0 +1,9 @@
+.active {
+    background: var(--sys-primary-container);
+    color: var(--sys-on-primary-container);
+}
+
+mat-list-item {
+    cursor: pointer !important;
+    border-radius: 50px;
+}
