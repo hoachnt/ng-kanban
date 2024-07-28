@@ -1,3 +1,4 @@
+import { KanbanService } from "./../../../data/services/kanban.service";
 import { Component, inject, signal } from "@angular/core";
 import { RouterLink, RouterOutlet } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
@@ -34,6 +35,9 @@ export class ToolbarComponent {
     readonly dialog = inject(MatDialog);
     readonly authService = inject(AuthService);
     readonly themeService = inject(ThemeService);
+    readonly kanbanService = inject(KanbanService);
+
+    isProjectId$ = this.kanbanService.currentProjectId;
 
     isOpen = signal(false);
 

@@ -60,6 +60,8 @@
                         themeService.theme ? "light_mode" : "dark_mode"
                     }}</mat-icon>
                 </button>
+                @if(isProjectId$()) {
+
                 <button
                     matTooltip="Add task & list"
                     mat-icon-button
@@ -78,6 +80,7 @@
                         <span>Add list</span>
                     </button>
                 </mat-menu>
+                }
             </mat-toolbar>
         </nav>
         <main>
