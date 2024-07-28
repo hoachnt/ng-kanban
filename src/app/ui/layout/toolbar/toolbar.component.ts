@@ -74,8 +74,6 @@ export class ToolbarComponent {
                 this.currentScreenSize !== "XSmall" &&
                 this.currentScreenSize !== "Small"
         );
-
-        console.log(this.isOpen());
     }
 
     ngOnDestroy() {
