@@ -83,7 +83,7 @@
                 }
             </mat-toolbar>
         </nav>
-        <main>
+        <main [@routeAnimations]="getRouteAnimationData()">
             <router-outlet></router-outlet>
         </main>
     </mat-drawer-content>

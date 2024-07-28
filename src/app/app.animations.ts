@@ -9,7 +9,7 @@ import {
 } from "@angular/animations";
 
 export const slideInAnimation = trigger("routeAnimations", [
-    transition("HomePage <=> LoginPage", [
+    transition("LoginPage => ToolbarLayout", [
         style({ position: "relative" }),
         query(":enter, :leave", [
             style({
@@ -24,7 +24,48 @@ export const slideInAnimation = trigger("routeAnimations", [
         group([
             query(
                 ":leave",
-                [animate("500ms ease-in-out", style({ left: "100%" }))],
+                [
+                    animate(
+                        "500ms ease-in-out",
+                        style({ left: "100%", opacity: "0" })
+                    ),
+                ],
+                {
+                    optional: true,
+                }
+            ),
+            query(
+                ":enter",
+                [animate("500ms ease-in-out", style({ left: "0%" }))],
+                {
+                    optional: true,
+                }
+            ),
+        ]),
+    ]),
+    transition("ToolbarLayout => LoginPage", [
+        style({ position: "relative" }),
+        query(":enter, :leave", [
+            style({
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+            }),
+        ]),
+        query(":enter", [style({ left: "100%" })], {
+            optional: true,
+        }),
+        query(":leave", animateChild(), { optional: true }),
+        group([
+            query(
+                ":leave",
+                [
+                    animate(
+                        "500ms ease-in-out",
+                        style({ left: "-100%", opacity: "0" })
+                    ),
+                ],
                 {
                     optional: true,
                 }

@@ -1,6 +1,11 @@
+import { slideInAnimation } from "./toolbar.animations";
 import { KanbanService } from "./../../../data/services/kanban.service";
 import { Component, inject, signal } from "@angular/core";
-import { RouterLink, RouterOutlet } from "@angular/router";
+import {
+    ChildrenOutletContexts,
+    RouterLink,
+    RouterOutlet,
+} from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -32,6 +37,7 @@ import { Subject, takeUntil } from "rxjs";
         RouterLink,
     ],
     templateUrl: "./toolbar.component.html",
+    animations: [slideInAnimation],
     styleUrl: "./toolbar.component.scss",
 })
 export class ToolbarComponent {
@@ -54,6 +60,7 @@ export class ToolbarComponent {
 
     constructor(
         private platform: Platform,
+        private contexts: ChildrenOutletContexts,
         breakpointObserver: BreakpointObserver
     ) {
         breakpointObserver
@@ -79,6 +86,12 @@ export class ToolbarComponent {
     ngOnDestroy() {
         this.destroyed.next();
         this.destroyed.complete();
+    }
+
+    getRouteAnimationData() {
+        return this.contexts.getContext("primary")?.route?.snapshot?.data?.[
+            "animation"
+        ];
     }
 
     openKanbanListDialog(): void {

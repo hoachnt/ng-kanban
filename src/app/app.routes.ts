@@ -9,6 +9,7 @@ export const routes: Routes = [
     {
         path: "",
         component: ToolbarComponent,
+        data: { animation: "ToolbarLayout" },
         children: [
             {
                 path: "",

@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { ChildrenOutletContexts, RouterOutlet } from "@angular/router";
-import { slideInAnimation } from "./animations";
+import { slideInAnimation } from "./app.animations";
 
 @Component({
     selector: "app-root",
