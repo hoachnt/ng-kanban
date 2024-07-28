@@ -50,7 +50,8 @@ export class ToolbarComponent {
     isProjectId$ = this.kanbanService.currentProjectId;
     currentScreenSize: string = "";
 
-    isOpen = signal(true);
+    isDesktop$ = signal(true);
+    isOpen$ = signal(true);
 
     // Create a map to display breakpoint names for demonstration purposes.
     displayNameMap = new Map([
@@ -75,12 +76,13 @@ export class ToolbarComponent {
                 }
             });
 
-        this.isOpen.set(
+        this.isDesktop$.set(
             !this.platform.ANDROID &&
                 !this.platform.IOS &&
                 this.currentScreenSize !== "XSmall" &&
                 this.currentScreenSize !== "Small"
         );
+        this.isOpen$.set(this.isDesktop$());
     }
 
     ngOnDestroy() {
@@ -107,10 +109,11 @@ export class ToolbarComponent {
     onLogout() {
         this.authService.logout();
     }
-    onOpenedChangDrawer(isOpen: boolean) {
-        this.isOpen.set(isOpen);
-    }
     toggleTheme(): void {
         this.themeService.toggleTheme();
+    }
+
+    onChangeOpenStateEvent(value: boolean) {
+        this.isOpen$.set(value);
     }
 }

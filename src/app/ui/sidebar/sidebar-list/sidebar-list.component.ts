@@ -1,4 +1,12 @@
-import { Component, inject, signal } from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    inject,
+    Input,
+    Output,
+    signal,
+    WritableSignal,
+} from "@angular/core";
 import { MatListModule } from "@angular/material/list";
 import { MatIconModule } from "@angular/material/icon";
 import { KanbanService } from "../../../data/services/kanban.service";
@@ -13,6 +21,9 @@ import { ActivatedRoute, RouterLink } from "@angular/router";
     styleUrl: "./sidebar-list.component.scss",
 })
 export class SidebarListComponent {
+    @Input({ required: true }) isDesktop$!: WritableSignal<boolean>;
+    @Output() changeOpenStateEvent = new EventEmitter<boolean>(false);
+
     kanbanService = inject(KanbanService);
     readonly route = inject(ActivatedRoute);
 
@@ -25,5 +36,11 @@ export class SidebarListComponent {
 
         if (this.me$() === undefined) return;
         await firstValueFrom(this.kanbanService.getProjects(this.me$()?.id!));
+    }
+
+    onChangeOpenState(value: boolean) {
+        if (this.isDesktop$()) return;
+
+        this.changeOpenStateEvent.emit(value);
     }
 }

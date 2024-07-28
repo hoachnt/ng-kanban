@@ -1,9 +1,9 @@
-<mat-drawer-container class="container" [class.active]="isOpen()">
+<mat-drawer-container class="container" [class.active]="isOpen$()">
     <mat-drawer
         #drawer
         mode="side"
-        [opened]="isOpen()"
-        (openedChange)="onOpenedChangDrawer($event)"
+        [opened]="isOpen$()"
+        (openedChange)="isOpen$.set($event)"
         class="!min-w-full md:!min-w-[360px] px-6 pb-2"
     >
         <section class="mat-drawer_main">
@@ -18,7 +18,10 @@
                 </button>
             </div>
             <div>
-                <app-sidebar-list />
+                <app-sidebar-list
+                    (changeOpenStateEvent)="onChangeOpenStateEvent($event)"
+                    [isDesktop$]="isDesktop$"
+                />
             </div>
             <button mat-flat-button class="logout-btn" (click)="onLogout()">
                 Logout
@@ -28,7 +31,7 @@
     <mat-drawer-content class="relative">
         <nav class="toolbar !sticky !top-0 !left-0 !h-fit !z-50 min-w-full">
             <mat-toolbar class="!px-6 !py-2">
-                @if (!isOpen()) {
+                @if (!isOpen$()) {
                 <button
                     mat-icon-button
                     class="icon"
