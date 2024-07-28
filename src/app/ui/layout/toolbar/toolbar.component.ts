@@ -13,6 +13,9 @@ import { AuthService } from "../../../auth/auth.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ThemeService } from "../../services/theme.service";
 import { SidebarListComponent } from "../../sidebar/sidebar-list/sidebar-list.component";
+import { Platform } from "@angular/cdk/platform";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: "app-toolbar",
@@ -37,9 +40,48 @@ export class ToolbarComponent {
     readonly themeService = inject(ThemeService);
     readonly kanbanService = inject(KanbanService);
 
+    destroyed = new Subject<void>();
     isProjectId$ = this.kanbanService.currentProjectId;
+    currentScreenSize: string = "";
 
-    isOpen = signal(false);
+    isOpen = signal(true);
+
+    // Create a map to display breakpoint names for demonstration purposes.
+    displayNameMap = new Map([
+        [Breakpoints.XSmall, "XSmall"],
+        [Breakpoints.Small, "Small"],
+    ]);
+
+    constructor(
+        private platform: Platform,
+        breakpointObserver: BreakpointObserver
+    ) {
+        breakpointObserver
+            .observe([Breakpoints.XSmall, Breakpoints.Small])
+            .pipe(takeUntil(this.destroyed))
+            .subscribe((result) => {
+                for (const query of Object.keys(result.breakpoints)) {
+                    if (result.breakpoints[query]) {
+                        this.currentScreenSize =
+                            this.displayNameMap.get(query) ?? "Unknown";
+                    }
+                }
+            });
+
+        this.isOpen.set(
+            !this.platform.ANDROID &&
+                !this.platform.IOS &&
+                this.currentScreenSize !== "XSmall" &&
+                this.currentScreenSize !== "Small"
+        );
+
+        console.log(this.isOpen());
+    }
+
+    ngOnDestroy() {
+        this.destroyed.next();
+        this.destroyed.complete();
+    }
 
     openKanbanListDialog(): void {
         const dialogRef = this.dialog.open(DialogAddKanbanListComponent);
