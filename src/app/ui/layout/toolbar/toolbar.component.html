@@ -3,7 +3,8 @@
         #drawer
         mode="side"
         [opened]="isOpen$()"
-        (openedChange)="isOpen$.set($event)"
+        (openedStart)="isOpen$.set(true)"
+        (closedStart)="isOpen$.set(false)"
         class="!min-w-full md:!min-w-[360px] px-6 pb-2"
     >
         <section class="mat-drawer_main">
