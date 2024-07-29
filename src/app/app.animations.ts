@@ -9,7 +9,7 @@ import {
 } from "@angular/animations";
 
 export const slideInAnimation = trigger("routeAnimations", [
-    transition("LoginPage => ToolbarLayout", [
+    transition("LoginPage => *", [
         style({ position: "relative" }),
         query(":enter, :leave", [
             style({
@@ -43,7 +43,7 @@ export const slideInAnimation = trigger("routeAnimations", [
             ),
         ]),
     ]),
-    transition("ToolbarLayout => LoginPage", [
+    transition("* => LoginPage", [
         style({ position: "relative" }),
         query(":enter, :leave", [
             style({

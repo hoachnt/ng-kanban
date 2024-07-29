@@ -52,13 +52,6 @@ export class DialogUpdateKanbanListComponent {
     readonly fb = inject(FormBuilder);
     readonly cdr = inject(ChangeDetectorRef);
     readonly kanbanService = inject(KanbanService);
-    route = inject(ActivatedRoute);
-
-    project$ = this.route.params.pipe(
-        switchMap(({ id }) => {
-            return this.kanbanService.getProjectById(id);
-        })
-    );
 
     readonly kabanList = this.kanbanService.kanbanLists;
     readonly isUpdating = signal(false);
@@ -96,15 +89,11 @@ export class DialogUpdateKanbanListComponent {
                 })
             );
 
-            this.project$
-                .subscribe((value) => {
-                    if (value.data.id === undefined) return;
-
-                    firstValueFrom(
-                        this.kanbanService.getKanbanList(value.data.id)
-                    );
-                })
-                .unsubscribe();
+            await firstValueFrom(
+                this.kanbanService.getKanbanList(
+                    this.kanbanService.currentProjectId()
+                )
+            );
             this.openSnackBar("Successfully updated!");
         } catch (error) {
             this.openSnackBar("Error during update list!");

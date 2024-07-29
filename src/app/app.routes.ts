@@ -4,6 +4,8 @@ import { ToolbarComponent } from "./ui/layout/toolbar/toolbar.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { canActivateAuth, canActivateLogin } from "./auth/access.guard";
 import { ProjectPageComponent } from "./pages/project-page/project-page.component";
+import { AuthLayoutComponent } from "./ui/layout/auth-layout/auth-layout.component";
+import { RegisterPageComponent } from "./pages/register-page/register-page.component";
 
 export const routes: Routes = [
     {
@@ -25,9 +27,22 @@ export const routes: Routes = [
         canActivate: [canActivateAuth],
     },
     {
-        path: "login",
-        component: LoginPageComponent,
-        data: { animation: "LoginPage" },
+        path: "auth",
+        component: AuthLayoutComponent,
+        data: { animation: "AuthLayout" },
+        children: [
+            {
+                path: "login",
+                component: LoginPageComponent,
+                data: { animation: "LoginPage" },
+            },
+            {
+                path: "register",
+                component: RegisterPageComponent,
+                data: { animation: "RegisterPage" },
+            },
+        ],
+
         canActivate: [canActivateLogin],
     },
 ];

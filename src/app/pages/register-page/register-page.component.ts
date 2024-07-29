@@ -9,7 +9,7 @@ import { AuthService } from "../../auth/auth.service";
 import { Router, RouterLink } from "@angular/router";
 
 @Component({
-    selector: "app-login-page",
+    selector: "app-register-page",
     standalone: true,
     imports: [
         MatFormFieldModule,
@@ -20,10 +20,10 @@ import { Router, RouterLink } from "@angular/router";
         ReactiveFormsModule,
         RouterLink,
     ],
-    templateUrl: "./login-page.component.html",
-    styleUrl: "./login-page.component.scss",
+    templateUrl: "./register-page.component.html",
+    styleUrl: "./register-page.component.scss",
 })
-export class LoginPageComponent {
+export class RegisterPageComponent {
     fb = inject(FormBuilder);
     authService = inject(AuthService);
     router = inject(Router);
@@ -31,6 +31,8 @@ export class LoginPageComponent {
     form = this.fb.group({
         email: ["", Validators.required],
         password: ["", Validators.required],
+        first_name: [""],
+        last_name: [""],
     });
 
     hide = signal(true);
@@ -50,8 +52,18 @@ export class LoginPageComponent {
         this.isDisabling.set(true);
 
         //@ts-ignore
-        this.authService.login(this.form.value).subscribe(() => {
-            this.router.navigate([""]);
+        this.authService.register(this.form.value).subscribe(() => {
+            const { email, password } = this.form.value;
+
+            const loginPayload = {
+                email,
+                password,
+            };
+
+            //@ts-ignore
+            this.authService.login(loginPayload).subscribe(() => {
+                this.router.navigate([""]);
+            });
         });
     }
 }

@@ -9,7 +9,7 @@ export function canActivateAuth() {
         return true;
     }
 
-    return inject(Router).createUrlTree(["/login"]);
+    return inject(Router).createUrlTree(["/auth/login"]);
 }
 
 export function canActivateLogin() {

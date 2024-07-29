@@ -34,16 +34,8 @@ export class DialogDeleteKanbanListComponent {
     readonly dialogRef = inject(MatDialogRef<DialogDeleteKanbanListComponent>);
     readonly data = inject<DialogData>(MAT_DIALOG_DATA);
     readonly kanbanService = inject(KanbanService);
-    readonly route = inject(ActivatedRoute);
-    
-    project$ = this.route.params.pipe(
-        switchMap(({ id }) => {
-            return this.kanbanService.getProjectById(id);
-        })
-    );
 
     readonly isDeleting = signal(false);
-
 
     constructor(private _snackBar: MatSnackBar) {}
 
@@ -61,15 +53,11 @@ export class DialogDeleteKanbanListComponent {
                 this.kanbanService.deleteKanbanList(this.data.id)
             );
 
-            this.project$
-                .subscribe((value) => {
-                    if (value.data.id === undefined) return;
-
-                    firstValueFrom(
-                        this.kanbanService.getKanbanList(value.data.id)
-                    );
-                })
-                .unsubscribe();
+            await firstValueFrom(
+                this.kanbanService.getKanbanList(
+                    this.kanbanService.currentProjectId()
+                )
+            );
 
             this.openSnackBar("Successfully deleted!");
         } catch (error) {

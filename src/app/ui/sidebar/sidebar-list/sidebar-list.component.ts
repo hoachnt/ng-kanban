@@ -10,7 +10,7 @@ import {
 import { MatListModule } from "@angular/material/list";
 import { MatIconModule } from "@angular/material/icon";
 import { KanbanService } from "../../../data/services/kanban.service";
-import { firstValueFrom, switchMap } from "rxjs";
+import { firstValueFrom } from "rxjs";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 
 @Component({

@@ -45,6 +45,9 @@ export interface IDirectusDataObject<T> {
 export interface IDirectusLoginData {
     data: ITokenResponse;
 }
+export interface IDirectusRegisterData {
+    data: IUser;
+}
 
 type Schema = {
     kanban_list: IKanbanList[];

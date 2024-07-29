@@ -15,7 +15,8 @@ export class AuthService {
     cookieService = inject(CookieService);
     router = inject(Router);
 
-    baseUrl: string = `${environment.directusUrl}/auth`;
+    baseAuthUrl: string = `${environment.directusUrl}/auth`;
+    baseUserUrl: string = `${environment.directusUrl}/users`;
     token: string | null = null;
     refreshToken: string | null = null;
 
@@ -30,7 +31,7 @@ export class AuthService {
 
     login(payload: { email: string; password: string }) {
         return this.http
-            .post<IDirectusLoginData>(`${this.baseUrl}/login`, payload)
+            .post<IDirectusLoginData>(`${this.baseAuthUrl}/login`, payload)
             .pipe(
                 tap((res) => {
                     this.saveTokens(res.data);
@@ -38,9 +39,21 @@ export class AuthService {
             );
     }
 
+    register(payload: {
+        email: string;
+        password: string;
+        first_name?: string;
+        last_name?: string;
+    }) {
+        return this.http.post<IDirectusLoginData>(`${this.baseUserUrl}`, {
+            ...payload,
+            role: environment.userRole,
+        });
+    }
+
     refreshAuthToken() {
         return this.http
-            .post<IDirectusLoginData>(`${this.baseUrl}/refresh`, {
+            .post<IDirectusLoginData>(`${this.baseAuthUrl}/refresh`, {
                 refresh_token: this.refreshToken,
             })
             .pipe(
@@ -59,7 +72,7 @@ export class AuthService {
         this.cookieService.deleteAll();
         this.token = null;
         this.refreshToken = null;
-        this.router.navigate(["/login"]);
+        this.router.navigate(["/auth/login"]);
     }
     saveTokens(res: ITokenResponse) {
         this.token = res.access_token;
