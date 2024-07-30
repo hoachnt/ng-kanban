@@ -23,6 +23,7 @@ mat-drawer-container {
 }
 
 mat-drawer-container {
+    will-change: grid-template-columns;
     height: 100dvh;
     display: grid;
     grid-template-columns: 1fr;
@@ -33,12 +34,11 @@ mat-drawer-container {
 
 mat-drawer-container.active {
     grid-template-columns: 360px 1fr;
-    transition: 0.2s ease;
 }
 
 .mat-drawer_main {
     display: grid;
-    grid-template-rows: 64px 1fr 48px;
+    grid-template-rows: 100px 1fr 48px;
     min-height: 100%;
     overflow: hidden;
 
@@ -49,8 +49,10 @@ mat-drawer-container.active {
     }
 }
 .mat-drawer_header {
+    height: fit-content;
     display: flex;
-    justify-content: end;
+    margin-top: 24px;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -68,3 +70,5 @@ mat-drawer {
 .logout-btn {
     background-color: var(--sys-error) !important;
 }
+
+

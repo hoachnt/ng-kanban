@@ -64,9 +64,9 @@ box:active {
 }
 
 mat-chip {
-    background-color: var(--sys-tertiary) !important;
-
-    --mdc-chip-label-text-color: var(--sys-on-tertiary) !important;
+    background-color: var(--sys-tertiary-container) !important;
+    --mdc-chip-label-text-color: var(--sys-on-tertiary-container) !important;
+    border: none !important;
 }
 
 .example-handle {

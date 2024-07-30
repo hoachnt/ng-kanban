@@ -5,10 +5,14 @@
         [opened]="isOpen$()"
         (openedStart)="isOpen$.set(true)"
         (closedStart)="isOpen$.set(false)"
-        class="!min-w-full md:!min-w-[360px] px-6 pb-2"
+        class="!min-w-full md:!min-w-[360px] !py-2"
     >
         <section class="mat-drawer_main">
-            <div class="mat-drawer_header">
+            <div class="mat-drawer_header !mx-6">
+                <button mat-fab extended class="add-project-btn">
+                    <mat-icon>add</mat-icon>
+                    Create project
+                </button>
                 <button
                     mat-icon-button
                     class="icon"
@@ -18,20 +22,20 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <div>
+            <div class="!mx-6">
                 <app-sidebar-list
                     (changeOpenStateEvent)="onChangeOpenStateEvent($event)"
                     [isDesktop$]="isDesktop$"
                 />
             </div>
-            <button mat-flat-button class="logout-btn" (click)="onLogout()">
+            <button mat-flat-button class="logout-btn !mx-6" (click)="onLogout()">
                 Logout
             </button>
         </section>
     </mat-drawer>
     <mat-drawer-content class="relative">
         <nav class="toolbar !sticky !top-0 !left-0 !h-fit !z-50 min-w-full">
-            <mat-toolbar class="!px-6 !py-2">
+            <mat-toolbar class="!p-2">
                 @if (!isOpen$()) {
                 <button
                     mat-icon-button
