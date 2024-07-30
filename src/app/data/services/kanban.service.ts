@@ -63,7 +63,7 @@ export class KanbanService {
         );
     }
     postKanbanList(data: IKanbanList) {
-        return this.http.post<IKanbanList>(
+        return this.http.post<IDirectusDataObject<IKanbanList>>(
             `${this.baseUrl}/items/kanban_list`,
             data
         );
@@ -99,6 +99,18 @@ export class KanbanService {
     getProjectById(project_id: number) {
         return this.http.get<IDirectusDataObject<IProject>>(
             `${this.baseUrl}/items/projects/${project_id}`
+        );
+    }
+    postProject(data: IProject) {
+        return this.http.post<IProject>(`${this.baseUrl}/items/projects`, data);
+    }
+    updateProject(
+        data: { kanban_lists_id: { update: object[] } },
+        project_id: number
+    ) {
+        return this.http.patch<IDirectusDataObject<IProject>>(
+            `${this.baseUrl}/items/projects/${project_id}`,
+            data
         );
     }
 }

@@ -1,9 +1,11 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 import { DropListGroupComponent } from "../../ui/drop-list-group/drop-list-group.component";
 import { KanbanService } from "../../data/services/kanban.service";
 import { ActivatedRoute } from "@angular/router";
 import { switchMap } from "rxjs";
 import { AsyncPipe } from "@angular/common";
+import { toObservable } from "@angular/core/rxjs-interop";
+import { IProject } from "../../libraries/directus/directus";
 
 @Component({
     selector: "app-project-page",
@@ -16,11 +18,7 @@ export class ProjectPageComponent {
     kanbanService = inject(KanbanService);
     route = inject(ActivatedRoute);
 
-    project$ = this.route.params.pipe(
-        switchMap(({ id }) => {
-            return this.kanbanService.getProjectById(id);
-        })
-    );
+    project$ = signal<IProject | null>(null);
 
     ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -28,5 +26,13 @@ export class ProjectPageComponent {
         this.route.paramMap.subscribe((params) => {
             this.kanbanService.currentProjectId.set(Number(params.get("id")));
         });
+
+        this.route.params
+            .pipe(
+                switchMap(({ id }) => {
+                    return this.kanbanService.getProjectById(id);
+                })
+            )
+            .subscribe((value) => this.project$.set(value.data));
     }
 }

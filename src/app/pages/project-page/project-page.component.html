@@ -1,4 +1,4 @@
-@if(project$ | async; as project) {
-<app-drop-list-group [projectId]="project.data.id"></app-drop-list-group>
+@if(project$(); as project) {
+<app-drop-list-group [projectId]="project.id"></app-drop-list-group>
 
 }

@@ -21,6 +21,7 @@ import { SidebarListComponent } from "../../sidebar/sidebar-list/sidebar-list.co
 import { Platform } from "@angular/cdk/platform";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Subject, takeUntil } from "rxjs";
+import { DialogAddProjectComponent } from "../../dialog-add-project/dialog-add-project.component";
 
 @Component({
     selector: "app-toolbar",
@@ -103,6 +104,11 @@ export class ToolbarComponent {
     }
     openKanbanItemDialog(): void {
         const dialogRef = this.dialog.open(DialogAddKanbanItemFormComponent);
+
+        dialogRef.afterClosed().subscribe();
+    }
+    openCreateProjectDialog(): void {
+        const dialogRef = this.dialog.open(DialogAddProjectComponent);
 
         dialogRef.afterClosed().subscribe();
     }

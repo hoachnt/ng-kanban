@@ -21,7 +21,7 @@ import {
 } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { IKanbanList } from "../../libraries/directus/directus";
+import { IDirectusData, IKanbanList } from "../../libraries/directus/directus";
 import {
     FormBuilder,
     FormsModule,
@@ -59,22 +59,16 @@ export class DialogAddKanbanListComponent {
     readonly dialogRef = inject(MatDialogRef<DialogAddKanbanListComponent>);
     fb = inject(FormBuilder);
     cdr = inject(ChangeDetectorRef);
-    route = inject(ActivatedRoute);
-
-    project$ = this.route.params.pipe(
-        switchMap(({ id }) => {
-            return this.kanbanService.getProjectById(id);
-        })
-    );
 
     isDisabling = signal(false);
+    currentProjectId$ = this.kanbanService.currentProjectId;
+    projects$ = this.kanbanService.projects;
+
     horizontalPosition: MatSnackBarHorizontalPosition = "right";
     verticalPosition: MatSnackBarVerticalPosition = "top";
 
     form = this.fb.group({
         title: ["", Validators.required],
-        description: [""],
-        deadline: [null],
     });
 
     constructor(private _snackBar: MatSnackBar) {}
@@ -104,18 +98,42 @@ export class DialogAddKanbanListComponent {
         };
 
         try {
-            await firstValueFrom(
-                this.kanbanService.postKanbanList(newKanbanList)
-            );
-            this.project$
+            let res: IKanbanList;
+            this.kanbanService
+                .postKanbanList(newKanbanList)
                 .subscribe((value) => {
-                    if (value.data.id === undefined) return;
+                    res = value.data;
 
-                    firstValueFrom(
-                        this.kanbanService.getKanbanList(value.data.id)
-                    );
-                })
-                .unsubscribe();
+                    this.kanbanService
+                        .getProjectById(this.currentProjectId$())
+                        .subscribe((value) => {
+                            console.log(res.id);
+                            if (res.id === undefined) return;
+
+                            this.kanbanService
+                                .updateProject(
+                                    {
+                                        kanban_lists_id: {
+                                            update: [
+                                                {
+                                                    id: res.id,
+                                                    project_id:
+                                                        this.currentProjectId$(),
+                                                },
+                                            ],
+                                        },
+                                    },
+                                    this.currentProjectId$()
+                                )
+                                .subscribe(() => {
+                                    firstValueFrom(
+                                        this.kanbanService.getKanbanList(
+                                            this.currentProjectId$()
+                                        )
+                                    );
+                                });
+                        });
+                });
 
             this.openSnackBar("List added successfully!", "success");
         } catch (error) {

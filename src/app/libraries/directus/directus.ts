@@ -21,7 +21,7 @@ export interface IKanbanList {
 
 export interface IProject {
     date_created?: Date | null;
-    user_created: string;
+    user_created?: string;
     id?: number;
     name: string;
     kanban_lists_id: number[];

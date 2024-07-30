@@ -9,7 +9,12 @@
     >
         <section class="mat-drawer_main">
             <div class="mat-drawer_header !mx-6">
-                <button mat-fab extended class="add-project-btn">
+                <button
+                    mat-fab
+                    extended
+                    class="add-project-btn"
+                    (click)="openCreateProjectDialog()"
+                >
                     <mat-icon>add</mat-icon>
                     Create project
                 </button>
@@ -28,7 +33,11 @@
                     [isDesktop$]="isDesktop$"
                 />
             </div>
-            <button mat-flat-button class="logout-btn !mx-6" (click)="onLogout()">
+            <button
+                mat-flat-button
+                class="logout-btn !mx-6"
+                (click)="onLogout()"
+            >
                 Logout
             </button>
         </section>

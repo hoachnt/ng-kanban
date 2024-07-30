@@ -1,4 +1,11 @@
-import { Component, inject, Input, signal } from "@angular/core";
+import {
+    Component,
+    inject,
+    Input,
+    signal,
+    SimpleChanges,
+    OnChanges,
+} from "@angular/core";
 import {
     CdkDragDrop,
     CdkDropList,
@@ -7,14 +14,12 @@ import {
     transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import { DropListComponent } from "../drop-list/drop-list.component";
-import { firstValueFrom, switchMap } from "rxjs";
+import { firstValueFrom } from "rxjs";
 import { KanbanService } from "../../data/services/kanban.service";
 import { IKanbanItem } from "../../libraries/directus/directus";
 import { KanbanItemsFilterPipe } from "../../helpers/pipes/kanban-items-filter.pipe";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { DialogAddKanbanListComponent } from "../dialog-add-kanban-list/dialog-add-kanban-list.component";
-import { MatDialog } from "@angular/material/dialog";
 import { SortByDatePipePipe } from "../../helpers/pipes/sort-by-date-pipe.pipe";
 import { ActivatedRoute } from "@angular/router";
 
@@ -33,7 +38,7 @@ import { ActivatedRoute } from "@angular/router";
     templateUrl: "./drop-list-group.component.html",
     styleUrls: ["./drop-list-group.component.scss"], // Исправлено styleUrl на styleUrls
 })
-export class DropListGroupComponent {
+export class DropListGroupComponent implements OnChanges {
     @Input() projectId!: number | undefined;
 
     kanbanService = inject(KanbanService);
@@ -44,11 +49,27 @@ export class DropListGroupComponent {
 
     isUpdating = signal(false);
 
-    async ngOnInit(): Promise<void> {
-        if (this.projectId === undefined) return;
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes["projectId"] && this.projectId !== undefined) {
+            this.loadData();
+        }
+    }
 
-        await firstValueFrom(this.kanbanService.getKanbanList(this.projectId));
-        await firstValueFrom(this.kanbanService.getKanbanItems());
+    async loadData(): Promise<void> {
+        this.isUpdating.set(true);
+
+        try {
+            if (this.projectId === undefined) return;
+
+            await firstValueFrom(
+                this.kanbanService.getKanbanList(this.projectId)
+            );
+            await firstValueFrom(this.kanbanService.getKanbanItems());
+        } catch (error) {
+            console.error("Error loading data:", error);
+        } finally {
+            this.isUpdating.set(false);
+        }
     }
 
     async updateKanbanList(data: IKanbanItem[], dropListId?: number) {
