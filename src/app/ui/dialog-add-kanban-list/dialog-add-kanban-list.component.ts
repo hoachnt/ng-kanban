@@ -98,42 +98,35 @@ export class DialogAddKanbanListComponent {
         };
 
         try {
-            let res: IKanbanList;
-            this.kanbanService
-                .postKanbanList(newKanbanList)
-                .subscribe((value) => {
-                    res = value.data;
+            const { data: res } = await firstValueFrom(
+                this.kanbanService.postKanbanList(newKanbanList)
+            );
 
-                    this.kanbanService
-                        .getProjectById(this.currentProjectId$())
-                        .subscribe((value) => {
-                            console.log(res.id);
-                            if (res.id === undefined) return;
+            const project = await firstValueFrom(
+                this.kanbanService.getProjectById(this.currentProjectId$())
+            );
 
-                            this.kanbanService
-                                .updateProject(
-                                    {
-                                        kanban_lists_id: {
-                                            update: [
-                                                {
-                                                    id: res.id,
-                                                    project_id:
-                                                        this.currentProjectId$(),
-                                                },
-                                            ],
-                                        },
-                                    },
-                                    this.currentProjectId$()
-                                )
-                                .subscribe(() => {
-                                    firstValueFrom(
-                                        this.kanbanService.getKanbanList(
-                                            this.currentProjectId$()
-                                        )
-                                    );
-                                });
-                        });
-                });
+            if (!res.id) return;
+
+            await firstValueFrom(
+                this.kanbanService.updateProject(
+                    {
+                        kanban_lists_id: {
+                            update: [
+                                {
+                                    id: res.id,
+                                    project_id: this.currentProjectId$(),
+                                },
+                            ],
+                        },
+                    },
+                    this.currentProjectId$()
+                )
+            );
+
+            await firstValueFrom(
+                this.kanbanService.getKanbanList(this.currentProjectId$())
+            );
 
             this.openSnackBar("List added successfully!", "success");
         } catch (error) {
