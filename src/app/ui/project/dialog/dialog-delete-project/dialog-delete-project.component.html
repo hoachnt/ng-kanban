@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Delete project</h2>
+<mat-dialog-content>
+    <p>Do u really want to delete "{{ data.name }}"?</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" [disabled]="isDeleting()">
+        No
+    </button>
+    <button
+        mat-button
+        cdkFocusInitial
+        (click)="onDeleteProject()"
+        [disabled]="isDeleting()"
+    >
+        Yes
+    </button>
+</mat-dialog-actions>

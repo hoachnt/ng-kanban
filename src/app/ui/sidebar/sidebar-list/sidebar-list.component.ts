@@ -14,6 +14,11 @@ import { firstValueFrom } from "rxjs";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
+import {
+    DialogDataDeleteProject,
+    DialogDeleteProjectComponent,
+} from "../../project/dialog/dialog-delete-project/dialog-delete-project.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
     selector: "app-sidebar-list",
@@ -34,6 +39,7 @@ export class SidebarListComponent {
 
     kanbanService = inject(KanbanService);
     readonly route = inject(ActivatedRoute);
+    readonly dialog = inject(MatDialog);
 
     me$ = this.kanbanService.me;
     projects$ = this.kanbanService.projects;
@@ -54,5 +60,15 @@ export class SidebarListComponent {
     onMenuButtonClick(event: MouseEvent) {
         event.preventDefault();
         event.stopPropagation();
+    }
+
+    openDialogDelete(project: DialogDataDeleteProject | null): void {
+        if (project === null) return;
+
+        const dialogDeleteRef = this.dialog.open(DialogDeleteProjectComponent, {
+            data: { ...project },
+        });
+
+        dialogDeleteRef.afterClosed().subscribe();
     }
 }

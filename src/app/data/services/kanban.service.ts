@@ -113,4 +113,9 @@ export class KanbanService {
             data
         );
     }
+    deleteProject(project_id: number) {
+        return this.http.delete<IDirectusData<IProject>>(
+            `${this.baseUrl}/items/projects/${project_id}`
+        );
+    }
 }
