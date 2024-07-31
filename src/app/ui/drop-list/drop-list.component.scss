@@ -9,7 +9,7 @@
     min-height: 60px;
     border-radius: var(--mdc-elevated-card-container-shape);
     overflow: hidden;
-    border: 1px solid var(--mdc-outlined-card-outline-color);
+    background-color: var(--sys-surface-container);
 }
 
 :host {
