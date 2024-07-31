@@ -4,7 +4,6 @@ import { KanbanService } from "../../data/services/kanban.service";
 import { ActivatedRoute } from "@angular/router";
 import { switchMap } from "rxjs";
 import { AsyncPipe } from "@angular/common";
-import { toObservable } from "@angular/core/rxjs-interop";
 import { IProject } from "../../libraries/directus/directus";
 
 @Component({

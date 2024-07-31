@@ -5,6 +5,7 @@ import {
     signal,
     SimpleChanges,
     OnChanges,
+    WritableSignal,
 } from "@angular/core";
 import {
     CdkDragDrop,
@@ -22,6 +23,38 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { SortByDatePipePipe } from "../../helpers/pipes/sort-by-date-pipe.pipe";
 import { ActivatedRoute } from "@angular/router";
+import {
+    animate,
+    animateChild,
+    group,
+    query,
+    sequence,
+    stagger,
+    style,
+    transition,
+    trigger,
+} from "@angular/animations";
+import { CommonModule } from "@angular/common";
+
+export const fadeAnimation = trigger("fadeAnimation", [
+    transition(":enter", [
+        style({ opacity: 0 }),
+        animate("300ms", style({ opacity: 1 })),
+    ]),
+    transition(":leave", [
+        sequence([
+            animate("300ms", style({ opacity: 0 })),
+            query(
+                ":enter",
+                [
+                    style({ opacity: 0 }),
+                    animate("300ms", style({ opacity: 1 })),
+                ],
+                { optional: true }
+            ),
+        ]),
+    ]),
+]);
 
 @Component({
     selector: "app-drop-list-group",
@@ -34,7 +67,9 @@ import { ActivatedRoute } from "@angular/router";
         MatButtonModule,
         MatIconModule,
         SortByDatePipePipe,
+        CommonModule,
     ],
+    animations: [fadeAnimation],
     templateUrl: "./drop-list-group.component.html",
     styleUrls: ["./drop-list-group.component.scss"], // Исправлено styleUrl на styleUrls
 })
@@ -48,6 +83,7 @@ export class DropListGroupComponent implements OnChanges {
     kanbanItems = this.kanbanService.kanbanItems;
 
     isUpdating = signal(false);
+    currentView$: "loading" | "empty" | "list" = "loading";
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes["projectId"] && this.projectId !== undefined) {
@@ -56,7 +92,7 @@ export class DropListGroupComponent implements OnChanges {
     }
 
     async loadData(): Promise<void> {
-        this.isUpdating.set(true);
+        this.currentView$ = "loading";
 
         try {
             if (this.projectId === undefined) return;
@@ -68,7 +104,14 @@ export class DropListGroupComponent implements OnChanges {
         } catch (error) {
             console.error("Error loading data:", error);
         } finally {
-            this.isUpdating.set(false);
+            if (
+                this.kanbanLists() === null ||
+                this.kanbanLists()!.length === 0
+            ) {
+                this.currentView$ = "empty";
+            } else {
+                this.currentView$ = "list";
+            }
         }
     }
 
