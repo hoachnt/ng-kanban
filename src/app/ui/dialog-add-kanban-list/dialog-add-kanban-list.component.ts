@@ -21,7 +21,7 @@ import {
 } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { IDirectusData, IKanbanList } from "../../libraries/directus/directus";
+import { IKanbanList } from "../../libraries/directus/directus";
 import {
     FormBuilder,
     FormsModule,
@@ -31,7 +31,6 @@ import {
 import { MatButtonModule } from "@angular/material/button";
 import { KanbanService } from "../../data/services/kanban.service";
 import { firstValueFrom, switchMap } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
 
 export interface DialogData extends IKanbanList {}
 
@@ -108,6 +107,7 @@ export class DialogAddKanbanListComponent {
 
             if (!res.id) return;
 
+            // Изменяем O2M по синтаксису directus
             await firstValueFrom(
                 this.kanbanService.updateProject(
                     {

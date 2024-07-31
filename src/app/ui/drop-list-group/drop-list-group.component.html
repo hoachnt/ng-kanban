@@ -1,3 +1,7 @@
+@if(kanbanLists() === null || kanbanLists()?.length === 0) {
+<h2 class="text-center text-2xl">Project is empty</h2>
+}
+
 <div cdkDropListGroup class="kanban-list_group">
     @for (item of kanbanLists() | sortByDatePipe; track item.id) {
     @if(kanbanItems(); as kanbanItems) {

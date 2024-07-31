@@ -14,7 +14,6 @@ import {
 } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DialogDeleteKanbanItem } from "../dialog-delete-kanban-item.component";
 import { DialogUpdateKanbanItemComponent } from "../dialog-update-kanban-item.component";

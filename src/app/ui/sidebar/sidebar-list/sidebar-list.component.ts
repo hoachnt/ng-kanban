@@ -12,11 +12,19 @@ import { MatIconModule } from "@angular/material/icon";
 import { KanbanService } from "../../../data/services/kanban.service";
 import { firstValueFrom } from "rxjs";
 import { ActivatedRoute, RouterLink } from "@angular/router";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
     selector: "app-sidebar-list",
     standalone: true,
-    imports: [MatListModule, MatIconModule, RouterLink],
+    imports: [
+        MatListModule,
+        MatIconModule,
+        RouterLink,
+        MatMenuModule,
+        MatButtonModule,
+    ],
     templateUrl: "./sidebar-list.component.html",
     styleUrl: "./sidebar-list.component.scss",
 })
@@ -42,5 +50,9 @@ export class SidebarListComponent {
         if (this.isDesktop$()) return;
 
         this.changeOpenStateEvent.emit(value);
+    }
+    onMenuButtonClick(event: MouseEvent) {
+        event.preventDefault();
+        event.stopPropagation();
     }
 }
