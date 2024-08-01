@@ -1,38 +1,48 @@
 <mat-list>
     <div mat-subheader>Projects</div>
-    @for (project of projects$(); track project.id) {
-    <a
-        [routerLink]="['/project', project.id]"
-        (click)="onChangeOpenState(false)"
+    <ng-template
+        #name
+        appSkeleton
+        [skeleton]="isLoading$()"
+        [skeletonRepeat]="4"
+        [skeletonHeight]="'48px'"
+        [skeletonWidth]="'100%'"
+        [skeletonClassName]="'mb-2 rounded-full'"
     >
-        <div
-            class="flex px-4 py-1 rounded-full items-center justify-between transition-all duration-200"
-            [class.active]="currentProjectId$() === project.id"
+        @for (project of projects$(); track project.id) {
+        <a
+            [routerLink]="['/project', project.id]"
+            (click)="onChangeOpenState(false)"
         >
-            <div class="flex space-x-4">
-                <mat-icon matListItemIcon>folder</mat-icon>
-                <div matListItemTitle>{{ project.name }}</div>
-            </div>
-            <button
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                (click)="onMenuButtonClick($event)"
-                aria-label="More actions"
-                class="!flex !justify-center !items-center"
+            <div
+                class="flex px-4 py-1 rounded-full items-center justify-between transition-all duration-200"
+                [class.active]="currentProjectId$() === project.id"
             >
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openDialogDelete(project)">
-                    <mat-icon>delete</mat-icon>
-                    <span>Delete</span>
+                <div class="flex space-x-4">
+                    <mat-icon matListItemIcon>folder</mat-icon>
+                    <div matListItemTitle>{{ project.name }}</div>
+                </div>
+                <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    (click)="onMenuButtonClick($event)"
+                    aria-label="More actions"
+                    class="!flex !justify-center !items-center"
+                >
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <!-- <button mat-menu-item>
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
-                </button> -->
-            </mat-menu>
-        </div>
-    </a>
-    }
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openDialogDelete(project)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                    <!-- <button mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                    </button> -->
+                </mat-menu>
+            </div>
+        </a>
+        }
+    </ng-template>
 </mat-list>

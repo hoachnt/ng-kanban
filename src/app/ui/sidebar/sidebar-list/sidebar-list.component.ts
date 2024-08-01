@@ -19,6 +19,7 @@ import {
     DialogDeleteProjectComponent,
 } from "../../project/dialog/dialog-delete-project/dialog-delete-project.component";
 import { MatDialog } from "@angular/material/dialog";
+import { SkeletonDirective } from "../../directives/skeleton/skeleton.directive";
 
 @Component({
     selector: "app-sidebar-list",
@@ -29,6 +30,7 @@ import { MatDialog } from "@angular/material/dialog";
         RouterLink,
         MatMenuModule,
         MatButtonModule,
+        SkeletonDirective,
     ],
     templateUrl: "./sidebar-list.component.html",
     styleUrl: "./sidebar-list.component.scss",
@@ -44,12 +46,21 @@ export class SidebarListComponent {
     me$ = this.kanbanService.me;
     projects$ = this.kanbanService.projects;
     currentProjectId$ = this.kanbanService.currentProjectId;
+    isLoading$ = signal(false);
 
     async ngOnInit(): Promise<void> {
-        await firstValueFrom(this.kanbanService.getMe());
+        this.isLoading$.set(true);
+        try {
+            await firstValueFrom(this.kanbanService.getMe());
 
-        if (this.me$() === undefined) return;
-        await firstValueFrom(this.kanbanService.getProjects(this.me$()?.id!));
+            if (this.me$() === undefined) return;
+            await firstValueFrom(
+                this.kanbanService.getProjects(this.me$()?.id!)
+            );
+        } catch (error) {
+        } finally {
+            this.isLoading$.set(false);
+        }
     }
 
     onChangeOpenState(value: boolean) {
