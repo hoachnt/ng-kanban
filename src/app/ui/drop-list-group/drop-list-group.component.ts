@@ -36,23 +36,19 @@ import {
 } from "@angular/animations";
 import { CommonModule } from "@angular/common";
 
-export const fadeAnimation = trigger("fadeAnimation", [
-    transition(":enter", [
-        style({ opacity: 0 }),
-        animate("300ms", style({ opacity: 1 })),
-    ]),
-    transition(":leave", [
-        sequence([
-            animate("300ms", style({ opacity: 0 })),
-            query(
-                ":enter",
-                [
-                    style({ opacity: 0 }),
-                    animate("300ms", style({ opacity: 1 })),
-                ],
-                { optional: true }
-            ),
-        ]),
+const fadeListAnimation = trigger("listAnimation", [
+    transition("* => *", [
+        query(":enter", style({ opacity: 0 }), { optional: true }),
+        query(":leave", animate("300ms ease-in-out", style({ opacity: 0 })), {
+            optional: true,
+        }),
+        query(
+            ":enter",
+            stagger("60ms", [
+                animate("300ms ease-in-out", style({ opacity: 1 })),
+            ]),
+            { optional: true }
+        ),
     ]),
 ]);
 
@@ -69,7 +65,7 @@ export const fadeAnimation = trigger("fadeAnimation", [
         SortByDatePipePipe,
         CommonModule,
     ],
-    animations: [fadeAnimation],
+    animations: [fadeListAnimation],
     templateUrl: "./drop-list-group.component.html",
     styleUrls: ["./drop-list-group.component.scss"], // Исправлено styleUrl на styleUrls
 })
@@ -83,7 +79,7 @@ export class DropListGroupComponent implements OnChanges {
     kanbanItems = this.kanbanService.kanbanItems;
 
     isUpdating = signal(false);
-    currentView$: "loading" | "empty" | "list" = "loading";
+    currentView$ = signal<"loading" | "empty" | "list">("loading");
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes["projectId"] && this.projectId !== undefined) {
@@ -92,7 +88,7 @@ export class DropListGroupComponent implements OnChanges {
     }
 
     async loadData(): Promise<void> {
-        this.currentView$ = "loading";
+        this.currentView$.set("loading");
 
         try {
             if (this.projectId === undefined) return;
@@ -104,14 +100,16 @@ export class DropListGroupComponent implements OnChanges {
         } catch (error) {
             console.error("Error loading data:", error);
         } finally {
-            if (
-                this.kanbanLists() === null ||
-                this.kanbanLists()!.length === 0
-            ) {
-                this.currentView$ = "empty";
-            } else {
-                this.currentView$ = "list";
-            }
+            setTimeout(() => {
+                if (
+                    this.kanbanLists() === null ||
+                    this.kanbanLists()!.length === 0
+                ) {
+                    this.currentView$.set("empty");
+                } else {
+                    this.currentView$.set("list");
+                }
+            }, 200); // Adjust delay as needed
         }
     }
 
