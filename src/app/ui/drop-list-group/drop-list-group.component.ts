@@ -5,7 +5,6 @@ import {
     signal,
     SimpleChanges,
     OnChanges,
-    WritableSignal,
 } from "@angular/core";
 import {
     CdkDragDrop,
@@ -25,16 +24,12 @@ import { SortByDatePipePipe } from "../../helpers/pipes/sort-by-date-pipe.pipe";
 import { ActivatedRoute } from "@angular/router";
 import {
     animate,
-    animateChild,
-    group,
     query,
-    sequence,
     stagger,
     style,
     transition,
     trigger,
 } from "@angular/animations";
-import { CommonModule } from "@angular/common";
 
 const fadeListAnimation = trigger("listAnimation", [
     transition("* => *", [
@@ -63,7 +58,6 @@ const fadeListAnimation = trigger("listAnimation", [
         MatButtonModule,
         MatIconModule,
         SortByDatePipePipe,
-        CommonModule,
     ],
     animations: [fadeListAnimation],
     templateUrl: "./drop-list-group.component.html",
