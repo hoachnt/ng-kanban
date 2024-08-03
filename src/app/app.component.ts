@@ -10,6 +10,7 @@ import { ChildrenOutletContexts, RouterOutlet } from "@angular/router";
 import { slideInAnimation } from "./app.animations";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { isPlatformBrowser } from "@angular/common";
+import { ThemeService } from "./ui/services/theme.service";
 
 @Component({
     selector: "app-root",
@@ -21,6 +22,8 @@ import { isPlatformBrowser } from "@angular/common";
     encapsulation: ViewEncapsulation.None, // Add this line
 })
 export class AppComponent {
+    readonly themeService = inject(ThemeService);
+
     isLoading$ = signal(true);
 
     title = "kanban";
