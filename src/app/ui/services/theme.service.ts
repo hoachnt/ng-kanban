@@ -1,17 +1,23 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({
     providedIn: "root",
 })
 export class ThemeService {
     private isDarkTheme = false;
+    private isBrowser: boolean;
 
-    constructor() {
-        const prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-        ).matches;
-        this.isDarkTheme = prefersDark;
-        this.setTheme(this.isDarkTheme);
+    constructor(@Inject(PLATFORM_ID) private platformId: any) {
+        this.isBrowser = isPlatformBrowser(this.platformId);
+
+        if (this.isBrowser) {
+            const prefersDark = window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches;
+            this.isDarkTheme = prefersDark;
+            this.setTheme(this.isDarkTheme);
+        }
     }
 
     toggleTheme(): void {
@@ -20,10 +26,12 @@ export class ThemeService {
     }
 
     setTheme(isDark: boolean): void {
-        if (isDark) {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
+        if (this.isBrowser) {
+            if (isDark) {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
         }
     }
 
