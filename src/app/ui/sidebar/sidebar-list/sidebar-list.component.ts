@@ -20,6 +20,7 @@ import {
 } from "../../project/dialog/dialog-delete-project/dialog-delete-project.component";
 import { MatDialog } from "@angular/material/dialog";
 import { SkeletonDirective } from "../../directives/skeleton/skeleton.directive";
+import { DialogData, DialogUpdateProjectComponent } from "../../project/dialog/dialog-update-project/dialog-update-project.component";
 
 @Component({
     selector: "app-sidebar-list",
@@ -77,6 +78,15 @@ export class SidebarListComponent {
         if (project === null) return;
 
         const dialogDeleteRef = this.dialog.open(DialogDeleteProjectComponent, {
+            data: { ...project },
+        });
+
+        dialogDeleteRef.afterClosed().subscribe();
+    }
+    openDialogUpdate(project: DialogData | null): void {
+        if (project === null) return;
+
+        const dialogDeleteRef = this.dialog.open(DialogUpdateProjectComponent, {
             data: { ...project },
         });
 

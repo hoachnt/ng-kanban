@@ -110,7 +110,7 @@ export class KanbanService {
         return this.http.post<IProject>(`${this.baseUrl}/items/projects`, data);
     }
     updateProject(
-        data: { kanban_lists_id: { update: object[] } },
+        data: { kanban_lists_id: { update: object[] } } | IProject,
         project_id: number
     ) {
         return this.http.patch<IDirectusDataObject<IProject>>(

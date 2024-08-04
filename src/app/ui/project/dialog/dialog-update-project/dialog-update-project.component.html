@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Update project</h2> 
+<form [formGroup]="form" (ngSubmit)="onUpdateProject()">
+    <mat-dialog-content>
+        <mat-form-field class="w-full">
+            <mat-label>Name</mat-label>
+            <input #currentIndexInput matInput formControlName="name" />
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button
+            mat-button
+            (click)="onNoClick()"
+            [disabled]="isUpdating()"
+            type="button"
+        >
+            No
+        </button>
+        <button
+            mat-button
+            cdkFocusInitial
+            [disabled]="isUpdating()"
+            type="submit"
+        >
+            Yes
+        </button>
+    </mat-dialog-actions>
+</form>
