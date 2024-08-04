@@ -12,7 +12,7 @@ import {
 } from "@angular/material/dialog";
 import { KanbanService } from "../../../data/services/kanban.service";
 import { firstValueFrom } from "rxjs";
-import { IKanbanItem } from "../../../libraries/directus/directus";
+import { IKanbanItem, IUser } from "../../../libraries/directus/directus";
 
 export interface DialogData extends IKanbanItem {}
 
@@ -34,6 +34,7 @@ export class DialogDeleteKanbanItem {
 
     readonly kanbanService = inject(KanbanService);
     readonly isDeleting = signal(false);
+    readonly me$ = this.kanbanService.me;
 
     constructor(private _snackBar: MatSnackBar) {}
 
@@ -50,7 +51,12 @@ export class DialogDeleteKanbanItem {
             await firstValueFrom(
                 this.kanbanService.deleteKanbanItem(this.data.id)
             );
-            await firstValueFrom(this.kanbanService.getKanbanItems());
+
+            if (this.me$() === undefined) return;
+
+            await firstValueFrom(
+                this.kanbanService.getKanbanItems((this.me$() as IUser).id)
+            );
 
             this.openSnackBar("Successfully deleted!");
         } catch (error) {

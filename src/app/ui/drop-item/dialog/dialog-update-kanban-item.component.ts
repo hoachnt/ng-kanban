@@ -27,7 +27,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { KanbanService } from "../../../data/services/kanban.service";
-import { IKanbanItem } from "../../../libraries/directus/directus";
+import { IKanbanItem, IUser } from "../../../libraries/directus/directus";
 import { firstValueFrom } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -67,6 +67,7 @@ export class DialogUpdateKanbanItemComponent {
 
     isDisabling = signal(false);
     kanbanLists = this.kanbanService.kanbanLists;
+    me$ = this.kanbanService.me;
 
     form = this.fb.group({
         title: ["", Validators.required],
@@ -123,7 +124,12 @@ export class DialogUpdateKanbanItemComponent {
                     kanban_list_id: this.form.value.kanban_list_id!,
                 })
             );
-            await firstValueFrom(this.kanbanService.getKanbanItems());
+
+            if (this.me$() === undefined) return;
+
+            await firstValueFrom(
+                this.kanbanService.getKanbanItems((this.me$() as IUser).id)
+            );
 
             this.openSnackBar("Successfully updated!");
         } catch (error) {

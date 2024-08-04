@@ -72,6 +72,8 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
     cdr = inject(ChangeDetectorRef);
 
     isDisabling = signal(false);
+    me$ = this.kanbanService.me;
+
     horizontalPosition: MatSnackBarHorizontalPosition = "right";
     verticalPosition: MatSnackBarVerticalPosition = "top";
 
@@ -128,7 +130,12 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
             await firstValueFrom(
                 this.kanbanService.postKanbanItem(newKanbanItem)
             );
-            await firstValueFrom(this.kanbanService.getKanbanItems());
+
+            if (this.me$() === undefined) return;
+
+            await firstValueFrom(
+                this.kanbanService.getKanbanItems(this.me$()?.id!)
+            );
 
             this.openSnackBar("Task added successfully!", "success");
         } catch (error) {

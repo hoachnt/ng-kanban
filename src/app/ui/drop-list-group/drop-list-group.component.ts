@@ -71,6 +71,7 @@ export class DropListGroupComponent implements OnChanges {
 
     kanbanLists = this.kanbanService.kanbanLists;
     kanbanItems = this.kanbanService.kanbanItems;
+    me$ = this.kanbanService.me;
 
     isUpdating = signal(false);
     currentView$ = signal<"loading" | "empty" | "list">("loading");
@@ -90,7 +91,12 @@ export class DropListGroupComponent implements OnChanges {
             await firstValueFrom(
                 this.kanbanService.getKanbanList(this.projectId)
             );
-            await firstValueFrom(this.kanbanService.getKanbanItems());
+
+            if (this.me$() === undefined) return;
+
+            await firstValueFrom(
+                this.kanbanService.getKanbanItems(this.me$()?.id!)
+            );
         } catch (error) {
             console.error("Error loading data:", error);
         } finally {
@@ -129,7 +135,11 @@ export class DropListGroupComponent implements OnChanges {
             }
         }
 
-        await firstValueFrom(this.kanbanService.getKanbanItems());
+        if (this.me$() === undefined) return;
+
+        await firstValueFrom(
+            this.kanbanService.getKanbanItems(this.me$()?.id!)
+        );
     }
 
     async drop(event: CdkDragDrop<IKanbanItem[]>, dropListId?: number) {

@@ -38,10 +38,15 @@ export class KanbanService {
             )
             .pipe(tap((res) => this.kanbanLists.set(res.data)));
     }
-    getKanbanItems() {
+    getKanbanItems(user_id: string) {
         return this.http
             .get<IDirectusData<IKanbanItem>>(
-                `${this.baseUrl}/items/kanban_item`
+                `${this.baseUrl}/items/kanban_item`,
+                {
+                    params: {
+                        user_created: user_id,
+                    },
+                }
             )
             .pipe(tap((res) => this.kanbanItems.set(res.data)));
     }
