@@ -1,3 +1,4 @@
+import { firstValueFrom } from "rxjs";
 import { Component, inject, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
@@ -43,27 +44,32 @@ export class RegisterPageComponent {
         event.stopPropagation();
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
 
         if (this.form.invalid) return;
 
-        this.isDisabling.set(true);
+        try {
+            this.isDisabling.set(true);
 
-        //@ts-ignore
-        this.authService.register(this.form.value).subscribe(() => {
+            //@ts-ignore
+            await firstValueFrom(this.authService.register(this.form.value));
+
             const { email, password } = this.form.value;
-
             const loginPayload = {
                 email,
                 password,
             };
 
             //@ts-ignore
-            this.authService.login(loginPayload).subscribe(() => {
-                this.router.navigate([""]);
-            });
-        });
+            await firstValueFrom(this.authService.login(loginPayload));
+
+            this.router.navigate([""]);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            this.isDisabling.set(false);
+        }
     }
 }

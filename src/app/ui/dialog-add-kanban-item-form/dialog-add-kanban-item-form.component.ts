@@ -95,38 +95,38 @@ export class DialogAddKanbanItemFormComponent implements AfterViewInit {
     }
 
     async onCreateKanbanItem() {
-        this.form.markAllAsTouched();
-        this.form.updateValueAndValidity();
-
-        if (this.form.invalid)
-            return this.openSnackBar("Title required!", "warning");
-
-        this.isDisabling.set(true);
-
-        const kanbanLists = this.kanbanService.kanbanLists();
-        const getKanbanListId = kanbanLists ? kanbanLists[0]?.id : null;
-
-        if (!getKanbanListId) {
-            console.error("Kanban list ID is null or undefined");
-            return;
-        }
-
-        const formattedDeadline = this.form.value.deadline
-            ? this.datePipe.transform(
-                  this.form.value.deadline,
-                  "yyyy-MM-ddTHH:mm:ss"
-              )
-            : null;
-
-        const newKanbanItem: IKanbanItem = {
-            title: this.form.value.title!,
-            description: this.form.value.description,
-            deadline: formattedDeadline,
-            currentIndex: 0,
-            kanban_list_id: getKanbanListId,
-        };
-
         try {
+            this.form.markAllAsTouched();
+            this.form.updateValueAndValidity();
+
+            if (this.form.invalid)
+                return this.openSnackBar("Title required!", "warning");
+
+            this.isDisabling.set(true);
+
+            const kanbanLists = this.kanbanService.kanbanLists();
+            const getKanbanListId = kanbanLists ? kanbanLists[0]?.id : null;
+
+            if (!getKanbanListId) {
+                console.error("Kanban list ID is null or undefined");
+                return this.openSnackBar("You need to create a list");
+            }
+
+            const formattedDeadline = this.form.value.deadline
+                ? this.datePipe.transform(
+                      this.form.value.deadline,
+                      "yyyy-MM-ddTHH:mm:ss"
+                  )
+                : null;
+
+            const newKanbanItem: IKanbanItem = {
+                title: this.form.value.title!,
+                description: this.form.value.description,
+                deadline: formattedDeadline,
+                currentIndex: 0,
+                kanban_list_id: getKanbanListId,
+            };
+
             await firstValueFrom(
                 this.kanbanService.postKanbanItem(newKanbanItem)
             );

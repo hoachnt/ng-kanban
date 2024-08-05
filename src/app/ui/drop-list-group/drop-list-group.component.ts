@@ -5,6 +5,7 @@ import {
     signal,
     SimpleChanges,
     OnChanges,
+    effect,
 } from "@angular/core";
 import {
     CdkDragDrop,
@@ -81,6 +82,21 @@ export class DropListGroupComponent implements OnChanges {
             this.loadData();
         }
     }
+
+    private loggingEffect = effect(
+        () => {
+            if (
+                this.kanbanLists() !== undefined &&
+                this.kanbanLists() !== null &&
+                this.kanbanLists()!.length > 0
+            ) {
+                this.currentView$.set("list");
+            } else {
+                this.currentView$.set("empty");
+            }
+        },
+        { allowSignalWrites: true }
+    );
 
     async loadData(): Promise<void> {
         this.currentView$.set("loading");

@@ -1,3 +1,4 @@
+import { firstValueFrom } from "rxjs";
 import { Component, inject, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
@@ -41,17 +42,22 @@ export class LoginPageComponent {
         event.stopPropagation();
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
 
         if (this.form.invalid) return;
 
-        this.isDisabling.set(true);
+        try {
+            this.isDisabling.set(true);
 
-        //@ts-ignore
-        this.authService.login(this.form.value).subscribe(() => {
+            //@ts-ignore
+            await firstValueFrom(this.authService.login(this.form.value));
             this.router.navigate([""]);
-        });
+        } catch (error) {
+            console.error(error);
+        } finally {
+            this.isDisabling.set(false);
+        }
     }
 }
