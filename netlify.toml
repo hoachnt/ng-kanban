@@ -1,0 +1,11 @@
+[build]
+  command = "bun run build --configuration production"
+  publish = "dist/kanban"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  directory = "netlify/functions"

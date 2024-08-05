@@ -4,7 +4,7 @@ import { inject, Injectable } from "@angular/core";
 import { catchError, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
 import { ITokenResponse } from "./auth.type";
-import { environment } from "../../environments/environment.development";
+import { environment } from "../../environments/environment";
 import { IDirectusLoginData } from "../libraries/directus/directus";
 
 @Injectable({

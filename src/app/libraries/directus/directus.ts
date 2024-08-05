@@ -1,5 +1,5 @@
 import { authentication, createDirectus, rest } from "@directus/sdk";
-import { environment } from "../../../environments/environment.development";
+import { environment } from "../../../environments/environment";
 import { ITokenResponse } from "../../auth/auth.type";
 
 export interface IKanbanItem {

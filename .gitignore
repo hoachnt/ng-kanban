@@ -42,4 +42,6 @@ testem.log
 Thumbs.db
 .
 
-src/environments/*
+.env
+# Local Netlify folder
+.netlify
