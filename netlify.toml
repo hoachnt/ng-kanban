@@ -1,6 +1,6 @@
 [build]
   command = "bun run build --configuration production"
-  publish = "dist/kanban"
+  publish = "dist/kanban/browser"
 
 [[redirects]]
   from = "/*"
