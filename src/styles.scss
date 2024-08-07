@@ -33,6 +33,10 @@ body {
     overflow-x: hidden;
 }
 
+.mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
 .mat-display-medium {
     font-size: 28px;
     margin: 32px 0 16px;

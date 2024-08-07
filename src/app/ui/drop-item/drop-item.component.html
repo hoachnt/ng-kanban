@@ -5,6 +5,10 @@
     class="box"
     (click)="openDropItemDialog(item)"
 >
+    <mat-card-header class="!pt-0">
+        {{ item.title | truncateText : 70 }}
+    </mat-card-header>
+    
     <div class="example-handle" cdkDragHandle>
         <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -13,10 +17,6 @@
             <path d="M0 0h24v24H0z" fill="none"></path>
         </svg>
     </div>
-
-    <mat-card-header class="!pt-0">
-        {{ item.title | truncateText : 70 }}
-    </mat-card-header>
     @if(item.deadline) {
     <mat-card-content class="kanban-item__content">
         <mat-chip matTooltip="Deadline">{{
