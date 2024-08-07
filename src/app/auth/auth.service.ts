@@ -1,4 +1,4 @@
-import { CookieService } from "ngx-cookie-service";
+import { SsrCookieService } from "ngx-cookie-service-ssr";
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { catchError, tap, throwError } from "rxjs";
@@ -12,11 +12,12 @@ import { IDirectusLoginData } from "../libraries/directus/directus";
 })
 export class AuthService {
     http = inject(HttpClient);
-    cookieService = inject(CookieService);
+    cookieService = inject(SsrCookieService);
     router = inject(Router);
 
     baseAuthUrl: string = `${environment.directusUrl}/auth`;
     baseUserUrl: string = `${environment.directusUrl}/users`;
+    mainDomain: string = `${environment.mainDomain}`;
     token: string | null = null;
     refreshToken: string | null = null;
 
@@ -69,7 +70,7 @@ export class AuthService {
     }
 
     logout() {
-        this.cookieService.deleteAll();
+        this.cookieService.deleteAll("/", this.mainDomain, true, "Lax");
         this.token = null;
         this.refreshToken = null;
         this.router.navigate(["/auth/login"]);

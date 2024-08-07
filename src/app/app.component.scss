@@ -14,7 +14,8 @@
     align-items: center;
     background-color: var(--sys-surface);
     height: 100dvh;
-    
+    min-width: 100%;
+
     .dark & {
         filter: invert(1);
     }
