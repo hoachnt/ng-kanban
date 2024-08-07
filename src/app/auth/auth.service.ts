@@ -78,8 +78,23 @@ export class AuthService {
     saveTokens(res: ITokenResponse) {
         this.token = res.access_token;
         this.refreshToken = res.refresh_token;
-
-        this.cookieService.set("token", this.token);
-        this.cookieService.set("refreshToken", this.refreshToken);
+        this.cookieService.set(
+            "token",
+            this.token,
+            undefined,
+            "/",
+            this.mainDomain,
+            true,
+            "Lax"
+        );
+        this.cookieService.set(
+            "refreshToken",
+            this.refreshToken,
+            undefined,
+            "/",
+            this.mainDomain,
+            true,
+            "Lax"
+        );
     }
 }
