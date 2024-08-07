@@ -6,7 +6,6 @@ main {
     height: 100%;
     overflow: auto;
     border-radius: 20px;
-    border: 1px solid var(--mdc-outlined-card-outline-color);
 }
 
 mat-drawer-content {
@@ -60,7 +59,6 @@ mat-drawer,
 mat-toolbar {
     background-color: var(--sys-surface-container);
     border-radius: 20px;
-    border: 1px solid var(--mdc-outlined-card-outline-color);
 }
 
 mat-drawer {
