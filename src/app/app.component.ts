@@ -19,7 +19,7 @@ import { ThemeService } from "./ui/services/theme.service";
     templateUrl: "./app.component.html",
     styleUrl: "./app.component.scss",
     animations: [slideInAnimation],
-    encapsulation: ViewEncapsulation.None, // Add this line
+    encapsulation: ViewEncapsulation.Emulated,
 })
 export class AppComponent {
     readonly themeService = inject(ThemeService);
