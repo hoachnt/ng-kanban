@@ -113,19 +113,15 @@ export class DialogAddProjectComponent {
         title: string,
         snackbarTypeClass?: "success" | "error" | "warning"
     ) {
+        const panelClass = snackbarTypeClass
+            ? `${snackbarTypeClass}-snackbar`
+            : "";
+
         this._snackBar.open(title, "Ok", {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: 5000,
-            // panelClass: [
-            //     snackbarTypeClass === "success"
-            //         ? "green-snackbar"
-            //         : snackbarTypeClass === "error"
-            //         ? "red-snackbar"
-            //         : snackbarTypeClass === "warning"
-            //         ? "warning-snackbar"
-            //         : "",
-            // ],
+            panelClass: panelClass ? [panelClass] : undefined,
         });
     }
 }

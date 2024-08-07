@@ -30,7 +30,7 @@ import {
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { KanbanService } from "../../data/services/kanban.service";
-import { firstValueFrom, switchMap } from "rxjs";
+import { firstValueFrom } from "rxjs";
 
 export interface DialogData extends IKanbanList {}
 
@@ -88,8 +88,6 @@ export class DialogAddKanbanListComponent {
         if (this.form.invalid)
             return this.openSnackBar("Title required!", "warning");
 
-        this.isDisabling.set(true);
-
         const newKanbanList: IKanbanList = {
             title: this.form.value.title!,
             currentIndex: 0,
@@ -97,6 +95,8 @@ export class DialogAddKanbanListComponent {
         };
 
         try {
+            this.isDisabling.set(true);
+
             const { data: res } = await firstValueFrom(
                 this.kanbanService.postKanbanList(newKanbanList)
             );
@@ -141,19 +141,15 @@ export class DialogAddKanbanListComponent {
         title: string,
         snackbarTypeClass?: "success" | "error" | "warning"
     ) {
+        const panelClass = snackbarTypeClass
+            ? `${snackbarTypeClass}-snackbar`
+            : "";
+
         this._snackBar.open(title, "Ok", {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: 5000,
-            // panelClass: [
-            //     snackbarTypeClass === "success"
-            //         ? "green-snackbar"
-            //         : snackbarTypeClass === "error"
-            //         ? "red-snackbar"
-            //         : snackbarTypeClass === "warning"
-            //         ? "warning-snackbar"
-            //         : "",
-            // ],
+            panelClass: panelClass ? [panelClass] : undefined,
         });
     }
 }

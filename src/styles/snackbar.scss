@@ -1,0 +1,41 @@
+.success-snackbar {
+    .mdc-snackbar__surface {
+        background-color: var(--extended-success-container) !important;
+    }
+    .mdc-snackbar__label {
+        color: var(--extended-success-on-container) !important;
+    }
+}
+.success-snackbar button {
+    background-color: var(--extended-success-container);
+    color: var(--extended-success-on-container) !important;
+    border: none;
+}
+
+.error-snackbar {
+    .mdc-snackbar__surface {
+        background-color: var(--sys-error-container) !important;
+    }
+    .mdc-snackbar__label {
+        color: var(--sys-on-error-container) !important;
+    }
+}
+.error-snackbar button {
+    background-color: var(--sys-error-container);
+    color: var(--sys-on-error-container) !important;
+    border: none;
+}
+
+.warning-snackbar {
+    .mdc-snackbar__surface {
+        background-color: var(--extended-warning-container) !important;
+    }
+    .mdc-snackbar__label {
+        color: var(--extended-warning-on-container) !important;
+    }
+}
+.warning-snackbar button {
+    background-color: var(--extended-warning-container);
+    color: var(--extended-warning-on-container) !important;
+    border: none;
+}

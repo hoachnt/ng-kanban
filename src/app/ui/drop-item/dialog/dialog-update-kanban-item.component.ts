@@ -102,10 +102,10 @@ export class DialogUpdateKanbanItemComponent {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
 
-        if (this.form.invalid) return this.openSnackBar("Title required!");
-        if (this.data.id === undefined) return;
-
-        this.isDisabling.set(true);
+        if (this.form.invalid)
+            return this.openSnackBar("Title required!", "warning");
+        if (this.data.id === undefined)
+            return this.openSnackBar("Task ID is not found", "error");
 
         const formattedDeadline = this.form.value.deadline
             ? this.datePipe.transform(
@@ -115,6 +115,8 @@ export class DialogUpdateKanbanItemComponent {
             : null;
 
         try {
+            this.isDisabling.set(true);
+
             await firstValueFrom(
                 this.kanbanService.updateKanbanItem(this.data.id, {
                     ...this.data,
@@ -131,20 +133,28 @@ export class DialogUpdateKanbanItemComponent {
                 this.kanbanService.getKanbanItems((this.me$() as IUser).id)
             );
 
-            this.openSnackBar("Successfully updated!");
+            this.openSnackBar("Successfully updated!", "success");
         } catch (error) {
-            this.openSnackBar("Error during update task!");
+            this.openSnackBar("Error during update task!", "error");
         } finally {
             this.dialogRef.close();
             this.isDisabling.set(false);
         }
     }
 
-    openSnackBar(title: string) {
+    openSnackBar(
+        title: string,
+        snackbarTypeClass?: "success" | "error" | "warning"
+    ) {
+        const panelClass = snackbarTypeClass
+            ? `${snackbarTypeClass}-snackbar`
+            : "";
+
         this._snackBar.open(title, "Ok", {
             horizontalPosition: "right",
             verticalPosition: "top",
             duration: 5000,
+            panelClass: panelClass ? [panelClass] : undefined,
         });
     }
 }

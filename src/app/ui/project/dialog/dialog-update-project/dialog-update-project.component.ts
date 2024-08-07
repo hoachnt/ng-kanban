@@ -73,12 +73,14 @@ export class DialogUpdateProjectComponent {
         this.form.markAllAsTouched();
         this.form.updateValueAndValidity();
 
-        if (this.form.invalid) return this.openSnackBar("Name required!");
-        if (this.data.id === undefined) return;
-
-        this.isUpdating.set(true);
+        if (this.form.invalid)
+            return this.openSnackBar("Name required!", "warning");
+        if (this.data.id === undefined)
+            return this.openSnackBar("Project ID is not found", "error");
 
         try {
+            this.isUpdating.set(true);
+
             await firstValueFrom(
                 this.kanbanService.updateProject(
                     {
@@ -94,20 +96,28 @@ export class DialogUpdateProjectComponent {
             await firstValueFrom(
                 this.kanbanService.getProjects(this.me$()?.id!)
             );
-            this.openSnackBar("Successfully updated!");
+            this.openSnackBar("Successfully updated!", "success");
         } catch (error) {
-            this.openSnackBar("Error during update project!");
+            this.openSnackBar("Error during update project!", "error");
         } finally {
             this.dialogRef.close();
             this.isUpdating.set(false);
         }
     }
 
-    openSnackBar(title: string) {
+    openSnackBar(
+        title: string,
+        snackbarTypeClass?: "success" | "error" | "warning"
+    ) {
+        const panelClass = snackbarTypeClass
+            ? `${snackbarTypeClass}-snackbar`
+            : "";
+
         this._snackBar.open(title, "Ok", {
             horizontalPosition: "right",
             verticalPosition: "top",
             duration: 5000,
+            panelClass: panelClass ? [panelClass] : undefined,
         });
     }
 }

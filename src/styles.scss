@@ -10,6 +10,7 @@
 @include mat.core();
 
 @import "./styles/mat-dialog.scss";
+@import "./styles//snackbar.scss";
 
 @tailwind base;
 @tailwind components;
@@ -42,20 +43,6 @@ body {
     .mat-expansion-panel-content
     .mat-expansion-panel-body {
     padding: 0 !important;
-}
-
-.green-snackbar {
-    .mdc-snackbar__surface {
-        background-color: var(--success-color) !important;
-    }
-    .mdc-snackbar__label {
-        color: var(--dark-color) !important;
-    }
-}
-.green-snackbar button {
-    background-color: var(--success-color);
-    color: var(--dark-color) !important;
-    border: none;
 }
 
 .pulse {

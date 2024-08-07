@@ -44,11 +44,12 @@ export class DialogDeleteKanbanListComponent {
     }
 
     async onDeleteKanbanItem() {
-        if (this.data.id === undefined) return;
-
-        this.isDeleting.set(true);
+        if (this.data.id === undefined)
+            return this.openSnackBar("List ID is not found", "error");
 
         try {
+            this.isDeleting.set(true);
+
             await firstValueFrom(
                 this.kanbanService.deleteKanbanList(this.data.id)
             );
@@ -59,20 +60,28 @@ export class DialogDeleteKanbanListComponent {
                 )
             );
 
-            this.openSnackBar("Successfully deleted!");
+            this.openSnackBar("Successfully deleted!", "success");
         } catch (error) {
-            this.openSnackBar("Error during delete list!");
+            this.openSnackBar("Error during delete list!", "error");
         } finally {
             this.dialogRef.close();
             this.isDeleting.set(false);
         }
     }
 
-    openSnackBar(title: string) {
+    openSnackBar(
+        title: string,
+        snackbarTypeClass?: "success" | "error" | "warning"
+    ) {
+        const panelClass = snackbarTypeClass
+            ? `${snackbarTypeClass}-snackbar`
+            : "";
+
         this._snackBar.open(title, "Ok", {
             horizontalPosition: "right",
             verticalPosition: "top",
             duration: 5000,
+            panelClass: panelClass ? [panelClass] : undefined,
         });
     }
 }

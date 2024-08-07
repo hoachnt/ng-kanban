@@ -1,6 +1,9 @@
 .active {
     background: var(--sys-primary-container);
     color: var(--sys-on-primary-container);
+
+    --mdc-list-list-item-label-text-color: var(--sys-on-primary-container);
+    --mdc-icon-button-icon-color: var(--sys-on-primary-container);
 }
 
 mat-list-item {
