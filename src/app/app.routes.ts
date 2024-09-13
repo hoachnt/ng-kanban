@@ -6,7 +6,10 @@ import { canActivateAuth, canActivateLogin } from "./auth/access.guard";
 export const routes: Routes = [
     {
         path: "",
-        component: ToolbarComponent,
+        loadComponent: () =>
+            import("./ui/layout/toolbar/toolbar.component").then(
+                (m) => m.ToolbarComponent
+            ),
         data: { animation: "ToolbarLayout" },
         children: [
             {
