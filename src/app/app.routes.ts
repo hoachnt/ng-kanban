@@ -1,11 +1,7 @@
 import { Routes } from "@angular/router";
-import { HomePageComponent } from "./pages/home-page/home-page.component";
 import { ToolbarComponent } from "./ui/layout/toolbar/toolbar.component";
-import { LoginPageComponent } from "./pages/login-page/login-page.component";
-import { canActivateAuth, canActivateLogin } from "./auth/access.guard";
-import { ProjectPageComponent } from "./pages/project-page/project-page.component";
 import { AuthLayoutComponent } from "./ui/layout/auth-layout/auth-layout.component";
-import { RegisterPageComponent } from "./pages/register-page/register-page.component";
+import { canActivateAuth, canActivateLogin } from "./auth/access.guard";
 
 export const routes: Routes = [
     {
@@ -15,12 +11,18 @@ export const routes: Routes = [
         children: [
             {
                 path: "",
-                component: HomePageComponent,
+                loadComponent: () =>
+                    import("./pages/home-page/home-page.component").then(
+                        (m) => m.HomePageComponent
+                    ),
                 data: { animation: "HomePage" },
             },
             {
                 path: "project/:id",
-                component: ProjectPageComponent,
+                loadComponent: () =>
+                    import("./pages/project-page/project-page.component").then(
+                        (m) => m.ProjectPageComponent
+                    ),
                 data: { animation: "ProjectPage" },
             },
         ],
@@ -33,16 +35,21 @@ export const routes: Routes = [
         children: [
             {
                 path: "login",
-                component: LoginPageComponent,
+                loadComponent: () =>
+                    import("./pages/login-page/login-page.component").then(
+                        (m) => m.LoginPageComponent
+                    ),
                 data: { animation: "LoginPage" },
             },
             {
                 path: "register",
-                component: RegisterPageComponent,
+                loadComponent: () =>
+                    import(
+                        "./pages/register-page/register-page.component"
+                    ).then((m) => m.RegisterPageComponent),
                 data: { animation: "RegisterPage" },
             },
         ],
-
         canActivate: [canActivateLogin],
     },
 ];
