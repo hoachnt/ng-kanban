@@ -3,13 +3,12 @@ import { DropListGroupComponent } from "../../ui/drop-list-group/drop-list-group
 import { KanbanService } from "../../data/services/kanban.service";
 import { ActivatedRoute } from "@angular/router";
 import { switchMap } from "rxjs";
-import { AsyncPipe } from "@angular/common";
 import { IProject } from "../../libraries/directus/directus";
 
 @Component({
     selector: "app-project-page",
-    
-    imports: [DropListGroupComponent, AsyncPipe],
+
+    imports: [DropListGroupComponent],
     templateUrl: "./project-page.component.html",
     styleUrl: "./project-page.component.scss",
 })

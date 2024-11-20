@@ -1,7 +1,6 @@
 import {
     ChangeDetectorRef,
     Component,
-    effect,
     ElementRef,
     inject,
     signal,
@@ -37,7 +36,7 @@ interface DialogData extends IKanbanItem {}
 
 @Component({
     selector: "app-dialog-update-kanban-item",
-    
+
     imports: [
         MatFormFieldModule,
         MatInputModule,
@@ -46,7 +45,6 @@ interface DialogData extends IKanbanItem {}
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatDialogClose,
         MatProgressSpinnerModule,
         ReactiveFormsModule,
         MatDatepickerModule,
@@ -77,15 +75,11 @@ export class DialogUpdateKanbanItemComponent {
     });
 
     constructor(private _snackBar: MatSnackBar) {
-        effect(() => {
-            this.form.patchValue({
-                title: this.data.title || "",
-                description: this.data.description,
-                deadline: this.data.deadline
-                    ? new Date(this.data.deadline)
-                    : null,
-                kanban_list_id: this.data.kanban_list_id,
-            });
+        this.form.patchValue({
+            title: this.data.title || "",
+            description: this.data.description,
+            deadline: this.data.deadline ? new Date(this.data.deadline) : null,
+            kanban_list_id: this.data.kanban_list_id,
         });
     }
 

@@ -45,7 +45,6 @@ export interface DialogData extends IKanbanList {}
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatDialogClose,
         ReactiveFormsModule,
     ],
     templateUrl: "./dialog-add-kanban-list.component.html",

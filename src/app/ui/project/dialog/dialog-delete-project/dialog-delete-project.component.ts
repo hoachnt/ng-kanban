@@ -23,7 +23,6 @@ export interface DialogDataDeleteProject extends IProject {}
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatDialogClose,
     ],
     templateUrl: "./dialog-delete-project.component.html",
     styleUrl: "./dialog-delete-project.component.scss",

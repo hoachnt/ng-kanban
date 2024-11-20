@@ -22,7 +22,6 @@ interface DialogData extends IKanbanList {}
     
     imports: [
         MatDialogActions,
-        MatDialogClose,
         MatDialogContent,
         MatDialogTitle,
         MatButtonModule,

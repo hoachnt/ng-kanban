@@ -5,7 +5,6 @@ import { MatButtonModule } from "@angular/material/button";
 import {
     MAT_DIALOG_DATA,
     MatDialogActions,
-    MatDialogClose,
     MatDialogContent,
     MatDialogRef,
     MatDialogTitle,
@@ -13,7 +12,7 @@ import {
 import { IProject } from "../../../../libraries/directus/directus";
 import { KanbanService } from "../../../../data/services/kanban.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { firstValueFrom, switchMap } from "rxjs";
+import { firstValueFrom } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {
     FormBuilder,
@@ -27,12 +26,11 @@ export interface DialogData extends IProject {}
 
 @Component({
     selector: "app-dialog-update-project",
-    
+
     templateUrl: "./dialog-update-project.component.html",
     styleUrl: "./dialog-update-project.component.scss",
     imports: [
         MatDialogActions,
-        MatDialogClose,
         MatDialogContent,
         MatDialogTitle,
         MatButtonModule,

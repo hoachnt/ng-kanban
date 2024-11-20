@@ -25,7 +25,6 @@ export interface DialogData extends IKanbanItem {}
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatDialogClose,
     ],
 })
 export class DialogDeleteKanbanItem {

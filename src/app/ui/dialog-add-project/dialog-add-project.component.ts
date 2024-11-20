@@ -42,7 +42,6 @@ import { MatButtonModule } from "@angular/material/button";
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatDialogClose,
         ReactiveFormsModule,
     ],
     templateUrl: "./dialog-add-project.component.html",

@@ -54,7 +54,6 @@ export interface DialogData extends IKanbanItem {}
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,
-        MatDialogClose,
         ReactiveFormsModule,
         MatDatepickerModule,
     ],

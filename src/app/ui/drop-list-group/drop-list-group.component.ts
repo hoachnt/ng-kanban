@@ -9,7 +9,6 @@ import {
 } from "@angular/core";
 import {
     CdkDragDrop,
-    CdkDropList,
     CdkDropListGroup,
     moveItemInArray,
     transferArrayItem,
@@ -54,7 +53,6 @@ const fadeListAnimation = trigger("listAnimation", [
     imports: [
         DropListComponent,
         CdkDropListGroup,
-        CdkDropList,
         KanbanItemsFilterPipe,
         MatButtonModule,
         MatIconModule,
@@ -95,7 +93,6 @@ export class DropListGroupComponent implements OnChanges {
                 this.currentView$.set("empty");
             }
         },
-        { allowSignalWrites: true }
     );
 
     async loadData(): Promise<void> {

@@ -14,7 +14,6 @@ import { DropItemDialogComponent } from "./dialog/drop-item-dialog/drop-item-dia
     
     imports: [
         CdkDrag,
-        CdkDropList,
         CdkDragHandle,
         MatCardModule,
         MatButtonModule,

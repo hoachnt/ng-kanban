@@ -9,7 +9,6 @@ import { MatButtonModule } from "@angular/material/button";
 import {
     MAT_DIALOG_DATA,
     MatDialogActions,
-    MatDialogClose,
     MatDialogContent,
     MatDialogRef,
     MatDialogTitle,
@@ -17,7 +16,7 @@ import {
 import { IKanbanList } from "../../../../libraries/directus/directus";
 import { KanbanService } from "../../../../data/services/kanban.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { firstValueFrom, switchMap } from "rxjs";
+import { firstValueFrom } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {
     FormBuilder,
@@ -26,15 +25,13 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ActivatedRoute } from "@angular/router";
 interface DialogData extends IKanbanList {}
 
 @Component({
     selector: "app-dialog-update-kanban-list",
-    
+
     imports: [
         MatDialogActions,
-        MatDialogClose,
         MatDialogContent,
         MatDialogTitle,
         MatButtonModule,

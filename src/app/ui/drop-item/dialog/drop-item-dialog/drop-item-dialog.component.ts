@@ -31,8 +31,6 @@ interface DialogData extends IKanbanItem {}
         MatButtonModule,
         MatDialogTitle,
         MatDialogContent,
-        MatDialogActions,
-        MatDialogClose,
         MatCardModule,
         MatMenuModule,
         MatIconModule,

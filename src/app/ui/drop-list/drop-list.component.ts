@@ -34,9 +34,7 @@ import { DropItemComponent } from "../drop-item/drop-item.component";
     selector: "app-drop-list",
     
     imports: [
-        CdkDrag,
         CdkDropList,
-        CdkDragHandle,
         DropItemSortPipe,
         MatCardModule,
         MatButtonModule,
