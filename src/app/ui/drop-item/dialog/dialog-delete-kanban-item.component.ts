@@ -19,7 +19,7 @@ export interface DialogData extends IKanbanItem {}
 @Component({
     selector: "dialog-delete-kanban-item",
     templateUrl: "dialog-delete-kanban-item.component.html",
-    standalone: true,
+    
     imports: [
         MatButtonModule,
         MatDialogTitle,

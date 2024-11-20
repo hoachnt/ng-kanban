@@ -44,7 +44,7 @@ export interface DialogData extends IKanbanItem {}
 
 @Component({
     selector: "app-dialog-add-kanban-item-form",
-    standalone: true,
+    
     providers: [DatePipe],
     imports: [
         MatFormFieldModule,

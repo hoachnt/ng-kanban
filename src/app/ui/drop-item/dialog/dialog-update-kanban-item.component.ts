@@ -37,7 +37,7 @@ interface DialogData extends IKanbanItem {}
 
 @Component({
     selector: "app-dialog-update-kanban-item",
-    standalone: true,
+    
     imports: [
         MatFormFieldModule,
         MatInputModule,

@@ -50,7 +50,7 @@ const fadeListAnimation = trigger("listAnimation", [
 
 @Component({
     selector: "app-drop-list-group",
-    standalone: true,
+    
     imports: [
         DropListComponent,
         CdkDropListGroup,

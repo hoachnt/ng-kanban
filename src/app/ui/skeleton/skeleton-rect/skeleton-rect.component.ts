@@ -5,7 +5,7 @@ import { Component, ElementRef, Input, OnInit } from "@angular/core";
     host: {
         class: "pulse",
     },
-    standalone: true,
+    
     imports: [],
     template: "",
     styles: [

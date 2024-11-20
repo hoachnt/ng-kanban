@@ -17,7 +17,7 @@ export interface DialogDataDeleteProject extends IProject {}
 
 @Component({
     selector: "app-dialog-delete-project",
-    standalone: true,
+    
     imports: [
         MatButtonModule,
         MatDialogTitle,

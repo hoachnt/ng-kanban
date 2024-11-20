@@ -27,7 +27,7 @@ export interface DialogData extends IProject {}
 
 @Component({
     selector: "app-dialog-update-project",
-    standalone: true,
+    
     templateUrl: "./dialog-update-project.component.html",
     styleUrl: "./dialog-update-project.component.scss",
     imports: [

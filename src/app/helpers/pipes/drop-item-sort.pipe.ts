@@ -3,7 +3,7 @@ import { IKanbanItem } from "../../libraries/directus/directus";
 
 @Pipe({
     name: "dropItemSort",
-    standalone: true,
+    
 })
 export class DropItemSortPipe implements PipeTransform {
     transform(value: IKanbanItem[] | null): IKanbanItem[] {

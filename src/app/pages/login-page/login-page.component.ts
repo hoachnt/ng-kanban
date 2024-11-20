@@ -11,7 +11,7 @@ import { Router, RouterLink } from "@angular/router";
 
 @Component({
     selector: "app-login-page",
-    standalone: true,
+    
     imports: [
         MatFormFieldModule,
         MatInputModule,

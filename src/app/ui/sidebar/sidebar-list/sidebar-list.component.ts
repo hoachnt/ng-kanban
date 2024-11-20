@@ -24,7 +24,7 @@ import { DialogData, DialogUpdateProjectComponent } from "../../project/dialog/d
 
 @Component({
     selector: "app-sidebar-list",
-    standalone: true,
+    
     imports: [
         MatListModule,
         MatIconModule,

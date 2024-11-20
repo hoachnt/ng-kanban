@@ -11,7 +11,7 @@ import { DropItemDialogComponent } from "./dialog/drop-item-dialog/drop-item-dia
 
 @Component({
     selector: "app-drop-item",
-    standalone: true,
+    
     imports: [
         CdkDrag,
         CdkDropList,

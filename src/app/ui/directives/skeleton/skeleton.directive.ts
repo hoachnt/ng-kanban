@@ -9,7 +9,7 @@ import { SkeletonRectComponent } from "../../skeleton/skeleton-rect/skeleton-rec
 
 @Directive({
     selector: "[appSkeleton]",
-    standalone: true,
+    
 })
 export class SkeletonDirective {
     @Input("skeleton") isLoading = false;

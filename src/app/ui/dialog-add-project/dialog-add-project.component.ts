@@ -33,7 +33,7 @@ import { MatButtonModule } from "@angular/material/button";
 
 @Component({
     selector: "app-dialog-add-project",
-    standalone: true,
+    
     imports: [
         MatFormFieldModule,
         MatInputModule,

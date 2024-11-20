@@ -3,7 +3,7 @@ import { IKanbanItem } from "../../libraries/directus/directus";
 
 @Pipe({
     name: "kanbanItemsFilter",
-    standalone: true,
+    
 })
 export class KanbanItemsFilterPipe implements PipeTransform {
     transform(

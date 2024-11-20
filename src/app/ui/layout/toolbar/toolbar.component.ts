@@ -25,7 +25,7 @@ import { DialogAddProjectComponent } from "../../dialog-add-project/dialog-add-p
 
 @Component({
     selector: "app-toolbar",
-    standalone: true,
+    
     imports: [
         RouterOutlet,
         MatToolbarModule,

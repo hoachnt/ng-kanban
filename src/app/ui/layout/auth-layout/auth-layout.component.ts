@@ -10,7 +10,7 @@ import { slideInAnimation } from "./auth-layout.animations";
 
 @Component({
     selector: "app-auth-layout",
-    standalone: true,
+    
     imports: [RouterOutlet, RouterLink, MatTabsModule, MatButtonModule],
     templateUrl: "./auth-layout.component.html",
     styleUrl: "./auth-layout.component.scss",

@@ -31,7 +31,7 @@ interface DialogData extends IKanbanList {}
 
 @Component({
     selector: "app-dialog-update-kanban-list",
-    standalone: true,
+    
     imports: [
         MatDialogActions,
         MatDialogClose,

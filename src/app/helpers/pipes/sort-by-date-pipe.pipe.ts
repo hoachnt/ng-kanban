@@ -3,7 +3,7 @@ import { IKanbanList } from "../../libraries/directus/directus";
 
 @Pipe({
     name: "sortByDatePipe",
-    standalone: true,
+    
 })
 export class SortByDatePipePipe implements PipeTransform {
     transform(value: IKanbanList[] | null) {

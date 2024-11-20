@@ -32,7 +32,7 @@ import { DropItemComponent } from "../drop-item/drop-item.component";
 
 @Component({
     selector: "app-drop-list",
-    standalone: true,
+    
     imports: [
         CdkDrag,
         CdkDropList,

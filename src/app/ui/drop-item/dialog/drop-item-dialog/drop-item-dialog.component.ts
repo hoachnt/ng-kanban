@@ -26,7 +26,7 @@ interface DialogData extends IKanbanItem {}
 
 @Component({
     selector: "app-drop-item-dialog",
-    standalone: true,
+    
     imports: [
         MatButtonModule,
         MatDialogTitle,

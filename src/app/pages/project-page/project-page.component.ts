@@ -8,7 +8,7 @@ import { IProject } from "../../libraries/directus/directus";
 
 @Component({
     selector: "app-project-page",
-    standalone: true,
+    
     imports: [DropListGroupComponent, AsyncPipe],
     templateUrl: "./project-page.component.html",
     styleUrl: "./project-page.component.scss",

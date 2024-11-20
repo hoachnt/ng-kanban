@@ -36,7 +36,7 @@ export interface DialogData extends IKanbanList {}
 
 @Component({
     selector: "app-dialog-add-kanban-list",
-    standalone: true,
+    
     imports: [
         MatFormFieldModule,
         MatInputModule,
