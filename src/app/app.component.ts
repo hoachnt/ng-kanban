@@ -8,7 +8,6 @@ import {
 } from "@angular/core";
 import { ChildrenOutletContexts, RouterOutlet } from "@angular/router";
 import { slideInAnimation } from "./app.animations";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { isPlatformBrowser } from "@angular/common";
 import { ThemeService } from "./ui/services/theme.service";
 

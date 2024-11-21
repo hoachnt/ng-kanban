@@ -14,7 +14,7 @@ import { Component, ElementRef, Input, OnInit } from "@angular/core";
                 display: block;
                 width: var(--skeleton-rect-width);
                 height: var(--skeleton-rect-height);
-                background: var(--sys-surface) no-repeat;
+                background: var(--mat-sys-surface) no-repeat;
             }
         `,
     ],

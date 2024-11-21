@@ -1,13 +1,12 @@
 import { Routes } from "@angular/router";
-import { ToolbarComponent } from "./ui/layout/toolbar/toolbar.component";
-import { AuthLayoutComponent } from "./ui/layout/auth-layout/auth-layout.component";
-import { canActivateAuth, canActivateLogin } from "./auth/access.guard";
+import { AuthLayoutComponent } from "../ui/layout/auth-layout/auth-layout.component";
+import { canActivateAuth, canActivateLogin } from "../auth/access.guard";
 
 export const routes: Routes = [
     {
         path: "",
         loadComponent: () =>
-            import("./ui/layout/toolbar/toolbar.component").then(
+            import("../ui/layout/toolbar/toolbar.component").then(
                 (m) => m.ToolbarComponent
             ),
         data: { animation: "ToolbarLayout" },
@@ -15,7 +14,7 @@ export const routes: Routes = [
             {
                 path: "",
                 loadComponent: () =>
-                    import("./pages/home-page/home-page.component").then(
+                    import("../pages/home-page/home-page.component").then(
                         (m) => m.HomePageComponent
                     ),
                 data: { animation: "HomePage" },
@@ -23,7 +22,7 @@ export const routes: Routes = [
             {
                 path: "project/:id",
                 loadComponent: () =>
-                    import("./pages/project-page/project-page.component").then(
+                    import("../pages/project-page/project-page.component").then(
                         (m) => m.ProjectPageComponent
                     ),
                 data: { animation: "ProjectPage" },
@@ -39,7 +38,7 @@ export const routes: Routes = [
             {
                 path: "login",
                 loadComponent: () =>
-                    import("./pages/login-page/login-page.component").then(
+                    import("../pages/login-page/login-page.component").then(
                         (m) => m.LoginPageComponent
                     ),
                 data: { animation: "LoginPage" },
@@ -48,7 +47,7 @@ export const routes: Routes = [
                 path: "register",
                 loadComponent: () =>
                     import(
-                        "./pages/register-page/register-page.component"
+                        "../pages/register-page/register-page.component"
                     ).then((m) => m.RegisterPageComponent),
                 data: { animation: "RegisterPage" },
             },

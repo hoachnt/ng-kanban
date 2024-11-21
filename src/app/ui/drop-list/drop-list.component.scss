@@ -7,9 +7,9 @@
 
 .list {
     min-height: 60px;
-    border-radius: var(--mdc-elevated-card-container-shape);
+    border-radius: 10px;
     overflow: hidden;
-    background-color: var(--sys-surface-container);
+    background-color: var(--mat-sys-surface-container);
 }
 
 :host {

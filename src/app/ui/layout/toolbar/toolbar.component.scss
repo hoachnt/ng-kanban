@@ -57,7 +57,7 @@ mat-drawer-container.active {
 
 mat-drawer,
 mat-toolbar {
-    background-color: var(--sys-surface-container);
+    background-color: var(--mat-sys-surface-container);
     border-radius: 20px;
 }
 
@@ -67,7 +67,7 @@ mat-drawer {
 }
 
 .logout-btn {
-    background-color: var(--sys-error) !important;
+    background-color: var(--mat-sys-error) !important;
 }
 
 
