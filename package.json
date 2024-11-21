@@ -1,7 +1,6 @@
 {
   "name": "kanban",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "ng": "ng",
     "dev": "bun replace-env.ts ng serve",
@@ -25,7 +24,6 @@
     "@angular/router": "^19.0.0",
     "@angular/ssr": "^19.0.0",
     "@directus/sdk": "^18.0.0",
-    "@netlify/edge-functions": "^2.10.0",
     "express": "^4.18.2",
     "ngx-cookie-service-ssr": "^19.0.0",
     "rxjs": "~7.8.0",
